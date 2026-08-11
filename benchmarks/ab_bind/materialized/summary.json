@@ -1,0 +1,13 @@
+{
+  "generated": {
+    "core_v1": {
+      "complex_count": 18,
+      "manifest_csv": "/mnt/data/liuchao/abag-rbfep/benchmarks/ab_bind/manifests/ab_bind_rbfe_core_v1_inputs.csv"
+    },
+    "core_v2": {
+      "complex_count": 19,
+      "manifest_csv": "/mnt/data/liuchao/abag-rbfep/benchmarks/ab_bind/manifests/ab_bind_rbfe_core_v2_inputs.csv"
+    }
+  },
+  "missing_structures": []
+}

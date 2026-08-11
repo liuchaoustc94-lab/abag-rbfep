@@ -1,0 +1,9 @@
+job_id,mutation_group_id,chain_id,resseq,wt,mut,entity_side,experimental_ddg_kcal_mol,chain_mapping_basis,source_reference
+3hfm-patel-2021-antigen-y-y20f,patel_3hfm_y20f,Y,20,Y,F,antigen,-0.48,explicit residue identity in 3HFM antigen chain Y,Patel 2021 Table 2
+3hfm-patel-2021-antibody-h-d32n,patel_3hfm_d32n,H,32,D,N,antibody,0.17,explicit residue identity in 3HFM heavy chain H,Patel 2021 Table 2
+3hfm-patel-2021-antigen-y-r21a,patel_3hfm_r21a,Y,21,R,A,antigen,0.90,explicit residue identity in 3HFM antigen chain Y,Patel 2021 Table 2
+3hfm-patel-2021-antigen-y-d101k,patel_3hfm_d101k,Y,101,D,K,antigen,2.13,inferred from residue identity and interface contact pattern,Patel 2021 Table 2
+3hfm-patel-2021-antibody-h-w98f,patel_3hfm_w98f,H,98,W,F,antibody,3.25,inferred from residue identity and interface contact pattern,Patel 2021 Table 2
+3hfm-patel-2021-antibody-l-y50l,patel_3hfm_y50l,L,50,Y,L,antibody,4.39,matched to AB-Bind 3HFM L:Y50L row and residue identity,Patel 2021 Table 2
+3hfm-patel-2021-antibody-l-n31e,patel_3hfm_n31e,L,31,N,E,antibody,5.71,matched to AB-Bind 3HFM L:N31E row and residue identity,Patel 2021 Table 2
+3hfm-patel-2021-antigen-y-k97d,patel_3hfm_k97d,Y,97,K,D,antigen,6.77,explicit residue identity in 3HFM antigen chain Y,Patel 2021 Table 2

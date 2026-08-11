@@ -1,0 +1,39 @@
+name: AB-Bind-RBFE-Core-V1-Split-V1
+spec_name: core_v1
+description: >
+  Complex-level split for protocol development. The development split contains
+  complexes already used to debug the workflow. The calibration split is the
+  tuning pool after the workflow is frozen. The validation split is held out
+  for independent reporting.
+notes:
+  - Split is defined at the complex level to avoid mutation-level leakage.
+  - Validation complexes were chosen from untouched experimental-structure systems.
+  - Development complexes are excluded from the independent validation metric.
+splits:
+  development:
+    description: Workflow-debug and smoke-validation complexes already exercised during implementation.
+    complex_ids:
+      - 1VFB
+      - 1JRH
+      - 3NGB
+      - 1YY9
+  calibration:
+    description: Complexes available for protocol calibration after the pipeline is frozen.
+    complex_ids:
+      - 1DQJ
+      - 1MHP
+      - 1N8Z
+      - 2JEL
+      - 2NYY
+      - 3BDY
+      - 3BE1
+      - 3BN9
+  validation:
+    description: Held-out complexes for independent validation reporting.
+    complex_ids:
+      - 1BJ1
+      - 1CZ8
+      - 1MLC
+      - 2NZ9
+      - 3HFM
+      - 3NPS

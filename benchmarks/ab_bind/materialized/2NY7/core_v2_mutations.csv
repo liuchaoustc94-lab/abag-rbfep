@@ -1,0 +1,9 @@
+mutation_group_id,chain_id,resseq,icode,wt,mut,entity_side
+2ny7_0722,H,33,,V,T,antibody
+2ny7_0722,H,35,,H,M,antibody
+2ny7_0723,H,33,,V,T,antibody
+2ny7_0723,H,34,,I,V,antibody
+2ny7_0724,L,93,,A,G,antibody
+2ny7_0724,L,95,,S,A,antibody
+2ny7_0725,L,93,,A,W,antibody
+2ny7_0725,L,95,,S,Q,antibody

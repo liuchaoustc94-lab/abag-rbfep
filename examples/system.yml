@@ -1,0 +1,11 @@
+system_name: demo_abag
+input_structure: /absolute/path/to/complex.pdb
+structure_source: experimental
+antibody_chains:
+  - H
+  - L
+antigen_chains:
+  - A
+notes:
+  - Replace this example path before planning a batch.
+

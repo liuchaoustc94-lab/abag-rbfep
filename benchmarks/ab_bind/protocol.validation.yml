@@ -1,0 +1,17 @@
+preset: validation_single_point
+force_field: amber99sb-star-ildn-mut
+water_model: tip3p
+temperature_k: 310.0
+pressure_bar: 1.0
+overlap_threshold: 0.2
+max_repeat_delta_kcal_mol: 1.0
+max_bar_stderr_kcal_mol: 10.0
+gmx_bin: /mnt/data/liuchao/platform/gromacs-abag-mmgbsa/tools/gromacs-gpu/bin/gmx
+pmx_bin: pmx
+allow_external_execute: true
+box_type: dodecahedron
+box_padding_nm: 1.0
+equilibrate_retry_box_padding_nm: 2.0
+equilibrate_emergency_box_padding_nm: 5.0
+salt_concentration_m: 0.15
+mdrun_args: -ntmpi 1 -ntomp 4

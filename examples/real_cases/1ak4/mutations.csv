@@ -1,0 +1,16 @@
+mutation_group_id,chain_id,resseq,icode,wt,mut,entity_side
+antigen_d_a488g,D,488,,A,G,antigen
+antigen_d_a488v,D,488,,A,V,antigen
+antigen_d_a492g,D,492,,A,G,antigen
+antigen_d_a492v,D,492,,A,V,antigen
+antigen_d_g489a,D,489,,G,A,antigen
+antigen_d_g489v,D,489,,G,V,antigen
+antigen_d_h487a,D,487,,H,A,antigen
+antigen_d_h487q,D,487,,H,Q,antigen
+antigen_d_i491a,D,491,,I,A,antigen
+antigen_d_i491v,D,491,,I,V,antigen
+antigen_d_p485a,D,485,,P,A,antigen
+antigen_d_p490a,D,490,,P,A,antigen
+antigen_d_p490v,D,490,,P,V,antigen
+antigen_d_p493a,D,493,,P,A,antigen
+antigen_d_v486a,D,486,,V,A,antigen

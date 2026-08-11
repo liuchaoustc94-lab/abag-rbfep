@@ -1,0 +1,18 @@
+mutation_group_id,ddg_kcal_mol,note
+antibody_a_h30a,1.67,
+antibody_a_s93a,1.17,
+antibody_a_w92a,0.34,
+antibody_a_y32a,2.05,
+antibody_a_y49a,1.90,mean of two AB-Bind measurements (2.05/1.75)
+antibody_a_y50a,0.69,
+antibody_b_n56a,1.17,
+antibody_b_t30a,0.92,
+antibody_b_w52a,4.17,
+antibody_b_y101f,2.03,
+antibody_b_y32a,1.85,
+antigen_c_y49a,1.88,
+antigen_d_h33a,1.88,
+antigen_d_i101a,2.71,
+antigen_d_n55a,1.88,
+antigen_d_q104a,1.64,
+antigen_d_y102a,4.79,

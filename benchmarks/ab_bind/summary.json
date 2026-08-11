@@ -1,0 +1,48 @@
+{
+  "core_v1": {
+    "complex_count": 18,
+    "curated_csv": "/mnt/data/liuchao/abag-rbfep/benchmarks/ab_bind/curated/ab_bind_rbfe_core_v1.csv",
+    "filters": [
+      "antibody-antigen only",
+      "single-point only",
+      "standard residues only",
+      "structure mappable",
+      "stable run candidate",
+      "experimental structure",
+      "charge conserving"
+    ],
+    "name": "AB-Bind-RBFE-Core-V1",
+    "row_count": 318
+  },
+  "core_v2": {
+    "complex_count": 19,
+    "curated_csv": "/mnt/data/liuchao/abag-rbfep/benchmarks/ab_bind/curated/ab_bind_rbfe_core_v2.csv",
+    "filters": [
+      "AB-Bind-RBFE-Core-V1 rows",
+      "plus same-side double-point rows",
+      "experimental structure",
+      "structure mappable",
+      "stable run candidate",
+      "charge conserving"
+    ],
+    "name": "AB-Bind-RBFE-Core-V2",
+    "row_count": 339
+  },
+  "exclusion_counts": {
+    "charge_changing_v1": 180,
+    "charge_changing_v2": 43,
+    "double_cross_side": 53,
+    "invalid_mutation_token": 3,
+    "non_antibody_antigen": 418,
+    "non_experimental_structure": 87,
+    "unsupported_mutation_count": 193
+  },
+  "source": {
+    "annotations_csv": "/mnt/data/liuchao/abag-rbfep/benchmarks/ab_bind/source/ab_bind_complex_annotations.csv",
+    "complex_count": 32,
+    "name": "AB-Bind-Source",
+    "registered_csv": "/mnt/data/liuchao/abag-rbfep/benchmarks/ab_bind/curated/ab_bind_source_registered.csv",
+    "row_count": 1101,
+    "source_csv": "/mnt/data/liuchao/abag-rbfep/benchmarks/ab_bind/source/AB-Bind_experimental_data.csv"
+  }
+}

@@ -1,0 +1,35 @@
+.pytest_cache/
+__pycache__/
+*.pyc
+.DS_Store
+.coverage
+dist/
+build/
+*.egg-info/
+.venv/
+tmp/
+.agents/
+.codex/
+*.swp
+*~
+runs/*
+!runs/.gitkeep
+
+# Generated high-resolution figures are kept out of the GitHub repository;
+# the smaller PNG/PDF/SVG derivatives remain versioned.
+docs/validation_target_summary/*.tiff
+
+# Benchmark payloads are reproducible/downloadable and can be large. Keep the
+# source metadata, scripts, annotations, manifests, and curated tables.
+benchmarks/ab_bind/source/AB-Bind_experimental_data.csv
+benchmarks/ab_bind/source/structures/
+
+# Do not publish vendored upstream credentials or generated benchmark outputs.
+vendor/pmx/github_deploy_key_degrootlab_pmx.enc
+vendor/pmx/protLig_benchmark/
+vendor/pmx/tutorials/workpath_precalculated/
+
+# Local GROMACS scratch files occasionally appear at the repository root.
+mdout.mdp
+step*.pdb
+\#step*.pdb.*

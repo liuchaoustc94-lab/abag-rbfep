@@ -1,0 +1,3 @@
+mutation_group_id,chain_id,resseq,icode,wt,mut,entity_side
+antibody_h_y32f,H,32,,Y,F,antibody
+antigen_a_k58r,A,58,,K,R,antigen

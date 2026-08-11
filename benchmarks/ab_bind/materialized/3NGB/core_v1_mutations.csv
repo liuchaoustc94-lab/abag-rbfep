@@ -1,0 +1,8 @@
+mutation_group_id,chain_id,resseq,icode,wt,mut,entity_side
+3ngb_0952,H,56,,A,G,antibody
+3ngb_0953,H,54,,G,S,antibody
+3ngb_0954,H,30,,I,T,antibody
+3ngb_0959,H,33,,T,Y,antibody
+3ngb_0960,H,57,,V,T,antibody
+3ngb_0961,H,73,,V,T,antibody
+3ngb_0962,H,74,,Y,S,antibody

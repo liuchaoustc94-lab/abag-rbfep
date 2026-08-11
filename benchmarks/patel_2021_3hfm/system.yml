@@ -1,0 +1,12 @@
+system_name: 3hfm-patel-2021
+input_structure: /mnt/data/liuchao/abag-rbfep/benchmarks/ab_bind/source/structures/3HFM.pdb
+structure_source: experimental
+antibody_chains:
+- H
+- L
+antigen_chains:
+- Y
+notes:
+- External regression set derived from Patel, Patel, and Ytreberg 2021 (JCTC 17, 2457-2464).
+- Uses the same HyHEL-10/lysozyme 3HFM complex as the literature case study.
+- Chain assignments for H:W98F and Y:D101K are inferred from residue identity and interface proximity because the paper table omits chain letters.

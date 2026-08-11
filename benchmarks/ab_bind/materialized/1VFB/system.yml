@@ -1,0 +1,11 @@
+system_name: 1vfb
+input_structure: /mnt/data/liuchao/abag-rbfep/benchmarks/ab_bind/source/structures/1VFB.pdb
+structure_source: experimental
+antibody_chains:
+- H
+- L
+antigen_chains:
+- C
+notes:
+- Materialized from the local AB-Bind benchmark assets.
+- 'Complex ID: 1VFB'

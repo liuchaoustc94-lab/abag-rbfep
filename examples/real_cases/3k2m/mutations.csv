@@ -1,0 +1,6 @@
+mutation_group_id,chain_id,resseq,icode,wt,mut,entity_side
+antigen_d_m88a,D,88,,M,A,antigen
+antigen_d_w80a,D,80,,W,A,antigen
+antigen_d_y35a,D,35,,Y,A,antigen
+antigen_d_y36a,D,36,,Y,A,antigen
+antigen_d_y87a,D,87,,Y,A,antigen
