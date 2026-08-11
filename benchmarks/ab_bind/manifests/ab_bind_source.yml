@@ -1,0 +1,6 @@
+name: AB-Bind-Source
+source_csv: /mnt/data/liuchao/abag-rbfep/benchmarks/ab_bind/source/AB-Bind_experimental_data.csv
+annotations_csv: /mnt/data/liuchao/abag-rbfep/benchmarks/ab_bind/source/ab_bind_complex_annotations.csv
+row_count: 1101
+complex_count: 32
+registered_csv: /mnt/data/liuchao/abag-rbfep/benchmarks/ab_bind/curated/ab_bind_source_registered.csv

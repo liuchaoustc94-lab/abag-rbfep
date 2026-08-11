@@ -1,0 +1,13 @@
+system_name: 1dvf_d13_e52
+input_structure: /mnt/data/liuchao/abag-rbfep/benchmarks/ab_bind/source/structures/1DVF.pdb
+structure_source: experimental
+antibody_chains:
+  - A
+  - B
+antigen_chains:
+  - C
+  - D
+notes:
+  - 1DVF: D1.3 Fv (chains A,B) bound to anti-idiotypic E5.2 Fv (chains C,D), 1.9 A.
+  - New-target validation case (AB-Bind source, not in core_v1 benchmark).
+  - Experimental ddG from AB-Bind database (single-point, charge-conserving subset).

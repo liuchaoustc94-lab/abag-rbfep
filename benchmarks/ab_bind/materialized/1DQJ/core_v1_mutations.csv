@@ -1,0 +1,17 @@
+mutation_group_id,chain_id,resseq,icode,wt,mut,entity_side
+1dqj_0072,C,75,,L,A,antigen
+1dqj_0073,C,93,,N,A,antigen
+1dqj_0075,C,100,,S,A,antigen
+1dqj_0076,C,89,,T,A,antigen
+1dqj_0077,C,62,,W,A,antigen
+1dqj_0078,C,63,,W,A,antigen
+1dqj_0079,C,20,,Y,A,antigen
+1dqj_0081,H,98,,W,A,antibody
+1dqj_0082,H,33,,Y,A,antibody
+1dqj_0083,H,50,,Y,A,antibody
+1dqj_0084,H,53,,Y,A,antibody
+1dqj_0085,L,31,,N,A,antibody
+1dqj_0086,L,32,,N,A,antibody
+1dqj_0087,L,91,,S,A,antibody
+1dqj_0088,L,50,,Y,A,antibody
+1dqj_0089,L,96,,Y,A,antibody

@@ -1,0 +1,9 @@
+mutation_group_id,chain_id,resseq,icode,wt,mut,entity_side
+1mlc_0312,H,57,,S,A,antibody
+1mlc_0313,H,57,,S,V,antibody
+1mlc_0315,H,31,,T,A,antibody
+1mlc_0316,H,31,,T,V,antibody
+1mlc_0317,H,31,,T,W,antibody
+1mlc_0319,L,32,,N,G,antibody
+1mlc_0320,L,32,,N,Y,antibody
+1mlc_0321,L,92,,N,A,antibody

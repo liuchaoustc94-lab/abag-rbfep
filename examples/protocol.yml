@@ -1,0 +1,17 @@
+preset: single_point
+force_field: amber99sb-star-ildn-mut
+water_model: tip3p
+lambda_windows: 24
+repeats: 2
+nvt_ps: 100
+npt_ps: 1000
+production_ps: 2000
+temperature_k: 310.0
+pressure_bar: 1.0
+gmx_bin: gmx
+pmx_bin: pmx
+allow_external_execute: false
+box_type: dodecahedron
+box_padding_nm: 1.0
+salt_concentration_m: 0.15
+mdrun_args: -ntmpi 1 -ntomp 1

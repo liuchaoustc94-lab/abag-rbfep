@@ -1,0 +1,9 @@
+mutation_group_id,chain_id,resseq,icode,wt,mut,entity_side
+patel_3hfm_y20f,Y,20,,Y,F,antigen
+patel_3hfm_d32n,H,32,,D,N,antibody
+patel_3hfm_r21a,Y,21,,R,A,antigen
+patel_3hfm_d101k,Y,101,,D,K,antigen
+patel_3hfm_w98f,H,98,,W,F,antibody
+patel_3hfm_y50l,L,50,,Y,L,antibody
+patel_3hfm_n31e,L,31,,N,E,antibody
+patel_3hfm_k97d,Y,97,,K,D,antigen

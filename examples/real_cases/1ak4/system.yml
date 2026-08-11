@@ -1,0 +1,11 @@
+system_name: 1ak4_out_of_sample
+input_structure: /mnt/data/liuchao/abag-rbfep/benchmarks/ab_bind/source/structures/1AK4.pdb
+structure_source: experimental
+antibody_chains:
+  - A
+antigen_chains:
+  - D
+notes:
+  - huCycA (A) / HIV-1 capsid NTD (D), 2.36 A
+  - Out-of-sample FEP validation case (AB-Bind source, not in core_v1 benchmark).
+  - antibody/antigen chain labels are role placeholders for this non-antibody complex.

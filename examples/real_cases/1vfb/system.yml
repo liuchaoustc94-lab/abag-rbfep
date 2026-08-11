@@ -1,0 +1,11 @@
+system_name: 1vfb
+input_structure: /mnt/data/liuchao/abag-rbfep/examples/real_cases/1vfb/1VFB.pdb
+structure_source: experimental
+antibody_chains:
+  - A
+  - B
+antigen_chains:
+  - C
+notes:
+  - Real antibody-antigen crystal structure from RCSB PDB 1VFB.
+  - Water molecules are stripped during prepare.

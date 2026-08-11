@@ -1,0 +1,11 @@
+name: AB-Bind-RBFE-Core-V2
+row_count: 339
+complex_count: 19
+curated_csv: /mnt/data/liuchao/abag-rbfep/benchmarks/ab_bind/curated/ab_bind_rbfe_core_v2.csv
+filters:
+- AB-Bind-RBFE-Core-V1 rows
+- plus same-side double-point rows
+- experimental structure
+- structure mappable
+- stable run candidate
+- charge conserving

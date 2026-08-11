@@ -1,0 +1,9 @@
+
+This example uses rosetta protocol flex_DDG described in Barlow et al, JPCB, 2018
+
+The preparation of inputs is in the rosetta_prepare.ipynb notebook. This prepares all the necessary input files and jobscript submission scripts for an SGE queueing system (can be adapted if needed).
+
+After the calculations are complete, analyze.py script will process the results.
+
+Examples for plotting the results are in the plot_results.ipynb notebook.
+

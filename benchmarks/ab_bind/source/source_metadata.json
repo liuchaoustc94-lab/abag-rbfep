@@ -1,0 +1,12 @@
+{
+  "dataset_name": "AB-Bind",
+  "source_file": "AB-Bind_experimental_data.csv",
+  "upstream_repository": "sarahsirin/AB-Bind-Database",
+  "encoding": "iso-8859-1",
+  "row_count": 1101,
+  "complex_count": 32,
+  "notes": [
+    "This is the raw upstream experimental table copied into the standalone abag-rbfep repository.",
+    "Project-local RBFE benchmark filtering is defined by ab_bind_complex_annotations.csv and the curate-abbind pipeline."
+  ]
+}

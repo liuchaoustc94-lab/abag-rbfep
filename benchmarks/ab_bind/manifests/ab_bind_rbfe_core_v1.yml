@@ -1,0 +1,12 @@
+name: AB-Bind-RBFE-Core-V1
+row_count: 318
+complex_count: 18
+curated_csv: /mnt/data/liuchao/abag-rbfep/benchmarks/ab_bind/curated/ab_bind_rbfe_core_v1.csv
+filters:
+- antibody-antigen only
+- single-point only
+- standard residues only
+- structure mappable
+- stable run candidate
+- experimental structure
+- charge conserving

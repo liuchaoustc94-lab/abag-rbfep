@@ -1,0 +1,37 @@
+language: python
+sudo: false
+
+python:
+   - "3.6"
+
+env:
+  global:
+    # Doctr deploy key for deGrootLab/pmx
+    - secure: "gYG+rXGaa748XWe5ozx7mkFOwx20eSycX+hwUK4DV2E4ooX8W/S4SiLzRWcwdhQDTRzFyPu0AmdLBwTQ4RyHjYuf6wdAsO7V2rSw774pmqGM1w5qa4U92u1hLki0e32Zkr1fIDDOWBdZZqhrg8IbFM4mCzadzq+eUyO8Sh6LlcafWyXZ/quk3ZRrS0KgfpMwaO2N+KnHjDPM8VGFQvX0tzvoC7fewF+sgKUev5+bxkGqi6YJjr9OVPnqhFkdBnGSk9i4jLXw4DSmUqjNKR/mbcAnzlR5Btf7Qb2ZO4kgS3RHI1wjJVZyhFxVSKs5jZt+pWUffBy35ImdySO19zMqSByn3+UCG0Tnn9A1UeAw9SghXB5Dn+YQN2gdJ85H9HIpNZoXVCXj3orkpFKHEtzztyezqLr51FrJ2MQ/9BdnZ6qNxeK33o6Dzwme/Fkea8BnqPJv4i1LnI3hjrq6Ap7VkHimfgDsDSRzNmJfDFeCXE1VcUsKscZAlhZMzd+Oehsps7RhyxANXRRd3NDWS9k4QJuIQxWKDS1c0p+fhMmtLMpZn3yljntd+Ava/ummQIP8KPwJBu6IIJhO1gFMYZCdMR6oIL0vTg6sYIUvUts9kNGoDL67QT5Hqlk7GNeQcxikLNkDCaNYMrTfQareA/bBMzLEMC2HY3dyqM51EOEr7BE="
+
+branches:
+    only:
+        - develop
+
+install:
+    - pip install --upgrade pip setuptools wheel
+    - pip install --upgrade pytest
+    - pip install codecov
+    - pip install pytest-cov
+    - pip install -e .
+
+script:
+    - py.test --cov pmx tests/
+    - |
+      if [[ $TRAVIS_PYTHON_VERSION == "3.6" ]]; then
+        set -e
+        pip install doctr
+        pip install sphinx sphinx_rtd_theme msmb_theme
+        cd docs
+        make html
+        cd ../
+        doctr deploy . --built-docs docs/build/html/ --no-require-master --branch-whitelist develop
+      fi
+
+after_success:
+    - codecov

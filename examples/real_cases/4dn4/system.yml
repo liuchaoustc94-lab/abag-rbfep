@@ -1,0 +1,11 @@
+system_name: 4dn4
+input_structure: /mnt/data/liuchao/abag-rbfep/examples/real_cases/4dn4/4DN4.pdb
+structure_source: experimental
+antibody_chains:
+  - H
+  - L
+antigen_chains:
+  - M
+notes:
+  - Real antibody-antigen crystal structure from RCSB PDB 4DN4.
+  - Non-protein HETATM records are stripped during prepare.

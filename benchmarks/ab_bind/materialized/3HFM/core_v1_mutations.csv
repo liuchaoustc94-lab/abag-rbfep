@@ -1,0 +1,15 @@
+mutation_group_id,chain_id,resseq,icode,wt,mut,entity_side
+3hfm_0919,H,95,,C,A,antibody
+3hfm_0920,H,95,,C,F,antibody
+3hfm_0923,H,31,,S,A,antibody
+3hfm_0924,H,33,,Y,A,antibody
+3hfm_0925,H,50,,Y,A,antibody
+3hfm_0926,L,31,,N,A,antibody
+3hfm_0929,L,32,,N,A,antibody
+3hfm_0930,L,53,,Q,A,antibody
+3hfm_0931,L,50,,Y,A,antibody
+3hfm_0932,L,50,,Y,F,antibody
+3hfm_0933,L,50,,Y,L,antibody
+3hfm_0934,L,96,,Y,A,antibody
+3hfm_0935,L,96,,Y,F,antibody
+3hfm_0940,Y,20,,Y,A,antigen

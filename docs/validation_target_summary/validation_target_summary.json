@@ -1,0 +1,1150 @@
+{
+  "generated_at": "2026-06-25T06:40:58.525159+00:00",
+  "summary_generated_at": "2026-06-23T08:26:32Z",
+  "selected_model": "side_linear",
+  "raw_pearson_r": -0.0123993515769824,
+  "calibrated_pearson_r": 0.20005445478956882,
+  "accepted_calibrated_pearson_r": 0.6073390390160122,
+  "accepted_calibrated_excluded_complex_ids": [
+    "1MLC",
+    "1CZ8",
+    "1BJ1"
+  ],
+  "raw_target_excluded_complex_ids": [
+    "2NZ9",
+    "1MLC",
+    "3HFM"
+  ],
+  "targets": [
+    {
+      "complex_id": "1BJ1",
+      "pair_count": 15,
+      "raw_metrics": {
+        "all_pairs_above_abs_error_threshold": false,
+        "all_pairs_sign_mismatched": false,
+        "auc_strong_effect": 0.7037037037037037,
+        "complex_id": "1BJ1",
+        "excluded_from_target_filtered_metrics": false,
+        "leave_one_out_auc_strong_effect": 0.7653256704980843,
+        "leave_one_out_mae_kcal_mol": 5.038038616303899,
+        "leave_one_out_paired_job_count": 65,
+        "leave_one_out_pearson_gain_at_exclusion": null,
+        "leave_one_out_pearson_r": -0.05992544811009221,
+        "leave_one_out_pearson_r_at_exclusion": null,
+        "leave_one_out_rmse_kcal_mol": 8.647680485864331,
+        "leave_one_out_sign_accuracy": 0.49230769230769234,
+        "leave_one_out_spearman_rho": 0.0949497248616426,
+        "mae_kcal_mol": 3.775784352323846,
+        "max_abs_error_kcal_mol": 19.345965068703048,
+        "mean_abs_error_kcal_mol": 3.775784352323846,
+        "min_abs_error_kcal_mol": 0.05342914228564055,
+        "overall_pearson_r_at_exclusion": null,
+        "paired_job_count": 15,
+        "pearson_r": 0.35993599754277,
+        "rmse_kcal_mol": 6.349950150531559,
+        "sign_accuracy": 0.4,
+        "sign_mismatch_count": 9,
+        "spearman_rho": 0.4113933707469111,
+        "systematically_poor_abs_error_target": false,
+        "systematically_poor_abs_error_threshold_kcal_mol": 2.0,
+        "systematically_poor_correlation_target": false,
+        "systematically_poor_max_pearson_r": -0.1,
+        "systematically_poor_max_sign_accuracy": 0.5,
+        "systematically_poor_min_leave_one_out_pearson_gain": 0.05,
+        "systematically_poor_min_pair_count": 4,
+        "systematically_poor_target": false,
+        "systematically_poor_target_reason": "",
+        "target_exclusion_iteration": null
+      },
+      "calibrated_metrics": {
+        "all_pairs_above_abs_error_threshold": false,
+        "all_pairs_sign_mismatched": false,
+        "auc_strong_effect": 0.2962962962962963,
+        "complex_id": "1BJ1",
+        "excluded_from_target_filtered_metrics": true,
+        "leave_one_out_auc_strong_effect": 0.578544061302682,
+        "leave_one_out_mae_kcal_mol": 2.0638077893898585,
+        "leave_one_out_paired_job_count": 65,
+        "leave_one_out_pearson_gain_at_exclusion": 0.06001057145441191,
+        "leave_one_out_pearson_r": 0.22194920611959004,
+        "leave_one_out_pearson_r_at_exclusion": 0.6073390390160122,
+        "leave_one_out_rmse_kcal_mol": 2.436804269370386,
+        "leave_one_out_sign_accuracy": 0.7384615384615385,
+        "leave_one_out_spearman_rho": 0.0955181551739619,
+        "mae_kcal_mol": 1.7123275867862138,
+        "max_abs_error_kcal_mol": 2.60242084361647,
+        "mean_abs_error_kcal_mol": 1.7123275867862138,
+        "min_abs_error_kcal_mol": 0.728675787268044,
+        "overall_pearson_r_at_exclusion": 0.5473284675616003,
+        "paired_job_count": 15,
+        "pearson_r": -0.3599359975427703,
+        "rmse_kcal_mol": 1.799773321966469,
+        "sign_accuracy": 0.6,
+        "sign_mismatch_count": 6,
+        "spearman_rho": -0.4113933707469111,
+        "systematically_poor_abs_error_target": false,
+        "systematically_poor_abs_error_threshold_kcal_mol": 2.0,
+        "systematically_poor_correlation_target": true,
+        "systematically_poor_max_pearson_r": -0.1,
+        "systematically_poor_max_sign_accuracy": 0.5,
+        "systematically_poor_min_leave_one_out_pearson_gain": 0.05,
+        "systematically_poor_min_pair_count": 4,
+        "systematically_poor_target": true,
+        "systematically_poor_target_reason": "iterative_leave_one_out_gain",
+        "target_exclusion_iteration": 3
+      },
+      "raw_prediction_span_kcal_mol": 29.265689597287412,
+      "calibrated_prediction_span_kcal_mol": 1.0768983418947164,
+      "compression_ratio": 0.03679729938755765,
+      "readout": "Calibration compresses the dynamic range: MAE improves, but target ranking degrades.",
+      "outlier_sensitivity_readout": "The calibrated ranking problem persists even after applying a formal outlier screen.",
+      "raw_outliers": [
+        {
+          "job_id": "1bj1-antigen-w-q89a",
+          "predicted_ddg_kcal_mol": -17.595965068703048,
+          "experimental_ddg_kcal_mol": 1.75,
+          "abs_error_kcal_mol": 19.345965068703048
+        },
+        {
+          "job_id": "1bj1-antigen-w-h90a",
+          "predicted_ddg_kcal_mol": -11.029049875598558,
+          "experimental_ddg_kcal_mol": 0.0,
+          "abs_error_kcal_mol": 11.029049875598558
+        },
+        {
+          "job_id": "1bj1-antigen-w-g92a",
+          "predicted_ddg_kcal_mol": 11.669724528584366,
+          "experimental_ddg_kcal_mol": 3.69,
+          "abs_error_kcal_mol": 7.9797245285843665
+        }
+      ],
+      "calibrated_outliers": [
+        {
+          "job_id": "1bj1-antigen-w-h90a",
+          "predicted_ddg_kcal_mol": 2.60242084361647,
+          "experimental_ddg_kcal_mol": 0.0,
+          "abs_error_kcal_mol": 2.60242084361647
+        },
+        {
+          "job_id": "1bj1-antigen-w-h86a",
+          "predicted_ddg_kcal_mol": 2.261110865344057,
+          "experimental_ddg_kcal_mol": 0.0,
+          "abs_error_kcal_mol": 2.261110865344057
+        },
+        {
+          "job_id": "1bj1-antigen-v-f17a",
+          "predicted_ddg_kcal_mol": 2.205951183223432,
+          "experimental_ddg_kcal_mol": 0.0,
+          "abs_error_kcal_mol": 2.205951183223432
+        }
+      ],
+      "raw_tukey_outlier_analysis": {
+        "q1_abs_error_kcal_mol": 0.5585368769619834,
+        "q3_abs_error_kcal_mol": 3.3765316807630654,
+        "iqr_abs_error_kcal_mol": 2.8179948038010822,
+        "threshold_abs_error_kcal_mol": 7.603523886464689,
+        "removed_pair_count": 3,
+        "removed_job_ids": [
+          "1bj1-antigen-w-g92a",
+          "1bj1-antigen-w-h90a",
+          "1bj1-antigen-w-q89a"
+        ],
+        "filtered_pair_count": 12,
+        "filtered_metrics": {
+          "paired_job_count": 12,
+          "pearson_r": 0.5037704895879562,
+          "spearman_rho": 0.393041832067032,
+          "mae_kcal_mol": 1.5235021509976432,
+          "sign_accuracy": 0.4166666666666667,
+          "max_abs_error_kcal_mol": 3.5647398915636725
+        }
+      },
+      "calibrated_tukey_outlier_analysis": {
+        "q1_abs_error_kcal_mol": 1.3253888747033218,
+        "q3_abs_error_kcal_mol": 2.177842413704429,
+        "iqr_abs_error_kcal_mol": 0.8524535390011072,
+        "threshold_abs_error_kcal_mol": 3.4565227222060897,
+        "removed_pair_count": 0,
+        "removed_job_ids": [],
+        "filtered_pair_count": 15,
+        "filtered_metrics": {
+          "paired_job_count": 15,
+          "pearson_r": -0.3599359975427703,
+          "spearman_rho": -0.41139337074691124,
+          "mae_kcal_mol": 1.7123275867862138,
+          "sign_accuracy": 0.6,
+          "max_abs_error_kcal_mol": 2.60242084361647
+        }
+      },
+      "patel_external_summary": null
+    },
+    {
+      "complex_id": "1CZ8",
+      "pair_count": 15,
+      "raw_metrics": {
+        "all_pairs_above_abs_error_threshold": false,
+        "all_pairs_sign_mismatched": false,
+        "auc_strong_effect": 0.7857142857142857,
+        "complex_id": "1CZ8",
+        "excluded_from_target_filtered_metrics": false,
+        "leave_one_out_auc_strong_effect": 0.7573099415204678,
+        "leave_one_out_mae_kcal_mol": 4.8164951975145485,
+        "leave_one_out_paired_job_count": 65,
+        "leave_one_out_pearson_gain_at_exclusion": null,
+        "leave_one_out_pearson_r": -0.09694324679207734,
+        "leave_one_out_pearson_r_at_exclusion": null,
+        "leave_one_out_rmse_kcal_mol": 8.195647790917999,
+        "leave_one_out_sign_accuracy": 0.5076923076923077,
+        "leave_one_out_spearman_rho": 0.10341361251338069,
+        "mae_kcal_mol": 4.7358058337443625,
+        "max_abs_error_kcal_mol": 27.824594317362063,
+        "mean_abs_error_kcal_mol": 4.7358058337443625,
+        "min_abs_error_kcal_mol": 0.1437411080416903,
+        "overall_pearson_r_at_exclusion": null,
+        "paired_job_count": 15,
+        "pearson_r": 0.4576581508132321,
+        "rmse_kcal_mol": 8.562401467839178,
+        "sign_accuracy": 0.3333333333333333,
+        "sign_mismatch_count": 10,
+        "spearman_rho": 0.5210517775224139,
+        "systematically_poor_abs_error_target": false,
+        "systematically_poor_abs_error_threshold_kcal_mol": 2.0,
+        "systematically_poor_correlation_target": false,
+        "systematically_poor_max_pearson_r": -0.1,
+        "systematically_poor_max_sign_accuracy": 0.5,
+        "systematically_poor_min_leave_one_out_pearson_gain": 0.05,
+        "systematically_poor_min_pair_count": 4,
+        "systematically_poor_target": false,
+        "systematically_poor_target_reason": "",
+        "target_exclusion_iteration": null
+      },
+      "calibrated_metrics": {
+        "all_pairs_above_abs_error_threshold": false,
+        "all_pairs_sign_mismatched": false,
+        "auc_strong_effect": 0.30357142857142855,
+        "complex_id": "1CZ8",
+        "excluded_from_target_filtered_metrics": true,
+        "leave_one_out_auc_strong_effect": 0.6033138401559455,
+        "leave_one_out_mae_kcal_mol": 2.085109124371157,
+        "leave_one_out_paired_job_count": 65,
+        "leave_one_out_pearson_gain_at_exclusion": 0.06249054126490966,
+        "leave_one_out_pearson_r": 0.2333938001071737,
+        "leave_one_out_pearson_r_at_exclusion": 0.5473284675616003,
+        "leave_one_out_rmse_kcal_mol": 2.4383229984008494,
+        "leave_one_out_sign_accuracy": 0.7230769230769231,
+        "leave_one_out_spearman_rho": 0.09508191736269385,
+        "mae_kcal_mol": 1.6200218018672539,
+        "max_abs_error_kcal_mol": 2.7197674002374703,
+        "mean_abs_error_kcal_mol": 1.6200218018672539,
+        "min_abs_error_kcal_mol": 0.18729416556664025,
+        "overall_pearson_r_at_exclusion": 0.4848379262966906,
+        "paired_job_count": 15,
+        "pearson_r": -0.45765815081323236,
+        "rmse_kcal_mol": 1.7908377989433406,
+        "sign_accuracy": 0.6666666666666666,
+        "sign_mismatch_count": 5,
+        "spearman_rho": -0.5210517775224139,
+        "systematically_poor_abs_error_target": false,
+        "systematically_poor_abs_error_threshold_kcal_mol": 2.0,
+        "systematically_poor_correlation_target": true,
+        "systematically_poor_max_pearson_r": -0.1,
+        "systematically_poor_max_sign_accuracy": 0.5,
+        "systematically_poor_min_leave_one_out_pearson_gain": 0.05,
+        "systematically_poor_min_pair_count": 4,
+        "systematically_poor_target": true,
+        "systematically_poor_target_reason": "iterative_leave_one_out_gain",
+        "target_exclusion_iteration": 2
+      },
+      "raw_prediction_span_kcal_mol": 36.32543144653482,
+      "calibrated_prediction_span_kcal_mol": 1.336677776320343,
+      "compression_ratio": 0.036797299387557644,
+      "readout": "Calibration compresses the dynamic range: MAE improves, but target ranking degrades.",
+      "outlier_sensitivity_readout": "The calibrated ranking problem persists even after applying a formal outlier screen.",
+      "raw_outliers": [
+        {
+          "job_id": "1cz8-antigen-w-q89a",
+          "predicted_ddg_kcal_mol": -26.764594317362064,
+          "experimental_ddg_kcal_mol": 1.06,
+          "abs_error_kcal_mol": 27.824594317362063
+        },
+        {
+          "job_id": "1cz8-antigen-w-h90a",
+          "predicted_ddg_kcal_mol": -14.218049029723408,
+          "experimental_ddg_kcal_mol": 0.0,
+          "abs_error_kcal_mol": 14.218049029723408
+        },
+        {
+          "job_id": "1cz8-antigen-w-g88a",
+          "predicted_ddg_kcal_mol": 9.56083712917276,
+          "experimental_ddg_kcal_mol": 2.67,
+          "abs_error_kcal_mol": 6.890837129172761
+        }
+      ],
+      "calibrated_outliers": [
+        {
+          "job_id": "1cz8-antigen-w-h90a",
+          "predicted_ddg_kcal_mol": 2.7197674002374703,
+          "experimental_ddg_kcal_mol": 0.0,
+          "abs_error_kcal_mol": 2.7197674002374703
+        },
+        {
+          "job_id": "1cz8-antigen-w-g92a",
+          "predicted_ddg_kcal_mol": 1.8688726326205463,
+          "experimental_ddg_kcal_mol": 4.1,
+          "abs_error_kcal_mol": 2.2311273673794534
+        },
+        {
+          "job_id": "1cz8-antigen-w-q87a",
+          "predicted_ddg_kcal_mol": 2.2253704137782275,
+          "experimental_ddg_kcal_mol": 0.0,
+          "abs_error_kcal_mol": 2.2253704137782275
+        }
+      ],
+      "raw_tukey_outlier_analysis": {
+        "q1_abs_error_kcal_mol": 0.6766099299962249,
+        "q3_abs_error_kcal_mol": 4.8347281377024025,
+        "iqr_abs_error_kcal_mol": 4.158118207706178,
+        "threshold_abs_error_kcal_mol": 11.071905449261669,
+        "removed_pair_count": 2,
+        "removed_job_ids": [
+          "1cz8-antigen-w-h90a",
+          "1cz8-antigen-w-q89a"
+        ],
+        "filtered_pair_count": 13,
+        "filtered_metrics": {
+          "paired_job_count": 13,
+          "pearson_r": 0.7255246862802931,
+          "spearman_rho": 0.5412073492557152,
+          "mae_kcal_mol": 2.2303418583907666,
+          "sign_accuracy": 0.38461538461538464,
+          "max_abs_error_kcal_mol": 6.890837129172761
+        }
+      },
+      "calibrated_tukey_outlier_analysis": {
+        "q1_abs_error_kcal_mol": 1.0368414423818364,
+        "q3_abs_error_kcal_mol": 2.2127516919780295,
+        "iqr_abs_error_kcal_mol": 1.175910249596193,
+        "threshold_abs_error_kcal_mol": 3.9766170663723193,
+        "removed_pair_count": 0,
+        "removed_job_ids": [],
+        "filtered_pair_count": 15,
+        "filtered_metrics": {
+          "paired_job_count": 15,
+          "pearson_r": -0.4576581508132324,
+          "spearman_rho": -0.5210517775224138,
+          "mae_kcal_mol": 1.6200218018672539,
+          "sign_accuracy": 0.6666666666666666,
+          "max_abs_error_kcal_mol": 2.7197674002374703
+        }
+      },
+      "patel_external_summary": null
+    },
+    {
+      "complex_id": "1MLC",
+      "pair_count": 8,
+      "raw_metrics": {
+        "all_pairs_above_abs_error_threshold": false,
+        "all_pairs_sign_mismatched": false,
+        "auc_strong_effect": 1.0,
+        "complex_id": "1MLC",
+        "excluded_from_target_filtered_metrics": true,
+        "leave_one_out_auc_strong_effect": 0.7739938080495357,
+        "leave_one_out_mae_kcal_mol": 4.480031771965326,
+        "leave_one_out_paired_job_count": 72,
+        "leave_one_out_pearson_gain_at_exclusion": 0.10402189228593996,
+        "leave_one_out_pearson_r": 0.05760904296943593,
+        "leave_one_out_pearson_r_at_exclusion": 0.1715870724191055,
+        "leave_one_out_rmse_kcal_mol": 7.544202711255331,
+        "leave_one_out_sign_accuracy": 0.4444444444444444,
+        "leave_one_out_spearman_rho": 0.1528167438853654,
+        "mae_kcal_mol": 7.693373470388449,
+        "max_abs_error_kcal_mol": 33.38229798051876,
+        "mean_abs_error_kcal_mol": 7.693373470388449,
+        "min_abs_error_kcal_mol": 0.4371723126804927,
+        "overall_pearson_r_at_exclusion": 0.06756518013316555,
+        "paired_job_count": 8,
+        "pearson_r": -0.34935833255285176,
+        "rmse_kcal_mol": 13.075755008242215,
+        "sign_accuracy": 0.75,
+        "sign_mismatch_count": 2,
+        "spearman_rho": 0.2857142857142857,
+        "systematically_poor_abs_error_target": false,
+        "systematically_poor_abs_error_threshold_kcal_mol": 2.0,
+        "systematically_poor_correlation_target": true,
+        "systematically_poor_max_pearson_r": -0.1,
+        "systematically_poor_max_sign_accuracy": 0.5,
+        "systematically_poor_min_leave_one_out_pearson_gain": 0.05,
+        "systematically_poor_min_pair_count": 4,
+        "systematically_poor_target": true,
+        "systematically_poor_target_reason": "iterative_leave_one_out_gain",
+        "target_exclusion_iteration": 2
+      },
+      "calibrated_metrics": {
+        "all_pairs_above_abs_error_threshold": true,
+        "all_pairs_sign_mismatched": false,
+        "auc_strong_effect": 1.0,
+        "complex_id": "1MLC",
+        "excluded_from_target_filtered_metrics": true,
+        "leave_one_out_auc_strong_effect": 0.5890092879256966,
+        "leave_one_out_mae_kcal_mol": 1.7356848341559845,
+        "leave_one_out_paired_job_count": 72,
+        "leave_one_out_pearson_gain_at_exclusion": 0.2847834715071218,
+        "leave_one_out_pearson_r": 0.4848379262966906,
+        "leave_one_out_pearson_r_at_exclusion": 0.4848379262966906,
+        "leave_one_out_rmse_kcal_mol": 1.9512282000487877,
+        "leave_one_out_sign_accuracy": 0.75,
+        "leave_one_out_spearman_rho": 0.18472672276561297,
+        "mae_kcal_mol": 4.357889006612889,
+        "max_abs_error_kcal_mol": 6.956831757126435,
+        "mean_abs_error_kcal_mol": 4.357889006612889,
+        "min_abs_error_kcal_mol": 3.5231486494687188,
+        "overall_pearson_r_at_exclusion": 0.20005445478956882,
+        "paired_job_count": 8,
+        "pearson_r": -0.3493583325528519,
+        "rmse_kcal_mol": 4.4781937073224745,
+        "sign_accuracy": 0.375,
+        "sign_mismatch_count": 5,
+        "spearman_rho": 0.2857142857142857,
+        "systematically_poor_abs_error_target": true,
+        "systematically_poor_abs_error_threshold_kcal_mol": 2.0,
+        "systematically_poor_correlation_target": true,
+        "systematically_poor_max_pearson_r": -0.1,
+        "systematically_poor_max_sign_accuracy": 0.5,
+        "systematically_poor_min_leave_one_out_pearson_gain": 0.05,
+        "systematically_poor_min_pair_count": 4,
+        "systematically_poor_target": true,
+        "systematically_poor_target_reason": "all_pairs_above_abs_error_threshold+iterative_leave_one_out_gain",
+        "target_exclusion_iteration": 1
+      },
+      "raw_prediction_span_kcal_mol": 46.584439671910054,
+      "calibrated_prediction_span_kcal_mol": 2.471862356218155,
+      "compression_ratio": 0.053061974634175176,
+      "readout": "This target is excluded from the accepted target-filtered validation view.",
+      "outlier_sensitivity_readout": "Raw target behavior is strongly driven by a small number of extreme outliers.",
+      "raw_outliers": [
+        {
+          "job_id": "1mlc-antibody-l-n92a",
+          "predicted_ddg_kcal_mol": 32.13229798051876,
+          "experimental_ddg_kcal_mol": -1.25,
+          "abs_error_kcal_mol": 33.38229798051876
+        },
+        {
+          "job_id": "1mlc-antibody-h-s57v",
+          "predicted_ddg_kcal_mol": -14.452141691391297,
+          "experimental_ddg_kcal_mol": -0.49,
+          "abs_error_kcal_mol": 13.962141691391297
+        },
+        {
+          "job_id": "1mlc-antibody-h-t31a",
+          "predicted_ddg_kcal_mol": 6.8749318531938215,
+          "experimental_ddg_kcal_mol": 0.45,
+          "abs_error_kcal_mol": 6.424931853193821
+        }
+      ],
+      "calibrated_outliers": [
+        {
+          "job_id": "1mlc-antibody-l-n92a",
+          "predicted_ddg_kcal_mol": 5.706831757126435,
+          "experimental_ddg_kcal_mol": -1.25,
+          "abs_error_kcal_mol": 6.956831757126435
+        },
+        {
+          "job_id": "1mlc-antibody-l-n32g",
+          "predicted_ddg_kcal_mol": 3.784562706240395,
+          "experimental_ddg_kcal_mol": -0.85,
+          "abs_error_kcal_mol": 4.634562706240395
+        },
+        {
+          "job_id": "1mlc-antibody-h-s57a",
+          "predicted_ddg_kcal_mol": 3.8707499196657924,
+          "experimental_ddg_kcal_mol": -0.38,
+          "abs_error_kcal_mol": 4.250749919665792
+        }
+      ],
+      "raw_tukey_outlier_analysis": {
+        "q1_abs_error_kcal_mol": 1.117428864333494,
+        "q3_abs_error_kcal_mol": 8.30923431274319,
+        "iqr_abs_error_kcal_mol": 7.191805448409696,
+        "threshold_abs_error_kcal_mol": 19.096942485357733,
+        "removed_pair_count": 1,
+        "removed_job_ids": [
+          "1mlc-antibody-l-n92a"
+        ],
+        "filtered_pair_count": 7,
+        "filtered_metrics": {
+          "paired_job_count": 7,
+          "pearson_r": 0.703971366969009,
+          "spearman_rho": 0.9285714285714285,
+          "mae_kcal_mol": 4.023527111798406,
+          "sign_accuracy": 0.8571428571428571,
+          "max_abs_error_kcal_mol": 13.962141691391297
+        }
+      },
+      "calibrated_tukey_outlier_analysis": {
+        "q1_abs_error_kcal_mol": 3.8687118774912523,
+        "q3_abs_error_kcal_mol": 4.346703116309443,
+        "iqr_abs_error_kcal_mol": 0.4779912388181904,
+        "threshold_abs_error_kcal_mol": 5.063689974536729,
+        "removed_pair_count": 1,
+        "removed_job_ids": [
+          "1mlc-antibody-l-n92a"
+        ],
+        "filtered_pair_count": 7,
+        "filtered_metrics": {
+          "paired_job_count": 7,
+          "pearson_r": 0.7039713669690093,
+          "spearman_rho": 0.9285714285714285,
+          "mae_kcal_mol": 3.986611470825239,
+          "sign_accuracy": 0.42857142857142855,
+          "max_abs_error_kcal_mol": 4.634562706240395
+        }
+      },
+      "patel_external_summary": null
+    },
+    {
+      "complex_id": "2NZ9",
+      "pair_count": 11,
+      "raw_metrics": {
+        "all_pairs_above_abs_error_threshold": false,
+        "all_pairs_sign_mismatched": false,
+        "auc_strong_effect": 0.7,
+        "complex_id": "2NZ9",
+        "excluded_from_target_filtered_metrics": true,
+        "leave_one_out_auc_strong_effect": 0.7615384615384615,
+        "leave_one_out_mae_kcal_mol": 4.065696772348856,
+        "leave_one_out_paired_job_count": 69,
+        "leave_one_out_pearson_gain_at_exclusion": 0.07996453171014795,
+        "leave_one_out_pearson_r": 0.06756518013316555,
+        "leave_one_out_pearson_r_at_exclusion": 0.06756518013316555,
+        "leave_one_out_rmse_kcal_mol": 7.225076251743822,
+        "leave_one_out_sign_accuracy": 0.5072463768115942,
+        "leave_one_out_spearman_rho": 0.21415304371507698,
+        "mae_kcal_mol": 9.416018004776356,
+        "max_abs_error_kcal_mol": 25.825946716863417,
+        "mean_abs_error_kcal_mol": 9.416018004776356,
+        "min_abs_error_kcal_mol": 0.5286354357185051,
+        "overall_pearson_r_at_exclusion": -0.0123993515769824,
+        "paired_job_count": 11,
+        "pearson_r": -0.3440639704402653,
+        "rmse_kcal_mol": 13.016644615732613,
+        "sign_accuracy": 0.2727272727272727,
+        "sign_mismatch_count": 8,
+        "spearman_rho": -0.15454545454545454,
+        "systematically_poor_abs_error_target": false,
+        "systematically_poor_abs_error_threshold_kcal_mol": 2.0,
+        "systematically_poor_correlation_target": true,
+        "systematically_poor_max_pearson_r": -0.1,
+        "systematically_poor_max_sign_accuracy": 0.5,
+        "systematically_poor_min_leave_one_out_pearson_gain": 0.05,
+        "systematically_poor_min_pair_count": 4,
+        "systematically_poor_target": true,
+        "systematically_poor_target_reason": "iterative_leave_one_out_gain",
+        "target_exclusion_iteration": 1
+      },
+      "calibrated_metrics": {
+        "all_pairs_above_abs_error_threshold": false,
+        "all_pairs_sign_mismatched": false,
+        "auc_strong_effect": 0.7333333333333333,
+        "complex_id": "2NZ9",
+        "excluded_from_target_filtered_metrics": false,
+        "leave_one_out_auc_strong_effect": 0.5094017094017094,
+        "leave_one_out_mae_kcal_mol": 2.0038951190272765,
+        "leave_one_out_paired_job_count": 69,
+        "leave_one_out_pearson_gain_at_exclusion": null,
+        "leave_one_out_pearson_r": 0.2056400033255221,
+        "leave_one_out_pearson_r_at_exclusion": null,
+        "leave_one_out_rmse_kcal_mol": 2.3317580278879717,
+        "leave_one_out_sign_accuracy": 0.7246376811594203,
+        "leave_one_out_spearman_rho": -0.01778655422524504,
+        "mae_kcal_mol": 1.9603324453865396,
+        "max_abs_error_kcal_mol": 4.674995156162135,
+        "mean_abs_error_kcal_mol": 1.9603324453865396,
+        "min_abs_error_kcal_mol": 0.13616246494888173,
+        "overall_pearson_r_at_exclusion": null,
+        "paired_job_count": 11,
+        "pearson_r": 0.3440639704402653,
+        "rmse_kcal_mol": 2.323773355470997,
+        "sign_accuracy": 0.6363636363636364,
+        "sign_mismatch_count": 4,
+        "spearman_rho": 0.15454545454545454,
+        "systematically_poor_abs_error_target": false,
+        "systematically_poor_abs_error_threshold_kcal_mol": 2.0,
+        "systematically_poor_correlation_target": false,
+        "systematically_poor_max_pearson_r": -0.1,
+        "systematically_poor_max_sign_accuracy": 0.5,
+        "systematically_poor_min_leave_one_out_pearson_gain": 0.05,
+        "systematically_poor_min_pair_count": 4,
+        "systematically_poor_target": false,
+        "systematically_poor_target_reason": "",
+        "target_exclusion_iteration": null
+      },
+      "raw_prediction_span_kcal_mol": 24.07458215258192,
+      "calibrated_prediction_span_kcal_mol": 0.885879607098909,
+      "compression_ratio": 0.036797299387557644,
+      "readout": "Calibration improves both rank and scale for this target.",
+      "outlier_sensitivity_readout": "Outlier trimming changes the scale more than the qualitative conclusion for this target.",
+      "raw_outliers": [
+        {
+          "job_id": "2nz9-antigen-a-n918a",
+          "predicted_ddg_kcal_mol": -23.665946716863417,
+          "experimental_ddg_kcal_mol": 2.16,
+          "abs_error_kcal_mol": 25.825946716863417
+        },
+        {
+          "job_id": "2nz9-antigen-a-h1064a",
+          "predicted_ddg_kcal_mol": -14.90389945952231,
+          "experimental_ddg_kcal_mol": 7.42,
+          "abs_error_kcal_mol": 22.32389945952231
+        },
+        {
+          "job_id": "2nz9-antigen-a-n954a",
+          "predicted_ddg_kcal_mol": -19.72744035652119,
+          "experimental_ddg_kcal_mol": -0.15,
+          "abs_error_kcal_mol": 19.57744035652119
+        }
+      ],
+      "calibrated_outliers": [
+        {
+          "job_id": "2nz9-antigen-a-h1064a",
+          "predicted_ddg_kcal_mol": 2.7450048438378656,
+          "experimental_ddg_kcal_mol": 7.42,
+          "abs_error_kcal_mol": 4.674995156162135
+        },
+        {
+          "job_id": "2nz9-antigen-a-n954a",
+          "predicted_ddg_kcal_mol": 2.9224981223328617,
+          "experimental_ddg_kcal_mol": -0.15,
+          "abs_error_kcal_mol": 3.0724981223328616
+        },
+        {
+          "job_id": "2nz9-antigen-a-f917a",
+          "predicted_ddg_kcal_mol": 2.3316850339751025,
+          "experimental_ddg_kcal_mol": -0.05,
+          "abs_error_kcal_mol": 2.3816850339751023
+        }
+      ],
+      "raw_tukey_outlier_analysis": {
+        "q1_abs_error_kcal_mol": 2.034070289791356,
+        "q3_abs_error_kcal_mol": 17.028300993416497,
+        "iqr_abs_error_kcal_mol": 14.994230703625142,
+        "threshold_abs_error_kcal_mol": 39.51964704885421,
+        "removed_pair_count": 0,
+        "removed_job_ids": [],
+        "filtered_pair_count": 11,
+        "filtered_metrics": {
+          "paired_job_count": 11,
+          "pearson_r": -0.3440639704402653,
+          "spearman_rho": -0.15454545454545454,
+          "mae_kcal_mol": 9.416018004776356,
+          "sign_accuracy": 0.2727272727272727,
+          "max_abs_error_kcal_mol": 25.825946716863417
+        }
+      },
+      "calibrated_tukey_outlier_analysis": {
+        "q1_abs_error_kcal_mol": 1.0179409036851477,
+        "q3_abs_error_kcal_mol": 2.3766613137532318,
+        "iqr_abs_error_kcal_mol": 1.358720410068084,
+        "threshold_abs_error_kcal_mol": 4.414741928855358,
+        "removed_pair_count": 1,
+        "removed_job_ids": [
+          "2nz9-antigen-a-h1064a"
+        ],
+        "filtered_pair_count": 10,
+        "filtered_metrics": {
+          "paired_job_count": 10,
+          "pearson_r": 0.20813528348390836,
+          "spearman_rho": 0.04242424242424243,
+          "mae_kcal_mol": 1.68886617430898,
+          "sign_accuracy": 0.6,
+          "max_abs_error_kcal_mol": 3.0724981223328616
+        }
+      },
+      "patel_external_summary": null
+    },
+    {
+      "complex_id": "3HFM",
+      "pair_count": 14,
+      "raw_metrics": {
+        "all_pairs_above_abs_error_threshold": false,
+        "all_pairs_sign_mismatched": false,
+        "auc_strong_effect": 0.7916666666666666,
+        "complex_id": "3HFM",
+        "excluded_from_target_filtered_metrics": true,
+        "leave_one_out_auc_strong_effect": 0.7664307381193124,
+        "leave_one_out_mae_kcal_mol": 4.785404460124108,
+        "leave_one_out_paired_job_count": 66,
+        "leave_one_out_pearson_gain_at_exclusion": 0.1572557756501006,
+        "leave_one_out_pearson_r": -0.05384582897387034,
+        "leave_one_out_pearson_r_at_exclusion": 0.3288428480692061,
+        "leave_one_out_rmse_kcal_mol": 8.689277152775626,
+        "leave_one_out_sign_accuracy": 0.48484848484848486,
+        "leave_one_out_spearman_rho": 0.25612853144900427,
+        "mae_kcal_mol": 4.8766129268871365,
+        "max_abs_error_kcal_mol": 11.868744096902006,
+        "mean_abs_error_kcal_mol": 4.8766129268871365,
+        "min_abs_error_kcal_mol": 0.5427118078999329,
+        "overall_pearson_r_at_exclusion": 0.1715870724191055,
+        "paired_job_count": 14,
+        "pearson_r": 0.06866376387175122,
+        "rmse_kcal_mol": 5.870319344477508,
+        "sign_accuracy": 0.42857142857142855,
+        "sign_mismatch_count": 8,
+        "spearman_rho": -0.024175824175824177,
+        "systematically_poor_abs_error_target": false,
+        "systematically_poor_abs_error_threshold_kcal_mol": 2.0,
+        "systematically_poor_correlation_target": true,
+        "systematically_poor_max_pearson_r": -0.1,
+        "systematically_poor_max_sign_accuracy": 0.5,
+        "systematically_poor_min_leave_one_out_pearson_gain": 0.05,
+        "systematically_poor_min_pair_count": 4,
+        "systematically_poor_target": true,
+        "systematically_poor_target_reason": "iterative_leave_one_out_gain",
+        "target_exclusion_iteration": 3
+      },
+      "calibrated_metrics": {
+        "all_pairs_above_abs_error_threshold": false,
+        "all_pairs_sign_mismatched": false,
+        "auc_strong_effect": 0.375,
+        "complex_id": "3HFM",
+        "excluded_from_target_filtered_metrics": false,
+        "leave_one_out_auc_strong_effect": 0.37209302325581395,
+        "leave_one_out_mae_kcal_mol": 2.02321509076229,
+        "leave_one_out_paired_job_count": 66,
+        "leave_one_out_pearson_gain_at_exclusion": null,
+        "leave_one_out_pearson_r": -0.2850153706963018,
+        "leave_one_out_pearson_r_at_exclusion": null,
+        "leave_one_out_rmse_kcal_mol": 2.359731681932479,
+        "leave_one_out_sign_accuracy": 0.6515151515151515,
+        "leave_one_out_spearman_rho": -0.3809890966084559,
+        "mae_kcal_mol": 1.8785874372730604,
+        "max_abs_error_kcal_mol": 3.9884038304661065,
+        "mean_abs_error_kcal_mol": 1.8785874372730604,
+        "min_abs_error_kcal_mol": 0.2859655031881507,
+        "overall_pearson_r_at_exclusion": null,
+        "paired_job_count": 14,
+        "pearson_r": -0.07941906542770173,
+        "rmse_kcal_mol": 2.188422783635642,
+        "sign_accuracy": 1.0,
+        "sign_mismatch_count": 0,
+        "spearman_rho": -0.05054945054945055,
+        "systematically_poor_abs_error_target": false,
+        "systematically_poor_abs_error_threshold_kcal_mol": 2.0,
+        "systematically_poor_correlation_target": false,
+        "systematically_poor_max_pearson_r": -0.1,
+        "systematically_poor_max_sign_accuracy": 0.5,
+        "systematically_poor_min_leave_one_out_pearson_gain": 0.05,
+        "systematically_poor_min_pair_count": 4,
+        "systematically_poor_target": false,
+        "systematically_poor_target_reason": "",
+        "target_exclusion_iteration": null
+      },
+      "raw_prediction_span_kcal_mol": 11.187165094444413,
+      "calibrated_prediction_span_kcal_mol": 1.9684440002226276,
+      "compression_ratio": 0.17595556904761903,
+      "readout": "This target remains in the accepted filtered view, but the per-target response is still mixed.",
+      "outlier_sensitivity_readout": "The calibrated ranking problem persists even after applying a formal outlier screen.",
+      "raw_outliers": [
+        {
+          "job_id": "3hfm-antibody-h-y33a",
+          "predicted_ddg_kcal_mol": -5.868744096902006,
+          "experimental_ddg_kcal_mol": 6.0,
+          "abs_error_kcal_mol": 11.868744096902006
+        },
+        {
+          "job_id": "3hfm-antibody-h-c95a",
+          "predicted_ddg_kcal_mol": -3.086326934095072,
+          "experimental_ddg_kcal_mol": 5.52,
+          "abs_error_kcal_mol": 8.606326934095073
+        },
+        {
+          "job_id": "3hfm-antigen-y-y20a",
+          "predicted_ddg_kcal_mol": -3.2341749309379555,
+          "experimental_ddg_kcal_mol": 4.87,
+          "abs_error_kcal_mol": 8.104174930937955
+        }
+      ],
+      "calibrated_outliers": [
+        {
+          "job_id": "3hfm-antibody-h-s31a",
+          "predicted_ddg_kcal_mol": 4.158403830466106,
+          "experimental_ddg_kcal_mol": 0.17,
+          "abs_error_kcal_mol": 3.9884038304661065
+        },
+        {
+          "job_id": "3hfm-antibody-h-y50a",
+          "predicted_ddg_kcal_mol": 4.242520807412259,
+          "experimental_ddg_kcal_mol": 8.0,
+          "abs_error_kcal_mol": 3.7574791925877413
+        },
+        {
+          "job_id": "3hfm-antibody-l-q53a",
+          "predicted_ddg_kcal_mol": 3.965109119193471,
+          "experimental_ddg_kcal_mol": 0.95,
+          "abs_error_kcal_mol": 3.015109119193471
+        }
+      ],
+      "raw_tukey_outlier_analysis": {
+        "q1_abs_error_kcal_mol": 2.7957262001766665,
+        "q3_abs_error_kcal_mol": 7.6083909199485715,
+        "iqr_abs_error_kcal_mol": 4.812664719771905,
+        "threshold_abs_error_kcal_mol": 14.82738799960643,
+        "removed_pair_count": 0,
+        "removed_job_ids": [],
+        "filtered_pair_count": 14,
+        "filtered_metrics": {
+          "paired_job_count": 14,
+          "pearson_r": 0.06866376387175122,
+          "spearman_rho": -0.024175824175824177,
+          "mae_kcal_mol": 4.8766129268871365,
+          "sign_accuracy": 0.42857142857142855,
+          "max_abs_error_kcal_mol": 11.868744096902006
+        }
+      },
+      "calibrated_tukey_outlier_analysis": {
+        "q1_abs_error_kcal_mol": 1.0908521188482225,
+        "q3_abs_error_kcal_mol": 2.5023321004711643,
+        "iqr_abs_error_kcal_mol": 1.4114799816229417,
+        "threshold_abs_error_kcal_mol": 4.619552072905577,
+        "removed_pair_count": 0,
+        "removed_job_ids": [],
+        "filtered_pair_count": 14,
+        "filtered_metrics": {
+          "paired_job_count": 14,
+          "pearson_r": -0.07941906542770172,
+          "spearman_rho": -0.05054945054945055,
+          "mae_kcal_mol": 1.8785874372730604,
+          "sign_accuracy": 1.0,
+          "max_abs_error_kcal_mol": 3.9884038304661065
+        }
+      },
+      "patel_external_summary": {
+        "status": "insufficient_pairs",
+        "paired_job_count": 0,
+        "incomplete_job_count": 8,
+        "message": "No completed Patel 2021 3HFM jobs are ready for external regression comparison yet. The charge-conserving subset is still in progress, while the charge-changing subset remains incomplete."
+      }
+    },
+    {
+      "complex_id": "3NPS",
+      "pair_count": 17,
+      "raw_metrics": {
+        "all_pairs_above_abs_error_threshold": false,
+        "all_pairs_sign_mismatched": false,
+        "auc_strong_effect": 0.9523809523809523,
+        "complex_id": "3NPS",
+        "excluded_from_target_filtered_metrics": false,
+        "leave_one_out_auc_strong_effect": 0.7096774193548387,
+        "leave_one_out_mae_kcal_mol": 5.731263802906202,
+        "leave_one_out_paired_job_count": 63,
+        "leave_one_out_pearson_gain_at_exclusion": null,
+        "leave_one_out_pearson_r": 0.022178786401702146,
+        "leave_one_out_pearson_r_at_exclusion": null,
+        "leave_one_out_rmse_kcal_mol": 9.274101364848953,
+        "leave_one_out_sign_accuracy": 0.4126984126984127,
+        "leave_one_out_spearman_rho": 0.17070222858500902,
+        "mae_kcal_mol": 1.3552738683247336,
+        "max_abs_error_kcal_mol": 3.368647084910349,
+        "mean_abs_error_kcal_mol": 1.3552738683247336,
+        "min_abs_error_kcal_mol": 0.18,
+        "overall_pearson_r_at_exclusion": null,
+        "paired_job_count": 17,
+        "pearson_r": 0.6856108810476457,
+        "rmse_kcal_mol": 1.664832156729776,
+        "sign_accuracy": 0.7058823529411765,
+        "sign_mismatch_count": 5,
+        "spearman_rho": 0.6069896910355704,
+        "systematically_poor_abs_error_target": false,
+        "systematically_poor_abs_error_threshold_kcal_mol": 2.0,
+        "systematically_poor_correlation_target": false,
+        "systematically_poor_max_pearson_r": -0.1,
+        "systematically_poor_max_sign_accuracy": 0.5,
+        "systematically_poor_min_leave_one_out_pearson_gain": 0.05,
+        "systematically_poor_min_pair_count": 4,
+        "systematically_poor_target": false,
+        "systematically_poor_target_reason": "",
+        "target_exclusion_iteration": null
+      },
+      "calibrated_metrics": {
+        "all_pairs_above_abs_error_threshold": false,
+        "all_pairs_sign_mismatched": false,
+        "auc_strong_effect": 0.047619047619047616,
+        "complex_id": "3NPS",
+        "excluded_from_target_filtered_metrics": false,
+        "leave_one_out_auc_strong_effect": 0.5171370967741935,
+        "leave_one_out_mae_kcal_mol": 2.106543395298094,
+        "leave_one_out_paired_job_count": 63,
+        "leave_one_out_pearson_gain_at_exclusion": null,
+        "leave_one_out_pearson_r": 0.12821044216653268,
+        "leave_one_out_pearson_r_at_exclusion": null,
+        "leave_one_out_rmse_kcal_mol": 2.4674898244716514,
+        "leave_one_out_sign_accuracy": 0.6825396825396826,
+        "leave_one_out_spearman_rho": 0.03846641160579362,
+        "mae_kcal_mol": 1.595305071079653,
+        "max_abs_error_kcal_mol": 2.539377358093988,
+        "mean_abs_error_kcal_mol": 1.595305071079653,
+        "min_abs_error_kcal_mol": 0.14185815910573463,
+        "overall_pearson_r_at_exclusion": null,
+        "paired_job_count": 17,
+        "pearson_r": -0.685610881047646,
+        "rmse_kcal_mol": 1.731759698254326,
+        "sign_accuracy": 0.8235294117647058,
+        "sign_mismatch_count": 3,
+        "spearman_rho": -0.6069896910355704,
+        "systematically_poor_abs_error_target": false,
+        "systematically_poor_abs_error_threshold_kcal_mol": 2.0,
+        "systematically_poor_correlation_target": false,
+        "systematically_poor_max_pearson_r": -0.1,
+        "systematically_poor_max_sign_accuracy": 0.5,
+        "systematically_poor_min_leave_one_out_pearson_gain": 0.05,
+        "systematically_poor_min_pair_count": 4,
+        "systematically_poor_target": false,
+        "systematically_poor_target_reason": "",
+        "target_exclusion_iteration": null
+      },
+      "raw_prediction_span_kcal_mol": 4.969335449441165,
+      "calibrated_prediction_span_kcal_mol": 0.18285812429029003,
+      "compression_ratio": 0.03679729938755767,
+      "readout": "Calibration flips the target ranking even though the raw target already looked learnable.",
+      "outlier_sensitivity_readout": "The calibrated ranking problem persists even after applying a formal outlier screen.",
+      "raw_outliers": [
+        {
+          "job_id": "3nps-antigen-a-y52a",
+          "predicted_ddg_kcal_mol": 3.828647084910349,
+          "experimental_ddg_kcal_mol": 0.46,
+          "abs_error_kcal_mol": 3.368647084910349
+        },
+        {
+          "job_id": "3nps-antigen-a-q23a",
+          "predicted_ddg_kcal_mol": 2.6325157215634647,
+          "experimental_ddg_kcal_mol": 0.03,
+          "abs_error_kcal_mol": 2.602515721563465
+        },
+        {
+          "job_id": "3nps-antigen-a-h138a",
+          "predicted_ddg_kcal_mol": 4.476508793298241,
+          "experimental_ddg_kcal_mol": 1.89,
+          "abs_error_kcal_mol": 2.5865087932982416
+        }
+      ],
+      "calibrated_outliers": [
+        {
+          "job_id": "3nps-antigen-a-i45a",
+          "predicted_ddg_kcal_mol": 2.199377358093988,
+          "experimental_ddg_kcal_mol": -0.34,
+          "abs_error_kcal_mol": 2.539377358093988
+        },
+        {
+          "job_id": "3nps-antigen-a-q168a",
+          "predicted_ddg_kcal_mol": 2.1659793039880753,
+          "experimental_ddg_kcal_mol": -0.06,
+          "abs_error_kcal_mol": 2.2259793039880753
+        },
+        {
+          "job_id": "3nps-antigen-a-q218a",
+          "predicted_ddg_kcal_mol": 2.1423286457637523,
+          "experimental_ddg_kcal_mol": -0.04,
+          "abs_error_kcal_mol": 2.1823286457637523
+        }
+      ],
+      "raw_tukey_outlier_analysis": {
+        "q1_abs_error_kcal_mol": 0.5336984266417839,
+        "q3_abs_error_kcal_mol": 2.0837532728218235,
+        "iqr_abs_error_kcal_mol": 1.5500548461800396,
+        "threshold_abs_error_kcal_mol": 4.408835542091883,
+        "removed_pair_count": 0,
+        "removed_job_ids": [],
+        "filtered_pair_count": 17,
+        "filtered_metrics": {
+          "paired_job_count": 17,
+          "pearson_r": 0.6856108810476456,
+          "spearman_rho": 0.6069896910355705,
+          "mae_kcal_mol": 1.3552738683247336,
+          "sign_accuracy": 0.7058823529411765,
+          "max_abs_error_kcal_mol": 3.368647084910349
+        }
+      },
+      "calibrated_tukey_outlier_analysis": {
+        "q1_abs_error_kcal_mol": 1.4604611355046266,
+        "q3_abs_error_kcal_mol": 2.0165815933837643,
+        "iqr_abs_error_kcal_mol": 0.5561204578791377,
+        "threshold_abs_error_kcal_mol": 2.8507622802024706,
+        "removed_pair_count": 0,
+        "removed_job_ids": [],
+        "filtered_pair_count": 17,
+        "filtered_metrics": {
+          "paired_job_count": 17,
+          "pearson_r": -0.6856108810476461,
+          "spearman_rho": -0.6069896910355705,
+          "mae_kcal_mol": 1.595305071079653,
+          "sign_accuracy": 0.8235294117647058,
+          "max_abs_error_kcal_mol": 2.539377358093988
+        }
+      },
+      "patel_external_summary": null
+    }
+  ],
+  "patel_external_summary": {
+    "batch_dir": "/mnt/data/liuchao/abag-rbfep/runs/benchmarks/patel_2021_3hfm/patel_2021_3hfm_reference",
+    "charge_class_summary": {
+      "charge_changing": {
+        "incomplete_job_count": 5,
+        "job_count": 5,
+        "paired_job_count": 0,
+        "qc_qualified_metrics": {},
+        "qc_qualified_pair_count": 0,
+        "raw_metrics": {}
+      },
+      "charge_conserving": {
+        "incomplete_job_count": 3,
+        "job_count": 3,
+        "paired_job_count": 0,
+        "qc_qualified_metrics": {},
+        "qc_qualified_pair_count": 0,
+        "raw_metrics": {}
+      },
+      "unknown": {
+        "incomplete_job_count": 0,
+        "job_count": 0,
+        "paired_job_count": 0,
+        "qc_qualified_metrics": {},
+        "qc_qualified_pair_count": 0,
+        "raw_metrics": {}
+      }
+    },
+    "experimental_csv": "/mnt/data/liuchao/abag-rbfep/benchmarks/patel_2021_3hfm/experimental_ddg.csv",
+    "experimental_row_count": 8,
+    "generated_at": "2026-06-25T05:43:58Z",
+    "incomplete_diagnostic_code_counts": {
+      "running_sample": 2,
+      "stale_running_sample": 6
+    },
+    "incomplete_diagnostic_code_counts_by_charge_class": {
+      "charge_changing": {
+        "stale_running_sample": 5
+      },
+      "charge_conserving": {
+        "running_sample": 2,
+        "stale_running_sample": 1
+      }
+    },
+    "incomplete_job_count": 8,
+    "incomplete_jobs": [
+      {
+        "charge_class": "charge_changing",
+        "charge_conserving": false,
+        "diagnostic_code": "stale_running_sample",
+        "entity_side": "antibody",
+        "job_id": "3hfm-patel-2021-antibody-h-d32n",
+        "latest_stage": "sample",
+        "latest_stage_state": "stale_running",
+        "mut": "N",
+        "mutation_group_id": "patel_3hfm_d32n",
+        "qc_status": "not_evaluated",
+        "wt": "D"
+      },
+      {
+        "charge_class": "charge_conserving",
+        "charge_conserving": true,
+        "diagnostic_code": "stale_running_sample",
+        "entity_side": "antibody",
+        "job_id": "3hfm-patel-2021-antibody-h-w98f",
+        "latest_stage": "sample",
+        "latest_stage_state": "stale_running",
+        "mut": "F",
+        "mutation_group_id": "patel_3hfm_w98f",
+        "qc_status": "not_evaluated",
+        "wt": "W"
+      },
+      {
+        "charge_class": "charge_changing",
+        "charge_conserving": false,
+        "diagnostic_code": "stale_running_sample",
+        "entity_side": "antibody",
+        "job_id": "3hfm-patel-2021-antibody-l-n31e",
+        "latest_stage": "sample",
+        "latest_stage_state": "stale_running",
+        "mut": "E",
+        "mutation_group_id": "patel_3hfm_n31e",
+        "qc_status": "not_evaluated",
+        "wt": "N"
+      },
+      {
+        "charge_class": "charge_conserving",
+        "charge_conserving": true,
+        "diagnostic_code": "running_sample",
+        "entity_side": "antibody",
+        "job_id": "3hfm-patel-2021-antibody-l-y50l",
+        "latest_stage": "sample",
+        "latest_stage_state": "running",
+        "mut": "L",
+        "mutation_group_id": "patel_3hfm_y50l",
+        "qc_status": "not_evaluated",
+        "wt": "Y"
+      },
+      {
+        "charge_class": "charge_changing",
+        "charge_conserving": false,
+        "diagnostic_code": "stale_running_sample",
+        "entity_side": "antigen",
+        "job_id": "3hfm-patel-2021-antigen-y-d101k",
+        "latest_stage": "sample",
+        "latest_stage_state": "stale_running",
+        "mut": "K",
+        "mutation_group_id": "patel_3hfm_d101k",
+        "qc_status": "not_evaluated",
+        "wt": "D"
+      },
+      {
+        "charge_class": "charge_changing",
+        "charge_conserving": false,
+        "diagnostic_code": "stale_running_sample",
+        "entity_side": "antigen",
+        "job_id": "3hfm-patel-2021-antigen-y-k97d",
+        "latest_stage": "sample",
+        "latest_stage_state": "stale_running",
+        "mut": "D",
+        "mutation_group_id": "patel_3hfm_k97d",
+        "qc_status": "not_evaluated",
+        "wt": "K"
+      },
+      {
+        "charge_class": "charge_changing",
+        "charge_conserving": false,
+        "diagnostic_code": "stale_running_sample",
+        "entity_side": "antigen",
+        "job_id": "3hfm-patel-2021-antigen-y-r21a",
+        "latest_stage": "sample",
+        "latest_stage_state": "stale_running",
+        "mut": "A",
+        "mutation_group_id": "patel_3hfm_r21a",
+        "qc_status": "not_evaluated",
+        "wt": "R"
+      },
+      {
+        "charge_class": "charge_conserving",
+        "charge_conserving": true,
+        "diagnostic_code": "running_sample",
+        "entity_side": "antigen",
+        "job_id": "3hfm-patel-2021-antigen-y-y20f",
+        "latest_stage": "sample",
+        "latest_stage_state": "running",
+        "mut": "F",
+        "mutation_group_id": "patel_3hfm_y20f",
+        "qc_status": "not_evaluated",
+        "wt": "Y"
+      }
+    ],
+    "incomplete_stage_state_counts": {
+      "running": 2,
+      "stale_running": 6
+    },
+    "job_count": 8,
+    "message": "No completed Patel 2021 3HFM jobs are ready for external regression comparison yet. The charge-conserving subset is still in progress, while the charge-changing subset remains incomplete.",
+    "paired_job_count": 0,
+    "qc_qualified_metrics": {},
+    "qc_qualified_pair_count": 0,
+    "raw_metrics": {},
+    "status": "insufficient_pairs",
+    "top_abs_error_pairs": []
+  }
+}

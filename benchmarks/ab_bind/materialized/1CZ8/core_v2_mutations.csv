@@ -1,0 +1,16 @@
+mutation_group_id,chain_id,resseq,icode,wt,mut,entity_side
+1cz8_0037,V,17,,F,A,antigen
+1cz8_0038,V,21,,Y,A,antigen
+1cz8_0040,W,88,,G,A,antigen
+1cz8_0041,W,92,,G,A,antigen
+1cz8_0042,W,86,,H,A,antigen
+1cz8_0043,W,90,,H,A,antigen
+1cz8_0044,W,80,,I,A,antigen
+1cz8_0045,W,83,,I,A,antigen
+1cz8_0046,W,91,,I,A,antigen
+1cz8_0049,W,81,,M,A,antigen
+1cz8_0050,W,94,,M,A,antigen
+1cz8_0051,W,79,,Q,A,antigen
+1cz8_0052,W,87,,Q,A,antigen
+1cz8_0053,W,89,,Q,A,antigen
+1cz8_0055,W,45,,Y,A,antigen
