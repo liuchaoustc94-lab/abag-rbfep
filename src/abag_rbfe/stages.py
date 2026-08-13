@@ -248,31 +248,60 @@ def _lambda_values(window_count: int) -> list[float]:
 
 _DECOUPLED_LAMBDA_MIN_WINDOWS = 6
 
+_SIDECHAIN_HEAVY_ATOMS = {
+    "G": 0, "A": 1, "S": 2, "C": 2, "T": 3, "V": 3, "P": 3,
+    "N": 4, "D": 4, "L": 4, "I": 4, "M": 4, "K": 5, "Q": 5,
+    "E": 5, "H": 6, "F": 7, "R": 7, "Y": 8, "W": 10,
+}
 
-def _lambda_component_schedules(window_count: int) -> tuple[list[float], list[float]] | None:
-    """Coulomb-first / vdW-second decoupled lambda schedule.
+
+def _mutation_sidechain_growth(ctx: StageContext) -> int:
+    """Net sidechain heavy-atom change (mut - wt) across mutation sites."""
+    delta = 0
+    for site in getattr(ctx.mutation_group, "sites", []) or []:
+        delta += _SIDECHAIN_HEAVY_ATOMS.get(str(site.mut).upper(), 0) - _SIDECHAIN_HEAVY_ATOMS.get(
+            str(site.wt).upper(), 0
+        )
+    return delta
+
+
+def _lambda_component_schedules(window_count: int, *, sidechain_growth: int = 0) -> tuple[list[float], list[float]] | None:
+    """Overlapped coulomb/vdW decoupled lambda schedule.
 
     Decoupling electrostatics from vdW avoids the overlap collapse observed
-    for charge-changing transformations (e.g. charged-His hybrids showed
-    overlap 0.064 with a coupled single-lambda schedule). Returns
-    (coul_lambdas, vdw_lambdas); bonded/mass follow the vdW leg. Small window
-    counts (smoke presets) keep the coupled single-vector behaviour."""
+    for charge-changing transformations. The ramps OVERLAP (coulomb over the
+    first half, vdW over the last two-thirds) so no intermediate state carries
+    (near-)full charges with zero vdW protection: strictly separated legs made
+    inserted sidechains into charged ghosts at the junction window and crashed
+    LINCS in tightly packed loops (2026-08-12, ISSUE-007).
+    Returns (coul_lambdas, vdw_lambdas); bonded/mass follow the vdW leg. Small
+    window counts (smoke presets) keep the coupled single-vector behaviour.
+
+    Ramp ORDER is direction-aware: deletions uncharge first then un-vdW;
+    insertions grow vdW first then charge. Reversed order leaves fully charged
+    zero-vdW ghost atoms at the junction window, which detonates LINCS in
+    tightly packed loops (ISSUE-007)."""
     if window_count < _DECOUPLED_LAMBDA_MIN_WINDOWS:
         return None
-    coul_windows = max(2, window_count // 3)
+    ramp_end = max(1, (window_count // 2) - 1)
+    ramp_start = max(1, window_count // 3)
     coul: list[float] = []
     vdw: list[float] = []
+    insertion = sidechain_growth > 0
     for index in range(window_count):
-        coul.append(min(1.0, index / (coul_windows - 1)))
-        if index < coul_windows - 1:
-            vdw.append(0.0)
+        first = min(1.0, index / ramp_end)
+        second = 0.0 if index < ramp_start else min(1.0, (index - ramp_start + 1) / (window_count - ramp_start))
+        if insertion:
+            vdw.append(first)
+            coul.append(second)
         else:
-            vdw.append((index - coul_windows + 1) / (window_count - coul_windows))
+            coul.append(first)
+            vdw.append(second)
     return coul, vdw
 
 
-def _format_lambda_schedule_lines(lambda_values: list[float]) -> list[str]:
-    schedules = _lambda_component_schedules(len(lambda_values))
+def _format_lambda_schedule_lines(lambda_values: list[float], *, sidechain_growth: int = 0) -> list[str]:
+    schedules = _lambda_component_schedules(len(lambda_values), sidechain_growth=sidechain_growth)
     if schedules is None:
         return [f"fep-lambdas             = {_format_lambda_values(lambda_values)}"]
     coul, vdw = schedules
@@ -1128,7 +1157,7 @@ def _render_lambda_mdp(ctx: StageContext, lambda_values: list[float], window_ind
             "pbc                     = xyz",
             "free-energy             = yes",
             f"init-lambda-state       = {window_index}",
-            *_format_lambda_schedule_lines(lambda_values),
+            *_format_lambda_schedule_lines(lambda_values, sidechain_growth=_mutation_sidechain_growth(ctx)),
             "calc-lambda-neighbors   = -1",
             "sc-alpha                = 0.3",
             "sc-sigma                = 0.25",
@@ -1159,7 +1188,7 @@ def _render_window_relax_em_mdp(ctx: StageContext, lambda_values: list[float], w
             "pbc                     = xyz",
             "free-energy             = yes",
             f"init-lambda-state       = {window_index}",
-            *_format_lambda_schedule_lines(lambda_values),
+            *_format_lambda_schedule_lines(lambda_values, sidechain_growth=_mutation_sidechain_growth(ctx)),
             "calc-lambda-neighbors   = -1",
             "sc-alpha                = 0.3",
             "sc-sigma                = 0.25",
@@ -1199,7 +1228,7 @@ def _render_window_relax_md_mdp(
             "pbc                     = xyz",
             "free-energy             = yes",
             f"init-lambda-state       = {window_index}",
-            *_format_lambda_schedule_lines(lambda_values),
+            *_format_lambda_schedule_lines(lambda_values, sidechain_growth=_mutation_sidechain_growth(ctx)),
             "calc-lambda-neighbors   = -1",
             "sc-alpha                = 0.3",
             "sc-sigma                = 0.25",

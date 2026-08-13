@@ -1,0 +1,15 @@
+name: AB-Bind-RBFE-Core-V1-Split-20260812-Available
+spec_name: core_v1
+description: >
+  Subset split for the 2026-08-12 calibration rebuild: only complexes with
+  fixed-chemistry (post ISSUE-001) new-protocol data are included.
+splits:
+  development:
+    description: Development complexes with new-protocol data.
+    complex_ids: [1JRH, 1VFB, 3NGB]
+  calibration:
+    description: Calibration complexes with new-protocol data.
+    complex_ids: [1DQJ, 1N8Z, 2JEL, 3BE1]
+  validation:
+    description: Validation complexes with fixed-chemistry data.
+    complex_ids: [1BJ1, 1CZ8, 1MLC]

@@ -40,6 +40,18 @@
 - **B2** H33 HIP 变体用分步调度重跑 → 判据：complex 腿 overlap ≥0.2（当前 0.064）
 - **B3** fit pairs 补齐 11/11（3 个失败 job 重试中）→ 重建 side_linear 校准 + 官方验证视图
 
+## Phase D：RID 端点系综试点（2026-08-13 启动）
+
+**依据**：basin 实验 spread 2.7-3.3 > 1.0 预设门槛（§4.14①）。
+**设计**：`run_rid_pilot_1dvf_20260813.sh`
+1. RID pilot 探索 1DVF WT 复合物（A,B|C,D；3 walkers × 3 iters，GPU 0-2）→ ≤3 个 basin（无偏弛豫后构象）
+2. basin 蛋白坐标导出 PDB → 作为新输入结构走标准 FEP 全流程（prepare→mutate→…），y102a + y49a 各 1 job/basin
+3. 对比：RID-basin ddG 均值 vs 自由 MD basin 均值（13.6/−6.9）vs 实验（4.79/1.90）
+
+**判读规则**：RID basin 的 ddG 均值显著更接近实验（|误差| 减半以上）→ 端点系综策略成立，推广到 Y/W 删除类；仍不变 → Y/W 误差定位为力场/水合模型，停止采样方向投入。
+
+**踩坑记录**：run_abag_rid.sh 的 GPU 选择器硬编码 --count 4；绕过方式 = --dry-run 生成 config → 改 RID_WALKERS=3 + RID_GPU_IDS + **RID_EXECUTE=1**（dry-run 会写 0）→ 直接调 run_rid_pipeline.sh。
+
 ## Phase C：分析与扩展（与 B 并行）
 
 - **C1** 腿级误差归因（complex vs apo）——用 32 个新 job 的 bar_summary

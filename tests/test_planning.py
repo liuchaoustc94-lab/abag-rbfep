@@ -318,7 +318,7 @@ def test_batch_plan_and_stage_generation(tmp_path: Path) -> None:
     assert "rcoulomb                = 1.25" in pre_md_mdp
     assert "rvdw                    = 1.25" in pre_md_mdp
     assert "init-lambda-state       = 0" in production_mdp
-    assert "coul-lambdas            = 0.00000 1.00000 1.00000 1.00000 1.00000 1.00000" in production_mdp
+    assert "coul-lambdas            = 0.00000 0.50000 1.00000 1.00000 1.00000 1.00000" in production_mdp
     assert "vdw-lambdas             = 0.00000 0.00000 0.25000 0.50000 0.75000 1.00000" in production_mdp
     assert "bonded-lambdas" in production_mdp
     assert "mass-lambdas" in production_mdp
