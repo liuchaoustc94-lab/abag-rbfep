@@ -1,0 +1,1327 @@
+{
+ "4I77": {
+  "desc": "Lebrikizumab Fab / IL-13, 1.9A",
+  "ab": [
+   "H",
+   "L"
+  ],
+  "ag": [
+   "Z"
+  ],
+  "muts": [
+   {
+    "chain": "H",
+    "resseq": 52,
+    "wt": "W",
+    "mut": "F",
+    "side": "antibody",
+    "ddg": 2.52,
+    "cc": true,
+    "n_meas": 2
+   },
+   {
+    "chain": "H",
+    "resseq": 52,
+    "wt": "W",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": 2.57,
+    "cc": true,
+    "n_meas": 2
+   },
+   {
+    "chain": "H",
+    "resseq": 54,
+    "wt": "D",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": 2.62,
+    "cc": false,
+    "n_meas": 2
+   },
+   {
+    "chain": "H",
+    "resseq": 97,
+    "wt": "Y",
+    "mut": "F",
+    "side": "antibody",
+    "ddg": 0.0,
+    "cc": true,
+    "n_meas": 2
+   },
+   {
+    "chain": "H",
+    "resseq": 97,
+    "wt": "Y",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": 0.0,
+    "cc": true,
+    "n_meas": 2
+   },
+   {
+    "chain": "H",
+    "resseq": 98,
+    "wt": "Y",
+    "mut": "F",
+    "side": "antibody",
+    "ddg": 0.0,
+    "cc": true,
+    "n_meas": 2
+   },
+   {
+    "chain": "H",
+    "resseq": 98,
+    "wt": "Y",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": 1.65,
+    "cc": true,
+    "n_meas": 2
+   },
+   {
+    "chain": "H",
+    "resseq": 100,
+    "wt": "Y",
+    "mut": "F",
+    "side": "antibody",
+    "ddg": 0.33,
+    "cc": true,
+    "n_meas": 2
+   },
+   {
+    "chain": "H",
+    "resseq": 100,
+    "wt": "Y",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": 2.2,
+    "cc": true,
+    "n_meas": 2
+   },
+   {
+    "chain": "L",
+    "resseq": 28,
+    "wt": "Y",
+    "mut": "F",
+    "side": "antibody",
+    "ddg": 0.0,
+    "cc": true,
+    "n_meas": 2
+   },
+   {
+    "chain": "L",
+    "resseq": 28,
+    "wt": "Y",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": 0.82,
+    "cc": true,
+    "n_meas": 2
+   },
+   {
+    "chain": "L",
+    "resseq": 91,
+    "wt": "N",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": 1.38,
+    "cc": true,
+    "n_meas": 2
+   }
+  ],
+  "n_cc": 11,
+  "n_chg": 1
+ },
+ "2BDN": {
+  "desc": "11K2 scFv / MCP-1 (CCL2), 2.53A",
+  "ab": [
+   "H",
+   "L"
+  ],
+  "ag": [
+   "A"
+  ],
+  "muts": [
+   {
+    "chain": "H",
+    "resseq": 27,
+    "wt": "L",
+    "mut": "R",
+    "side": "antibody",
+    "ddg": 0.65,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "H",
+    "resseq": 27,
+    "wt": "L",
+    "mut": "K",
+    "side": "antibody",
+    "ddg": 0.87,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "H",
+    "resseq": 28,
+    "wt": "N",
+    "mut": "D",
+    "side": "antibody",
+    "ddg": 0.13,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "H",
+    "resseq": 28,
+    "wt": "N",
+    "mut": "Q",
+    "side": "antibody",
+    "ddg": 1.4,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "H",
+    "resseq": 31,
+    "wt": "D",
+    "mut": "E",
+    "side": "antibody",
+    "ddg": 1.09,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "L",
+    "resseq": 30,
+    "wt": "Y",
+    "mut": "K",
+    "side": "antibody",
+    "ddg": 0.67,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "L",
+    "resseq": 31,
+    "wt": "N",
+    "mut": "R",
+    "side": "antibody",
+    "ddg": -0.92,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "L",
+    "resseq": 31,
+    "wt": "N",
+    "mut": "K",
+    "side": "antibody",
+    "ddg": 3.49,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "L",
+    "resseq": 53,
+    "wt": "S",
+    "mut": "D",
+    "side": "antibody",
+    "ddg": -0.16,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "L",
+    "resseq": 53,
+    "wt": "S",
+    "mut": "E",
+    "side": "antibody",
+    "ddg": -0.85,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "L",
+    "resseq": 56,
+    "wt": "T",
+    "mut": "D",
+    "side": "antibody",
+    "ddg": -0.43,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "L",
+    "resseq": 56,
+    "wt": "T",
+    "mut": "E",
+    "side": "antibody",
+    "ddg": -0.69,
+    "cc": false,
+    "n_meas": 1
+   }
+  ],
+  "n_cc": 2,
+  "n_chg": 10
+ },
+ "1NMB": {
+  "desc": "NC10 Fab / influenza N9 neuraminidase, 2.2A",
+  "ab": [
+   "L",
+   "H"
+  ],
+  "ag": [
+   "N"
+  ],
+  "muts": [
+   {
+    "chain": "H",
+    "resseq": 56,
+    "wt": "D",
+    "mut": "N",
+    "side": "antibody",
+    "ddg": 2.95,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "H",
+    "resseq": 56,
+    "wt": "D",
+    "mut": "E",
+    "side": "antibody",
+    "ddg": 2.95,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "H",
+    "resseq": 99,
+    "wt": "Y",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": 2.14,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "L",
+    "resseq": 32,
+    "wt": "Y",
+    "mut": "F",
+    "side": "antibody",
+    "ddg": 0.47,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "L",
+    "resseq": 93,
+    "wt": "T",
+    "mut": "F",
+    "side": "antibody",
+    "ddg": -0.02,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "L",
+    "resseq": 93,
+    "wt": "T",
+    "mut": "W",
+    "side": "antibody",
+    "ddg": 0.18,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "L",
+    "resseq": 94,
+    "wt": "L",
+    "mut": "V",
+    "side": "antibody",
+    "ddg": 0.9,
+    "cc": true,
+    "n_meas": 1
+   }
+  ],
+  "n_cc": 6,
+  "n_chg": 1
+ },
+ "1AHW": {
+  "desc": "5G9 Fab / tissue factor, 3.0A",
+  "ab": [
+   "C"
+  ],
+  "ag": [
+   "A",
+   "B"
+  ],
+  "muts": [
+   {
+    "chain": "C",
+    "resseq": 156,
+    "wt": "Y",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": 3.81,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "C",
+    "resseq": 157,
+    "wt": "Y",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": -1.89,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "C",
+    "resseq": 167,
+    "wt": "T",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": -0.07,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "C",
+    "resseq": 170,
+    "wt": "T",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": 1.11,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "C",
+    "resseq": 176,
+    "wt": "L",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": 0.99,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "C",
+    "resseq": 178,
+    "wt": "D",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": -0.48,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "C",
+    "resseq": 197,
+    "wt": "T",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": 1.35,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "C",
+    "resseq": 198,
+    "wt": "V",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": -0.31,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "C",
+    "resseq": 199,
+    "wt": "N",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": 1.08,
+    "cc": true,
+    "n_meas": 1
+   }
+  ],
+  "n_cc": 8,
+  "n_chg": 1
+ },
+ "1IAR": {
+  "desc": "IL-4 / IL-4Ralpha, 2.3A",
+  "ab": [
+   "B"
+  ],
+  "ag": [
+   "A"
+  ],
+  "muts": [
+   {
+    "chain": "A",
+    "resseq": 5,
+    "wt": "I",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": 1.17,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 5,
+    "wt": "I",
+    "mut": "R",
+    "side": "antigen",
+    "ddg": 0.8,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 6,
+    "wt": "T",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": -0.1,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 6,
+    "wt": "T",
+    "mut": "D",
+    "side": "antigen",
+    "ddg": 1.39,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 8,
+    "wt": "Q",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": -0.02,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 8,
+    "wt": "Q",
+    "mut": "R",
+    "side": "antigen",
+    "ddg": 0.04,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 9,
+    "wt": "E",
+    "mut": "Q",
+    "side": "antigen",
+    "ddg": 3.11,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 11,
+    "wt": "I",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": 0.07,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 12,
+    "wt": "K",
+    "mut": "S",
+    "side": "antigen",
+    "ddg": -0.01,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 12,
+    "wt": "K",
+    "mut": "E",
+    "side": "antigen",
+    "ddg": 0.14,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 13,
+    "wt": "T",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": 0.98,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 13,
+    "wt": "T",
+    "mut": "D",
+    "side": "antigen",
+    "ddg": -0.22,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 15,
+    "wt": "N",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": -0.03,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 15,
+    "wt": "N",
+    "mut": "D",
+    "side": "antigen",
+    "ddg": -0.08,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 16,
+    "wt": "S",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": -0.18,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 16,
+    "wt": "S",
+    "mut": "D",
+    "side": "antigen",
+    "ddg": -0.1,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 19,
+    "wt": "E",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": -0.32,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 19,
+    "wt": "E",
+    "mut": "R",
+    "side": "antigen",
+    "ddg": -0.12,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 53,
+    "wt": "R",
+    "mut": "Q",
+    "side": "antigen",
+    "ddg": 0.84,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 77,
+    "wt": "K",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": 0.15,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 77,
+    "wt": "K",
+    "mut": "E",
+    "side": "antigen",
+    "ddg": 0.61,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 78,
+    "wt": "Q",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": 0.12,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 78,
+    "wt": "Q",
+    "mut": "E",
+    "side": "antigen",
+    "ddg": 0.24,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 81,
+    "wt": "R",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": 0.48,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 81,
+    "wt": "R",
+    "mut": "E",
+    "side": "antigen",
+    "ddg": 1.46,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 82,
+    "wt": "F",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": -0.09,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 82,
+    "wt": "F",
+    "mut": "D",
+    "side": "antigen",
+    "ddg": -0.58,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 84,
+    "wt": "K",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": 0.34,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 84,
+    "wt": "K",
+    "mut": "D",
+    "side": "antigen",
+    "ddg": 1.88,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 85,
+    "wt": "R",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": 0.43,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 85,
+    "wt": "R",
+    "mut": "E",
+    "side": "antigen",
+    "ddg": 1.22,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 88,
+    "wt": "R",
+    "mut": "Q",
+    "side": "antigen",
+    "ddg": 2.83,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 88,
+    "wt": "R",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": 3.75,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 89,
+    "wt": "N",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": 1.56,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 91,
+    "wt": "W",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": 0.73,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 91,
+    "wt": "W",
+    "mut": "D",
+    "side": "antigen",
+    "ddg": 1.31,
+    "cc": false,
+    "n_meas": 1
+   }
+  ],
+  "n_cc": 11,
+  "n_chg": 25
+ },
+ "1OGA": {
+  "desc": "JM22 TCR / HLA-A2+Tax pMHC, 1.4A",
+  "ab": [
+   "D",
+   "E"
+  ],
+  "ag": [
+   "A",
+   "B",
+   "C"
+  ],
+  "muts": [
+   {
+    "chain": "A",
+    "resseq": 43,
+    "wt": "Q",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": -0.02,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 58,
+    "wt": "E",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": 0.11,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 61,
+    "wt": "D",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": 0.12,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 63,
+    "wt": "E",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": -0.02,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 64,
+    "wt": "T",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": 0.19,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 65,
+    "wt": "R",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": -0.37,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 66,
+    "wt": "K",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": -0.02,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 67,
+    "wt": "V",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": -0.14,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 68,
+    "wt": "K",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": 0.25,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 69,
+    "wt": "A",
+    "mut": "G",
+    "side": "antigen",
+    "ddg": 0.43,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 70,
+    "wt": "H",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": 0.52,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 72,
+    "wt": "Q",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": -0.46,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 73,
+    "wt": "T",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": 0.85,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 74,
+    "wt": "H",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": 0.6,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 75,
+    "wt": "R",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": 0.71,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 76,
+    "wt": "V",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": 0.87,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 80,
+    "wt": "T",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": 0.2,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 146,
+    "wt": "K",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": 1.93,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 149,
+    "wt": "A",
+    "mut": "G",
+    "side": "antigen",
+    "ddg": 0.12,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 150,
+    "wt": "A",
+    "mut": "G",
+    "side": "antigen",
+    "ddg": 0.45,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 151,
+    "wt": "H",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": 0.0,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 152,
+    "wt": "V",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": 1.39,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 154,
+    "wt": "E",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": 0.61,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 155,
+    "wt": "Q",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": 0.49,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 158,
+    "wt": "A",
+    "mut": "G",
+    "side": "antigen",
+    "ddg": 0.13,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "A",
+    "resseq": 163,
+    "wt": "T",
+    "mut": "A",
+    "side": "antigen",
+    "ddg": 0.32,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "D",
+    "resseq": 31,
+    "wt": "S",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": 0.63,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "D",
+    "resseq": 32,
+    "wt": "S",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": 1.02,
+    "cc": true,
+    "n_meas": 2
+   },
+   {
+    "chain": "D",
+    "resseq": 34,
+    "wt": "Q",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": 0.99,
+    "cc": true,
+    "n_meas": 2
+   },
+   {
+    "chain": "E",
+    "resseq": 32,
+    "wt": "D",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": 1.57,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "E",
+    "resseq": 32,
+    "wt": "D",
+    "mut": "S",
+    "side": "antibody",
+    "ddg": 2.16,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "E",
+    "resseq": 52,
+    "wt": "Q",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": 2.16,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "E",
+    "resseq": 52,
+    "wt": "Q",
+    "mut": "E",
+    "side": "antibody",
+    "ddg": 2.16,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "E",
+    "resseq": 53,
+    "wt": "I",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": 2.16,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "E",
+    "resseq": 53,
+    "wt": "I",
+    "mut": "G",
+    "side": "antibody",
+    "ddg": 2.16,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "E",
+    "resseq": 53,
+    "wt": "I",
+    "mut": "N",
+    "side": "antibody",
+    "ddg": 2.16,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "E",
+    "resseq": 53,
+    "wt": "I",
+    "mut": "V",
+    "side": "antibody",
+    "ddg": 0.2,
+    "cc": true,
+    "n_meas": 2
+   },
+   {
+    "chain": "E",
+    "resseq": 53,
+    "wt": "I",
+    "mut": "L",
+    "side": "antibody",
+    "ddg": 1.42,
+    "cc": true,
+    "n_meas": 1
+   },
+   {
+    "chain": "E",
+    "resseq": 55,
+    "wt": "N",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": 1.11,
+    "cc": true,
+    "n_meas": 2
+   },
+   {
+    "chain": "E",
+    "resseq": 55,
+    "wt": "N",
+    "mut": "D",
+    "side": "antibody",
+    "ddg": 0.5,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "E",
+    "resseq": 56,
+    "wt": "D",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": 0.12,
+    "cc": false,
+    "n_meas": 2
+   },
+   {
+    "chain": "E",
+    "resseq": 58,
+    "wt": "Q",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": 0.5,
+    "cc": true,
+    "n_meas": 2
+   },
+   {
+    "chain": "E",
+    "resseq": 58,
+    "wt": "Q",
+    "mut": "E",
+    "side": "antibody",
+    "ddg": 0.0,
+    "cc": false,
+    "n_meas": 2
+   },
+   {
+    "chain": "E",
+    "resseq": 98,
+    "wt": "R",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": 2.16,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "E",
+    "resseq": 98,
+    "wt": "R",
+    "mut": "H",
+    "side": "antibody",
+    "ddg": 2.16,
+    "cc": false,
+    "n_meas": 1
+   },
+   {
+    "chain": "E",
+    "resseq": 99,
+    "wt": "S",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": -0.02,
+    "cc": true,
+    "n_meas": 2
+   },
+   {
+    "chain": "E",
+    "resseq": 101,
+    "wt": "Y",
+    "mut": "A",
+    "side": "antibody",
+    "ddg": 0.22,
+    "cc": true,
+    "n_meas": 2
+   },
+   {
+    "chain": "E",
+    "resseq": 101,
+    "wt": "Y",
+    "mut": "F",
+    "side": "antibody",
+    "ddg": 0.5,
+    "cc": true,
+    "n_meas": 2
+   }
+  ],
+  "n_cc": 31,
+  "n_chg": 17
+ }
+}

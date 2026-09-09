@@ -1,0 +1,5 @@
+pdb_id,method,resolution_A,deposited_structure,wt_baseline_status,formal_use,notes
+3SE8,X-RAY DIFFRACTION,1.895,crystal complex,"PDB construct baseline; no annotated substitutions",experimental_single_point_ready,VRC03-gp120
+3SE9,X-RAY DIFFRACTION,2.000,crystal complex,"PDB construct baseline; no annotated substitutions",experimental_single_point_ready,VRC-PG04-gp120
+3N85,X-RAY DIFFRACTION,3.200,crystal complex,"PDB construct baseline; no annotated substitutions",experimental_single_point_near_threshold,Fab37-HER2; nine unique singles after deduplication
+5C6T,X-RAY DIFFRACTION,3.600,crystal complex,"PDB construct baseline; antibody-side rows are experimental but only eight unique singles",experimental_single_point_near_threshold,1G2-HCMV glycoprotein B

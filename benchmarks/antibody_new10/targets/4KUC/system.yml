@@ -1,0 +1,11 @@
+system_name: 4kuc
+input_structure: benchmarks/antibody_new10/structures/4KUC.pdb
+structure_source: experimental
+antibody_chains:
+- H
+- D
+antigen_chains:
+- A
+notes:
+- 6C2 antibody–ricin A chain
+- 16 Rosetta Flex ddG antibody substitutions; useful for pipeline/structure stress testing.

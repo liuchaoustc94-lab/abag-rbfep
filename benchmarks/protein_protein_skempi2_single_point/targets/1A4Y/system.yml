@@ -1,0 +1,12 @@
+system_name: 1a4y
+input_structure: benchmarks/protein_protein_skempi2_single_point/structures/1A4Y.pdb
+structure_source: experimental
+complex_class: protein-protein
+mutated_partner: partner_a
+antibody_chains:
+- A
+antigen_chains:
+- B
+notes:
+- ribonuclease inhibitor–angiogenin
+- 16 unique single substitutions on ribonuclease inhibitor chain A.

@@ -1,0 +1,12 @@
+system_name: acc_4i77
+input_structure: /mnt/data/liuchao/abag-rbfep/benchmarks/acceptance/structures/4I77.pdb
+structure_source: experimental
+antibody_chains:
+  - H
+  - L
+antigen_chains:
+  - Z
+notes:
+  - Acceptance validation target (2026-08-18): Lebrikizumab Fab / IL-13, 1.9A
+  - Experimental ddG from SKEMPI 2.0 (RT ln(Kd_mut/Kd_wt), per-row assay temperature).
+  - antibody/antigen are role labels for non-antibody interfaces.

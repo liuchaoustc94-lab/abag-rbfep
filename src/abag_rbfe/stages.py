@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from hashlib import sha1
 import json
+import math
 import os
 from pathlib import Path
 import re
@@ -45,6 +46,7 @@ from abag_rbfe.structure import (
     strip_hydrogen_atoms,
     strip_terminal_oxygen_atoms,
     strip_sidechain_atoms_for_residues,
+    suggest_unbound_chain_mapping,
     write_inter_residue_heavy_atom_clash_report,
 )
 
@@ -148,7 +150,7 @@ def _write_external_stage_running(
 
 
 def _leg_mutated_chains(ctx: StageContext, leg: str) -> list[str]:
-    if leg == "complex":
+    if leg in ("complex", "bound"):
         return list(ctx.system.antibody_chains + ctx.system.antigen_chains)
     if ctx.mutation_group.entity_side == "antibody":
         return list(ctx.system.antibody_chains)
@@ -256,7 +258,15 @@ _SIDECHAIN_HEAVY_ATOMS = {
 
 
 def _mutation_sidechain_growth(ctx: StageContext) -> int:
-    """Net sidechain heavy-atom change (mut - wt) across mutation sites."""
+    """Net sidechain heavy-atom change (mut - wt) across mutation sites.
+
+    Proline-involving mutations always count as insertion-like: ring opening
+    or closing makes both deletion- and insertion-class alchemical atoms
+    disruptive regardless of the net atom count (observed LINCS failure for
+    P->V with a coul-first schedule, 2026-08)."""
+    for site in getattr(ctx.mutation_group, "sites", []) or []:
+        if str(site.wt).upper() == "P" or str(site.mut).upper() == "P":
+            return 1
     delta = 0
     for site in getattr(ctx.mutation_group, "sites", []) or []:
         delta += _SIDECHAIN_HEAVY_ATOMS.get(str(site.mut).upper(), 0) - _SIDECHAIN_HEAVY_ATOMS.get(
@@ -265,7 +275,12 @@ def _mutation_sidechain_growth(ctx: StageContext) -> int:
     return delta
 
 
-def _lambda_component_schedules(window_count: int, *, sidechain_growth: int = 0) -> tuple[list[float], list[float]] | None:
+def _lambda_component_schedules(
+    window_count: int,
+    *,
+    sidechain_growth: int = 0,
+    distribution: str = "linear",
+) -> tuple[list[float], list[float]] | None:
     """Overlapped coulomb/vdW decoupled lambda schedule.
 
     Decoupling electrostatics from vdW avoids the overlap collapse observed
@@ -283,14 +298,23 @@ def _lambda_component_schedules(window_count: int, *, sidechain_growth: int = 0)
     tightly packed loops (ISSUE-007)."""
     if window_count < _DECOUPLED_LAMBDA_MIN_WINDOWS:
         return None
+
+    def _warp(progress: float) -> float:
+        if distribution != "sigmoidal":
+            return progress
+        # Endpoint-dense sigmoidal warp (QresFEP-2 protocol matrix winner):
+        # concentrates windows near lambda 0 and 1 where dE/dlambda varies fastest.
+        steepness = 2.5
+        return 0.5 * (1.0 + math.tanh(steepness * (2.0 * progress - 1.0)) / math.tanh(steepness))
+
     ramp_end = max(1, (window_count // 2) - 1)
     ramp_start = max(1, window_count // 3)
     coul: list[float] = []
     vdw: list[float] = []
     insertion = sidechain_growth > 0
     for index in range(window_count):
-        first = min(1.0, index / ramp_end)
-        second = 0.0 if index < ramp_start else min(1.0, (index - ramp_start + 1) / (window_count - ramp_start))
+        first = _warp(min(1.0, index / ramp_end))
+        second = 0.0 if index < ramp_start else _warp(min(1.0, (index - ramp_start + 1) / (window_count - ramp_start)))
         if insertion:
             vdw.append(first)
             coul.append(second)
@@ -300,8 +324,57 @@ def _lambda_component_schedules(window_count: int, *, sidechain_growth: int = 0)
     return coul, vdw
 
 
-def _format_lambda_schedule_lines(lambda_values: list[float], *, sidechain_growth: int = 0) -> list[str]:
-    schedules = _lambda_component_schedules(len(lambda_values), sidechain_growth=sidechain_growth)
+def _mutation_topology_classes(ctx: StageContext) -> tuple[bool, bool]:
+    """Whether the mutation introduces dummy atoms on the deletion (WT-only)
+    and/or insertion (MUT-only) side, approximated by sidechain heavy-atom
+    counts (max-common-substructure mapping keeps shared atoms real)."""
+    deletion = insertion = False
+    for site in getattr(ctx.mutation_group, "sites", []) or []:
+        wt_heavy = _SIDECHAIN_HEAVY_ATOMS.get(str(site.wt).upper(), 0)
+        mut_heavy = _SIDECHAIN_HEAVY_ATOMS.get(str(site.mut).upper(), 0)
+        if wt_heavy > mut_heavy:
+            deletion = True
+        if mut_heavy > wt_heavy:
+            insertion = True
+    return deletion, insertion
+
+
+def check_lambda_schedule_naked_charge(
+    coul: list[float],
+    vdw: list[float],
+    *,
+    deletion_atoms: bool,
+    insertion_atoms: bool,
+    charge_threshold: float = 0.5,
+    lj_threshold: float = 0.05,
+) -> dict[str, object]:
+    """Naked-charge guard (feflow lambda_protocol idea): at no lambda window
+    may an atom class carry significant charge while its LJ is (nearly) gone.
+    Returns {'ok': bool, 'violations': [...], 'checked_windows': n}."""
+    violations: list[dict[str, object]] = []
+    for index, (coul_lambda, vdw_lambda) in enumerate(zip(coul, vdw)):
+        candidates = []
+        if deletion_atoms:
+            candidates.append(("deletion", 1.0 - coul_lambda, 1.0 - vdw_lambda))
+        if insertion_atoms:
+            candidates.append(("insertion", coul_lambda, vdw_lambda))
+        for atom_class, coul_scale, vdw_scale in candidates:
+            if coul_scale > charge_threshold and vdw_scale < lj_threshold:
+                violations.append(
+                    {
+                        "window": index,
+                        "atom_class": atom_class,
+                        "coul_scale": round(coul_scale, 4),
+                        "vdw_scale": round(vdw_scale, 4),
+                    }
+                )
+    return {"ok": not violations, "violations": violations, "checked_windows": len(coul)}
+
+
+def _format_lambda_schedule_lines(lambda_values: list[float], *, sidechain_growth: int = 0, distribution: str = "linear", force_coupled: bool = False) -> list[str]:
+    if force_coupled:
+        return [f"fep-lambdas             = {_format_lambda_values(lambda_values)}"]
+    schedules = _lambda_component_schedules(len(lambda_values), sidechain_growth=sidechain_growth, distribution=distribution)
     if schedules is None:
         return [f"fep-lambdas             = {_format_lambda_values(lambda_values)}"]
     coul, vdw = schedules
@@ -337,6 +410,14 @@ def _context_env_value(ctx: StageContext, key: str) -> str | None:
     return os.environ.get(key)
 
 
+def _job_legs(ctx: StageContext) -> tuple[str, ...]:
+    """Leg enumeration for this job: standard two-leg (complex+apo) or the
+    V2.1a DSSB single leg (double-system/single-box charge-changing path)."""
+    if str(getattr(ctx.protocol, "leg_topology", "two_leg")).strip().lower() == "dssb":
+        return ("dssb",)
+    return ("complex", "apo")
+
+
 def _configured_legs(value: object) -> tuple[str, ...]:
     if value is None:
         return ()
@@ -346,7 +427,7 @@ def _configured_legs(value: object) -> tuple[str, ...]:
         items = [item.strip().lower() for item in str(value).split(",")]
     legs: list[str] = []
     for item in items:
-        if item not in {"complex", "apo"} or item in legs:
+        if item not in {"complex", "apo", "dssb"} or item in legs:
             continue
         legs.append(item)
     return tuple(legs)
@@ -368,7 +449,7 @@ def _rescue_source_job_dir(ctx: StageContext) -> Path | None:
 
 def _job_target_legs(ctx: StageContext) -> tuple[str, ...]:
     target_legs = _configured_legs(ctx.rescue_config.get("target_legs"))
-    return target_legs or ("complex", "apo")
+    return target_legs or _job_legs(ctx)
 
 
 def _job_inherit_source_legs(ctx: StageContext) -> tuple[str, ...]:
@@ -376,7 +457,7 @@ def _job_inherit_source_legs(ctx: StageContext) -> tuple[str, ...]:
     if inherit_source_legs:
         return inherit_source_legs
     targeted = set(_job_target_legs(ctx))
-    return tuple(leg for leg in ("complex", "apo") if leg not in targeted)
+    return tuple(leg for leg in _job_legs(ctx) if leg not in targeted)
 
 
 def _should_inherit_leg_from_source(ctx: StageContext, leg: str) -> bool:
@@ -1156,13 +1237,14 @@ def _render_lambda_mdp(ctx: StageContext, lambda_values: list[float], window_ind
             "constraint-algorithm    = lincs",
             "pbc                     = xyz",
             "free-energy             = yes",
+            f"couple-intramol         = {'yes' if getattr(ctx.protocol, 'couple_intramol', False) else 'no'}",
             f"init-lambda-state       = {window_index}",
-            *_format_lambda_schedule_lines(lambda_values, sidechain_growth=_mutation_sidechain_growth(ctx)),
+            *_format_lambda_schedule_lines(lambda_values, sidechain_growth=_mutation_sidechain_growth(ctx), distribution=getattr(ctx.protocol, "lambda_distribution", "linear"), force_coupled=str(getattr(ctx.protocol, "leg_topology", "two_leg")).strip().lower() == "dssb"),
             "calc-lambda-neighbors   = -1",
-            "sc-alpha                = 0.3",
-            "sc-sigma                = 0.25",
-            "sc-power                = 1",
-            "sc-coul                 = yes",
+            f"sc-alpha                = {ctx.protocol.sc_alpha}",
+            f"sc-sigma                = {ctx.protocol.sc_sigma}",
+            f"sc-power                = {ctx.protocol.sc_power}",
+            f"sc-coul                 = {'yes' if ctx.protocol.sc_coul else 'no'}",
             "nstdhdl                 = 100",
             "dhdl-print-energy       = total",
             f"refcoord-scaling        = {ctx.protocol.sampling_refcoord_scaling}",
@@ -1187,13 +1269,14 @@ def _render_window_relax_em_mdp(ctx: StageContext, lambda_values: list[float], w
             "constraints             = none",
             "pbc                     = xyz",
             "free-energy             = yes",
+            f"couple-intramol         = {'yes' if getattr(ctx.protocol, 'couple_intramol', False) else 'no'}",
             f"init-lambda-state       = {window_index}",
-            *_format_lambda_schedule_lines(lambda_values, sidechain_growth=_mutation_sidechain_growth(ctx)),
+            *_format_lambda_schedule_lines(lambda_values, sidechain_growth=_mutation_sidechain_growth(ctx), distribution=getattr(ctx.protocol, "lambda_distribution", "linear"), force_coupled=str(getattr(ctx.protocol, "leg_topology", "two_leg")).strip().lower() == "dssb"),
             "calc-lambda-neighbors   = -1",
-            "sc-alpha                = 0.3",
-            "sc-sigma                = 0.25",
-            "sc-power                = 1",
-            "sc-coul                 = yes",
+            f"sc-alpha                = {ctx.protocol.sc_alpha}",
+            f"sc-sigma                = {ctx.protocol.sc_sigma}",
+            f"sc-power                = {ctx.protocol.sc_power}",
+            f"sc-coul                 = {'yes' if ctx.protocol.sc_coul else 'no'}",
             "nstdhdl                 = 100",
             "dhdl-print-energy       = total",
             "refcoord-scaling        = all",
@@ -1227,13 +1310,14 @@ def _render_window_relax_md_mdp(
             "constraints             = none",
             "pbc                     = xyz",
             "free-energy             = yes",
+            f"couple-intramol         = {'yes' if getattr(ctx.protocol, 'couple_intramol', False) else 'no'}",
             f"init-lambda-state       = {window_index}",
-            *_format_lambda_schedule_lines(lambda_values, sidechain_growth=_mutation_sidechain_growth(ctx)),
+            *_format_lambda_schedule_lines(lambda_values, sidechain_growth=_mutation_sidechain_growth(ctx), distribution=getattr(ctx.protocol, "lambda_distribution", "linear"), force_coupled=str(getattr(ctx.protocol, "leg_topology", "two_leg")).strip().lower() == "dssb"),
             "calc-lambda-neighbors   = -1",
-            "sc-alpha                = 0.3",
-            "sc-sigma                = 0.25",
-            "sc-power                = 1",
-            "sc-coul                 = yes",
+            f"sc-alpha                = {ctx.protocol.sc_alpha}",
+            f"sc-sigma                = {ctx.protocol.sc_sigma}",
+            f"sc-power                = {ctx.protocol.sc_power}",
+            f"sc-coul                 = {'yes' if ctx.protocol.sc_coul else 'no'}",
             "nstdhdl                 = 100",
             "dhdl-print-energy       = total",
             "refcoord-scaling        = all",
@@ -1247,6 +1331,130 @@ def _render_window_relax_md_mdp(
     )
 
 
+def _write_sample_retry_mdps(
+    ctx: StageContext,
+    *,
+    leg: str,
+    repeat_index: int,
+    window_index: int,
+    lambda_values: list[float],
+    window_dir: Path,
+) -> dict[str, dict[str, Path]]:
+    """Write retry-ladder MDP variants for one sampling window (ISSUE-007).
+
+    retry1 (reseed): identical physics with fresh ld-seeds — catches stochastic
+    LINCS/velocity crashes. The pre_relax EM (steepest descent) is deterministic
+    given coordinates, so retry1 reuses the standard pre_relax.mdp.
+    retry2 (couple-intramol): couple_intramol=yes at standard timing — the
+    GROMACS-recommended workaround for the exclusionchecker fatal ("perturbed,
+    excluded non-bonded pair interactions beyond the pair-list cut-off") that
+    deterministic spread-out hybrids (e.g. aromatic deletions at junction
+    windows) hit in EM/pre-relax; dt changes cannot fix that error class.
+    retry3 (robust): couple_intramol=yes + pre_relax 3x EM steps +
+    pre_md/production at half dt with doubled steps and fresh seeds — last
+    resort for hard junction-window instability.
+    Files are (re)written by the sample stage so legacy jobs gain the ladder on
+    resume without re-running build_legs."""
+    window_dir.mkdir(parents=True, exist_ok=True)
+
+    retry1_pre_md = window_dir / "pre_md.retry1.mdp"
+    retry1_production = window_dir / "production.retry1.mdp"
+    retry1_pre_md.write_text(
+        _render_window_relax_md_mdp(
+            ctx,
+            lambda_values,
+            window_index,
+            _job_seed(ctx, leg, repeat_index, window_index, "pre-md", "retry1"),
+        ),
+        encoding="utf-8",
+    )
+    retry1_production.write_text(
+        _render_lambda_mdp(
+            ctx,
+            lambda_values,
+            window_index,
+            _job_seed(ctx, leg, repeat_index, window_index, "prod", "retry1"),
+        ),
+        encoding="utf-8",
+    )
+
+    ci_protocol = replace(ctx.protocol, couple_intramol=True)
+    ci_ctx = replace(ctx, protocol=ci_protocol)
+    retry2_pre_relax = window_dir / "pre_relax.retry2.mdp"
+    retry2_pre_md = window_dir / "pre_md.retry2.mdp"
+    retry2_production = window_dir / "production.retry2.mdp"
+    retry2_pre_relax.write_text(
+        _render_window_relax_em_mdp(ci_ctx, lambda_values, window_index),
+        encoding="utf-8",
+    )
+    retry2_pre_md.write_text(
+        _render_window_relax_md_mdp(
+            ci_ctx,
+            lambda_values,
+            window_index,
+            _job_seed(ctx, leg, repeat_index, window_index, "pre-md", "retry2"),
+        ),
+        encoding="utf-8",
+    )
+    retry2_production.write_text(
+        _render_lambda_mdp(
+            ci_ctx,
+            lambda_values,
+            window_index,
+            _job_seed(ctx, leg, repeat_index, window_index, "prod", "retry2"),
+        ),
+        encoding="utf-8",
+    )
+
+    robust_protocol = replace(
+        ctx.protocol,
+        couple_intramol=True,
+        window_relax_em_steps=ctx.protocol.window_relax_em_steps * 3,
+        window_relax_md_dt_ps=ctx.protocol.window_relax_md_dt_ps / 2.0,
+        production_dt_ps=ctx.protocol.production_dt_ps / 2.0,
+    )
+    robust_ctx = replace(ctx, protocol=robust_protocol)
+    retry3_pre_relax = window_dir / "pre_relax.retry3.mdp"
+    retry3_pre_md = window_dir / "pre_md.retry3.mdp"
+    retry3_production = window_dir / "production.retry3.mdp"
+    retry3_pre_relax.write_text(
+        _render_window_relax_em_mdp(robust_ctx, lambda_values, window_index),
+        encoding="utf-8",
+    )
+    retry3_pre_md.write_text(
+        _render_window_relax_md_mdp(
+            robust_ctx,
+            lambda_values,
+            window_index,
+            _job_seed(ctx, leg, repeat_index, window_index, "pre-md", "retry3"),
+        ),
+        encoding="utf-8",
+    )
+    retry3_production.write_text(
+        _render_lambda_mdp(
+            robust_ctx,
+            lambda_values,
+            window_index,
+            _job_seed(ctx, leg, repeat_index, window_index, "prod", "retry3"),
+        ),
+        encoding="utf-8",
+    )
+
+    return {
+        "retry1": {"pre_md": retry1_pre_md, "production": retry1_production},
+        "retry2": {
+            "pre_relax": retry2_pre_relax,
+            "pre_md": retry2_pre_md,
+            "production": retry2_production,
+        },
+        "retry3": {
+            "pre_relax": retry3_pre_relax,
+            "pre_md": retry3_pre_md,
+            "production": retry3_production,
+        },
+    }
+
+
 def _sample_window_snippet(
     *,
     gmx_command: str,
@@ -1255,6 +1463,7 @@ def _sample_window_snippet(
     start_gro: Path,
     window_dir: Path,
     grompp_maxwarn_sampling: int,
+    retry_mdps: dict[str, dict[str, Path]] | None = None,
 ) -> str:
     pre_relax_mdp = window_dir / "pre_relax.mdp"
     pre_relax_tpr = window_dir / "pre_relax.tpr"
@@ -1299,23 +1508,72 @@ def _sample_window_snippet(
         deffnm.with_suffix(".trr"),
     ]
     cleanup_line = "rm -f " + " ".join(sh_quote(str(path)) for path in cleanup_targets)
-    return "\n".join(
-        [
-            f"if {completion_check}; then",
-            f"  echo \"[abag-rbfep] skipping completed sample window {window_tag}\"",
-            "else",
-            f"  echo \"[abag-rbfep] starting sample window {window_tag}\"",
+
+    def attempt_chain(em_mdp: Path, relax_mdp: Path, prod_mdp: Path, label: str) -> list[str]:
+        """One full grompp+mdrun chain for a window attempt.
+
+        Runs under `set +e` (the stage script is `set -euo pipefail`) so a
+        crashing mdrun (LINCS/SIGSEGV) falls through to the next ladder rung
+        instead of killing the whole stage (ISSUE-007 window-level rescue)."""
+        return [
+            f'  echo "[abag-rbfep] window {window_tag}: attempt {label}"',
             f"  {cleanup_line}",
-            f"  {gmx_command} grompp -f {sh_quote(str(pre_relax_mdp))} -c {sh_quote(str(start_gro))} -p {sh_quote(str(repeat_top))} -o {sh_quote(str(pre_relax_tpr))} -maxwarn {grompp_maxwarn_sampling}",
-            f"  {gmx_command} mdrun -s {sh_quote(str(pre_relax_tpr))} -deffnm {sh_quote(str(pre_relax_deffnm))}{mdrun_suffix}",
-            f"  {gmx_command} grompp -f {sh_quote(str(pre_md_mdp))} -c {sh_quote(str(pre_relax_deffnm.with_suffix('.gro')))} -p {sh_quote(str(repeat_top))} -o {sh_quote(str(pre_md_tpr))} -maxwarn {grompp_maxwarn_sampling}",
-            f"  {gmx_command} mdrun -s {sh_quote(str(pre_md_tpr))} -deffnm {sh_quote(str(pre_md_deffnm))}{mdrun_suffix}",
-            f"  {gmx_command} grompp -f {sh_quote(str(production_mdp))} -c {sh_quote(str(pre_md_deffnm.with_suffix('.gro')))} -t {sh_quote(str(pre_md_deffnm.with_suffix('.cpt')))} -p {sh_quote(str(repeat_top))} -o {sh_quote(str(tpr_path))} -maxwarn {grompp_maxwarn_sampling}",
+            "  set +e",
+            f"  {gmx_command} grompp -f {sh_quote(str(em_mdp))} -c {sh_quote(str(start_gro))} -p {sh_quote(str(repeat_top))} -o {sh_quote(str(pre_relax_tpr))} -maxwarn {grompp_maxwarn_sampling} && \\",
+            f"  {gmx_command} mdrun -s {sh_quote(str(pre_relax_tpr))} -deffnm {sh_quote(str(pre_relax_deffnm))}{mdrun_suffix} && \\",
+            f"  {gmx_command} grompp -f {sh_quote(str(relax_mdp))} -c {sh_quote(str(pre_relax_deffnm.with_suffix('.gro')))} -p {sh_quote(str(repeat_top))} -o {sh_quote(str(pre_md_tpr))} -maxwarn {grompp_maxwarn_sampling} && \\",
+            f"  {gmx_command} mdrun -s {sh_quote(str(pre_md_tpr))} -deffnm {sh_quote(str(pre_md_deffnm))}{mdrun_suffix} && \\",
+            f"  {gmx_command} grompp -f {sh_quote(str(prod_mdp))} -c {sh_quote(str(pre_md_deffnm.with_suffix('.gro')))} -t {sh_quote(str(pre_md_deffnm.with_suffix('.cpt')))} -p {sh_quote(str(repeat_top))} -o {sh_quote(str(tpr_path))} -maxwarn {grompp_maxwarn_sampling} && \\",
             f"  {gmx_command} mdrun -s {sh_quote(str(tpr_path))} -deffnm {sh_quote(str(deffnm))} -dhdl {sh_quote(str(dhdl_path))}{mdrun_suffix}",
-            f"  echo \"[abag-rbfep] completed sample window {window_tag}\"",
+            "  set -e",
+        ]
+
+    lines = [
+        f"if {completion_check}; then",
+        f'  echo "[abag-rbfep] skipping completed sample window {window_tag}"',
+        "else",
+        f'  echo "[abag-rbfep] starting sample window {window_tag}"',
+        *attempt_chain(pre_relax_mdp, pre_md_mdp, production_mdp, "standard"),
+    ]
+    retry1 = (retry_mdps or {}).get("retry1")
+    retry2 = (retry_mdps or {}).get("retry2")
+    retry3 = (retry_mdps or {}).get("retry3")
+    if retry1:
+        lines.extend(
+            [
+                f"  if ! ( {completion_check} ); then",
+                *attempt_chain(pre_relax_mdp, retry1["pre_md"], retry1["production"], "retry1-reseed"),
+                "  fi",
+            ]
+        )
+    if retry2:
+        lines.extend(
+            [
+                f"  if ! ( {completion_check} ); then",
+                *attempt_chain(retry2["pre_relax"], retry2["pre_md"], retry2["production"], "retry2-couple-intramol"),
+                "  fi",
+            ]
+        )
+    if retry3:
+        lines.extend(
+            [
+                f"  if ! ( {completion_check} ); then",
+                *attempt_chain(retry3["pre_relax"], retry3["pre_md"], retry3["production"], "retry3-robust-ci-half-dt"),
+                "  fi",
+            ]
+        )
+    lines.extend(
+        [
+            f"  if ( {completion_check} ); then",
+            f'    echo "[abag-rbfep] completed sample window {window_tag}"',
+            "  else",
+            f'    echo "[abag-rbfep] FAILED sample window {window_tag} after retry ladder" >&2',
+            "    exit 1",
+            "  fi",
             "fi",
         ]
     )
+    return "\n".join(lines)
 
 
 def _bar_repeat_snippet(
@@ -1400,11 +1658,20 @@ def _stage_prepare(ctx: StageContext) -> StageStatus:
         "legs": {},
     }
     mutated_site_keys = {(site.chain_id, site.resseq, site.icode or "") for site in ctx.mutation_group.sites}
-    for leg in ("complex", "apo"):
+    is_dssb = str(getattr(ctx.protocol, "leg_topology", "two_leg")).strip().lower() == "dssb"
+    if is_dssb:
+        # V2.1a DSSB: one leg dir, two inputs (bound complex + unbound copy).
+        leg_specs: list[tuple[str, str, list[str]]] = [
+            ("dssb", "bound", _leg_mutated_chains(ctx, "bound")),
+            ("dssb", "unbound", _leg_mutated_chains(ctx, "apo")),
+        ]
+    else:
+        leg_specs = [(leg, leg, _leg_mutated_chains(ctx, leg)) for leg in _job_legs(ctx)]
+    for leg, input_label, keep_chains in leg_specs:
         leg_dir = ctx.job_dir / "legs" / leg
         leg_dir.mkdir(parents=True, exist_ok=True)
-        prepared_input = leg_dir / "input.pdb"
-        extract_pdb_chains(input_path, prepared_input, keep_chains=_leg_mutated_chains(ctx, leg))
+        prepared_input = leg_dir / ("input.pdb" if not is_dssb else f"{input_label}_input.pdb")
+        extract_pdb_chains(input_path, prepared_input, keep_chains=keep_chains)
         # Strip any input hydrogens so pdb2gmx can run without -ignh: normal
         # residues are re-protonated from .hdb rules, while pmx hybrid residues
         # keep their explicit pmx hydrogens/dummies (-ignh would silently drop
@@ -1454,9 +1721,9 @@ def _stage_prepare(ctx: StageContext) -> StageStatus:
                 _, blocking_heavy_atom_clashes = partition_sidechain_repairable_clashes(heavy_atom_clashes)
         inter_residue_heavy_atom_clashes = find_inter_residue_heavy_atom_clashes(prepared_input)
         manifest = {
-            "leg": leg,
+            "leg": input_label,
             "mutated_entity_side": ctx.mutation_group.entity_side,
-            "chains_retained": _leg_mutated_chains(ctx, leg),
+            "chains_retained": keep_chains,
             "input_structure": str(prepared_input),
             "source_input_structure": ctx.system.input_structure,
             "structure_source": ctx.system.structure_source,
@@ -1466,9 +1733,10 @@ def _stage_prepare(ctx: StageContext) -> StageStatus:
             "intra_residue_heavy_atom_clash_count": len(heavy_atom_clashes),
             "inter_residue_heavy_atom_clash_count": len(inter_residue_heavy_atom_clashes),
         }
-        write_json(leg_dir / "manifest.json", manifest)
-        qc_payload["legs"][leg] = {
-            "chains_retained": _leg_mutated_chains(ctx, leg),
+        manifest_name = "manifest.json" if not is_dssb else f"{input_label}_manifest.json"
+        write_json(leg_dir / manifest_name, manifest)
+        qc_payload["legs"][input_label] = {
+            "chains_retained": keep_chains,
             "incomplete_standard_residues": incomplete_residues,
             "blocking_incomplete_standard_residues": blocking_incomplete_residues,
             "sidechain_only_incomplete_standard_residues": sidechain_only_incomplete_residues,
@@ -1646,17 +1914,35 @@ def _stage_mutate(ctx: StageContext) -> StageStatus:
     gmxlib = env.get("GMXLIB") if env else None
     if gmxlib:
         artifacts.append(gmxlib)
-    for leg in ("complex", "apo"):
-        prepared_input = ctx.job_dir / "legs" / leg / "input.pdb"
-        if not prepared_input.is_file():
-            status = StageStatus(
-                stage="mutate",
-                state="blocked_input",
-                message=f"Prepared leg input is missing: {prepared_input}",
-                started_at=started,
-                completed_at=utc_now(),
-            )
-            return _write_stage_status(ctx.job_dir, status)
+    for leg in _job_legs(ctx):
+        is_dssb_leg = leg == "dssb"
+        if is_dssb_leg:
+            dssb_inputs = [
+                ctx.job_dir / "legs" / leg / "bound_input.pdb",
+                ctx.job_dir / "legs" / leg / "unbound_input.pdb",
+            ]
+            missing_inputs = [str(path) for path in dssb_inputs if not path.is_file()]
+            if missing_inputs:
+                status = StageStatus(
+                    stage="mutate",
+                    state="blocked_input",
+                    message=f"Prepared DSSB inputs are missing: {', '.join(missing_inputs)}",
+                    started_at=started,
+                    completed_at=utc_now(),
+                )
+                return _write_stage_status(ctx.job_dir, status)
+            prepared_input = dssb_inputs[0]
+        else:
+            prepared_input = ctx.job_dir / "legs" / leg / "input.pdb"
+            if not prepared_input.is_file():
+                status = StageStatus(
+                    stage="mutate",
+                    state="blocked_input",
+                    message=f"Prepared leg input is missing: {prepared_input}",
+                    started_at=started,
+                    completed_at=utc_now(),
+                )
+                return _write_stage_status(ctx.job_dir, status)
         leg_dir = ctx.job_dir / "legs" / leg / "pmx"
         leg_dir.mkdir(parents=True, exist_ok=True)
         script_path = leg_dir / "mutations.txt"
@@ -1729,6 +2015,26 @@ def _stage_mutate(ctx: StageContext) -> StageStatus:
             restore_summary_path=Path(mutant_standard_residue_repair.name),
             pdbfixer_summary_path=Path(mutant_pdbfixer_repair.name),
         )
+        if is_dssb_leg:
+            bound_chains = list(ctx.system.antibody_chains + ctx.system.antigen_chains)
+            unbound_chains = _leg_mutated_chains(ctx, "apo")
+            chain_mapping = suggest_unbound_chain_mapping(bound_chains, unbound_chains)
+            mapping_path = leg_dir / "dssb_chain_mapping.json"
+            write_json(mapping_path, {"chain_mapping": chain_mapping})
+            stage_commands.extend(
+                _dssb_mutate_inner_commands(
+                    ctx,
+                    leg_dir=leg_dir,
+                    pmx_command=pmx_command,
+                    gmx_command=gmx_command,
+                    project_python_command=project_python_command,
+                    script_path=script_path,
+                    chain_mapping=chain_mapping,
+                    mutated_chain_ids=mutated_chain_ids,
+                    pmx_command_argv=pmx_command_argv,
+                )
+            )
+            continue
         inner_commands = " && ".join(
             [
                 f"cd {sh_quote(str(leg_dir))}",
@@ -1763,7 +2069,7 @@ def _stage_mutate(ctx: StageContext) -> StageStatus:
     }
     qc_path = ctx.job_dir / "artifacts" / "mutate_qc.json"
     missing_mutant_pdbs: list[str] = []
-    for leg in ("complex", "apo"):
+    for leg in _job_legs(ctx):
         leg_payload, leg_artifacts, missing_mutant = _collect_mutate_leg_qc(
             ctx.job_dir,
             leg,
@@ -1788,7 +2094,7 @@ def _stage_mutate(ctx: StageContext) -> StageStatus:
         if repaired_any:
             qc_artifacts = []
             missing_mutant_pdbs = []
-            for leg in ("complex", "apo"):
+            for leg in _job_legs(ctx):
                 leg_payload, leg_artifacts, missing_mutant = _collect_mutate_leg_qc(
                     ctx.job_dir,
                     leg,
@@ -2276,6 +2582,164 @@ def _mutate_repair_commands(
     return [f"bash -lc {sh_quote(inner_commands)}"]
 
 
+def _dssb_mutate_inner_commands(
+    ctx: StageContext,
+    *,
+    leg_dir: Path,
+    pmx_command: str,
+    gmx_command: str,
+    project_python_command: str,
+    script_path: Path,
+    chain_mapping: dict[str, str],
+    mutated_chain_ids: list[str],
+    pmx_command_argv: list[str] | None,
+) -> list[str]:
+    """Build the DSSB (double-system/single-box) mutate command chain.
+
+    Produces, inside legs/dssb/pmx:
+      mutant_bound.pdb           (forward hybrid WT->MUT, bound complex)
+      mutant_unbound.pdb         (forward hybrid, unbound copy)
+      mutant_unbound_renamed.pdb (chain IDs remapped to avoid collisions)
+      mutant.pdb                 (pmx doublebox combined structure)
+      processed.gro / topol.top / pmxtop.top (+ per-chain itps)
+      pmx_topol_Protein_chain_<U>.itp with A/B states SWAPPED (unbound runs
+      MUT->WT under the same global lambda)
+      dssb_qc.json               (hybrid integrity + charge invariance)
+    """
+    job_dir = ctx.job_dir
+    bound_input = job_dir / "legs" / "dssb" / "bound_input.pdb"
+    unbound_input = job_dir / "legs" / "dssb" / "unbound_input.pdb"
+    separation = float(getattr(ctx.protocol, "doublebox_separation_nm", 2.5))
+    wall = float(getattr(ctx.protocol, "doublebox_wall_nm", 1.5))
+    mapping_path = leg_dir / "dssb_chain_mapping.json"
+    renamed_unbound = leg_dir / "mutant_unbound_renamed.pdb"
+    unbound_chain_ids = sorted(set(chain_mapping.values()))
+    gentop_chain_ids = sorted(set(mutated_chain_ids) | set(unbound_chain_ids))
+
+    rename_command = (
+        f"{project_python_command} -c "
+        + sh_quote(
+            "import json; from pathlib import Path; "
+            "from abag_rbfe.structure import rename_pdb_chains; "
+            f"mapping = json.loads(Path({str(mapping_path)!r}).read_text())['chain_mapping']; "
+            f"rename_pdb_chains(Path('mutant_unbound.pdb'), Path({renamed_unbound.name!r}), mapping)"
+        )
+    )
+    strip_bound_command = (
+        f"{project_python_command} -c "
+        + sh_quote(
+            "from pathlib import Path; "
+            "from abag_rbfe.structure import strip_terminal_oxygen_atoms; "
+            "strip_terminal_oxygen_atoms(Path('mutant_bound.pdb'), Path('mutant_bound.pdb'))"
+        )
+    )
+    strip_unbound_command = (
+        f"{project_python_command} -c "
+        + sh_quote(
+            "from pathlib import Path; "
+            "from abag_rbfe.structure import strip_terminal_oxygen_atoms; "
+            f"strip_terminal_oxygen_atoms(Path({renamed_unbound.name!r}), Path({renamed_unbound.name!r}))"
+        )
+    )
+    strip_mutant_terminal_oxygen_command = (
+        f"{project_python_command} -c "
+        + sh_quote(
+            "from pathlib import Path; "
+            "from abag_rbfe.structure import strip_terminal_oxygen_atoms; "
+            "strip_terminal_oxygen_atoms(Path('mutant.pdb'), Path('mutant.pdb'))"
+        )
+    )
+    mutant_standard_residue_repair = leg_dir / "mutant_standard_residue_repair.json"
+    mutant_pdbfixer_repair = leg_dir / "mutant_pdbfixer_repair.json"
+    mutant_geometry_qc = leg_dir / "mutant_geometry_qc.json"
+    processed_gro_qc = leg_dir / "processed_gro_qc.json"
+    dssb_qc_path = leg_dir / "dssb_qc.json"
+
+    mutant_standard_residue_restore_command = _mutant_standard_residue_restore_command(
+        project_python_command,
+        template_path=bound_input,
+        target_path=Path("mutant.pdb"),
+        summary_path=Path(mutant_standard_residue_repair.name),
+    )
+    mutant_pdbfixer_repair_command = _mutant_pdbfixer_sidechain_repair_command(
+        project_python_command,
+        target_path=Path("mutant.pdb"),
+        summary_path=Path(mutant_pdbfixer_repair.name),
+    )
+    mutant_inter_residue_qc_command = (
+        f"{project_python_command} -c "
+        + sh_quote(
+            "from pathlib import Path; "
+            "from abag_rbfe.structure import write_inter_residue_heavy_atom_clash_report; "
+            "import sys; "
+            f"payload = write_inter_residue_heavy_atom_clash_report(Path('mutant.pdb'), Path({mutant_geometry_qc.name!r}), reference_path=Path({str(bound_input)!r})); "
+            "sys.exit(2 if payload.get('blocking_inter_residue_heavy_atom_clashes') else 0)"
+        )
+    )
+    processed_gro_validation_command = _processed_gro_validation_command(
+        project_python_command,
+        gro_path=Path("processed.gro"),
+        summary_path=Path(processed_gro_qc.name),
+    )
+    hybrid_topology_generation_command = _hybrid_topology_generation_command(
+        project_python_command,
+        topology_path=Path("topol.top"),
+        output_path=Path("pmxtop.top"),
+        force_field=ctx.protocol.force_field,
+        mutated_chain_ids=gentop_chain_ids,
+        pmx_command_argv=pmx_command_argv or [ctx.protocol.pmx_bin],
+        restore_summary_path=Path(mutant_standard_residue_repair.name),
+        pdbfixer_summary_path=Path(mutant_pdbfixer_repair.name),
+    )
+    swap_command = (
+        f"{project_python_command} -c "
+        + sh_quote(
+            "import json; from pathlib import Path; "
+            "from abag_rbfe.gmx import swap_hybrid_residue_ab_states; "
+            "import glob; "
+            f"mapping = json.loads(Path({str(mapping_path)!r}).read_text())['chain_mapping']; "
+            "swapped = []; "
+            "[swapped.append(swap_hybrid_residue_ab_states(Path(p), set())) "
+            f"for chain in sorted(set(mapping.values())) for p in glob.glob(f'pmx_topol_Protein_chain_{{chain}}.itp')]; "
+            "print(json.dumps(swapped))"
+        )
+    )
+    dssb_qc_command = (
+        f"{project_python_command} -c "
+        + sh_quote(
+            "import json, sys; from pathlib import Path; "
+            "from abag_rbfe.gmx import validate_hybrid_topology_integrity, validate_dssb_charge_invariance; "
+            "hybrid = validate_hybrid_topology_integrity(Path('.')); "
+            "charge = validate_dssb_charge_invariance(sorted(Path('.').glob('pmx_topol_Protein_chain_*.itp'))); "
+            f"payload = {{'hybrid_integrity': hybrid, 'charge_invariance': charge}}; "
+            f"Path({dssb_qc_path.name!r}).write_text(json.dumps(payload, indent=1) + '\\n'); "
+            "sys.exit(2 if (hybrid['checked'] and not hybrid['ok']) or not charge['ok'] else 0)"
+        )
+    )
+
+    inner = " && ".join(
+        [
+            f"cd {sh_quote(str(leg_dir))}",
+            f"{pmx_command} mutate -f {sh_quote(str(bound_input))} -o mutant_bound.pdb -ff {ctx.protocol.force_field} --script {sh_quote(str(script_path))} --keep_resid",
+            f"{pmx_command} mutate -f {sh_quote(str(unbound_input))} -o mutant_unbound.pdb -ff {ctx.protocol.force_field} --script {sh_quote(str(script_path))} --keep_resid",
+            strip_bound_command,
+            rename_command,
+            strip_unbound_command,
+            f"{pmx_command} doublebox -f1 mutant_bound.pdb -f2 {renamed_unbound.name} -o mutant.pdb -r {separation} -d {wall}",
+            strip_mutant_terminal_oxygen_command,
+            mutant_standard_residue_restore_command,
+            mutant_pdbfixer_repair_command,
+            mutant_inter_residue_qc_command,
+            f"{gmx_command} pdb2gmx -missing -f mutant.pdb -o processed.gro -p topol.top -ff {ctx.protocol.force_field} -water {ctx.protocol.water_model}",
+            processed_gro_validation_command,
+            hybrid_topology_generation_command,
+            swap_command,
+            dssb_qc_command,
+        ]
+    )
+    return [f"bash -lc {sh_quote(inner)}"]
+
+
 def _attempt_repair_mutant_sidechain_clashes(
     ctx: StageContext,
     *,
@@ -2376,7 +2840,7 @@ def _stage_build_legs(ctx: StageContext) -> StageStatus:
     command_lines: list[str] = []
     gmxlib_dir = Path(gmxlib) if gmxlib else None
 
-    for leg in ("complex", "apo"):
+    for leg in _job_legs(ctx):
         pmx_dir = ctx.job_dir / "legs" / leg / "pmx"
         processed_gro = pmx_dir / "processed.gro"
         pmx_top = pmx_dir / "pmxtop.top"
@@ -2406,6 +2870,20 @@ def _stage_build_legs(ctx: StageContext) -> StageStatus:
                 "gmxlib": str(gmxlib_dir) if gmxlib_dir else None,
                 "water_coordinates": str(water_coordinate_path(gmxlib_dir, ctx.protocol.water_model)) if gmxlib_dir else None,
             }
+            schedule = _lambda_component_schedules(
+                len(lambda_values),
+                sidechain_growth=_mutation_sidechain_growth(ctx),
+                distribution=getattr(ctx.protocol, "lambda_distribution", "linear"),
+            )
+            if schedule is not None:
+                deletion_atoms, insertion_atoms = _mutation_topology_classes(ctx)
+                manifest["lambda_distribution"] = getattr(ctx.protocol, "lambda_distribution", "linear")
+                manifest["lambda_schedule_naked_charge"] = check_lambda_schedule_naked_charge(
+                    schedule[0],
+                    schedule[1],
+                    deletion_atoms=deletion_atoms,
+                    insertion_atoms=insertion_atoms,
+                )
             write_json(repeat_dir / "lambda_plan.json", manifest)
             artifacts.extend(
                 [
@@ -2488,7 +2966,7 @@ def _stage_equilibrate(ctx: StageContext) -> StageStatus:
     if gmxlib:
         artifacts.append(gmxlib)
 
-    for leg in ("complex", "apo"):
+    for leg in _job_legs(ctx):
         pmx_dir = ctx.job_dir / "legs" / leg / "pmx"
         processed_gro = pmx_dir / "processed.gro"
         pmx_top = pmx_dir / "pmxtop.top"
@@ -2652,13 +3130,29 @@ def _stage_sample(ctx: StageContext) -> StageStatus:
 
     gmx_command = _resolve_gmx_command(ctx)
     mdrun_suffix = _mdrun_suffix(ctx)
+    # Per-window start-structure overrides (P1 hydration seeding, 2026-09):
+    # config/window_seeds.json maps "leg/repNN/lambda_NNN" -> absolute gro path.
+    # Validated pattern (3be1 w50a / 1dqj y50a / 1vfb w52a): hydrated MetaD
+    # frames seeded ONLY into high-vdw-lambda windows (ring ~dummy) cut
+    # aromatic-deletion overestimation by ~half (mean |err| 6.42 -> 3.21).
+    # Precedence: window_seeds > window_chaining > shared npt.gro.
+    window_seeds: dict[str, str] = {}
+    seeds_path = ctx.job_dir / "config" / "window_seeds.json"
+    if seeds_path.is_file():
+        try:
+            payload = read_json(seeds_path)
+            if isinstance(payload, dict):
+                window_seeds = {str(k): str(v) for k, v in payload.items()}
+        except OSError:
+            window_seeds = {}
     commands: list[str] = []
     artifacts: list[str] = []
     gmxlib = env.get("GMXLIB") if env else None
     if gmxlib:
         artifacts.append(gmxlib)
 
-    for leg in ("complex", "apo"):
+    lambda_values = _lambda_values(ctx.protocol.lambda_windows)
+    for leg in _job_legs(ctx):
         for repeat_index in range(1, ctx.protocol.repeats + 1):
             repeat_dir = ctx.job_dir / "legs" / leg / f"rep{repeat_index:02d}"
             repeat_top = repeat_dir / "system.top"
@@ -2684,8 +3178,18 @@ def _stage_sample(ctx: StageContext) -> StageStatus:
             if ctx.runner.execute:
                 artifacts.extend(_backfill_repeat_support_itps_from_seed_source(repeat_dir, repeat_top))
 
-            for window_index, _lambda_value in enumerate(_lambda_values(ctx.protocol.lambda_windows)):
+            chained_start_gro = start_gro
+            for window_index, _lambda_value in enumerate(lambda_values):
                 window_dir = repeat_dir / f"lambda_{window_index:03d}"
+                seed_key = f"{leg}/rep{repeat_index:02d}/lambda_{window_index:03d}"
+                if seed_key in window_seeds:
+                    chained_start_gro = Path(window_seeds[seed_key])
+                elif getattr(ctx.protocol, "window_chaining", False) and window_index > 0:
+                    # Patel-style continuous traversal: start from the previous
+                    # window's production endpoint, not the shared npt.gro.
+                    chained_start_gro = repeat_dir / f"lambda_{window_index - 1:03d}" / "md.gro"
+                else:
+                    chained_start_gro = start_gro
                 if ctx.runner.execute and _should_inherit_leg_from_source(ctx, leg):
                     artifacts.extend(
                         _seed_sample_window_from_source(
@@ -2706,14 +3210,28 @@ def _stage_sample(ctx: StageContext) -> StageStatus:
                         str(window_dir / "dhdl.xvg"),
                     ]
                 )
+                retry_mdps = _write_sample_retry_mdps(
+                    ctx,
+                    leg=leg,
+                    repeat_index=repeat_index,
+                    window_index=window_index,
+                    lambda_values=lambda_values,
+                    window_dir=window_dir,
+                )
+                artifacts.extend(
+                    str(path)
+                    for attempt in retry_mdps.values()
+                    for path in attempt.values()
+                )
                 commands.append(
                     _sample_window_snippet(
                         gmx_command=gmx_command,
                         mdrun_suffix=mdrun_suffix,
                         repeat_top=repeat_top,
-                        start_gro=start_gro,
+                        start_gro=chained_start_gro,
                         window_dir=window_dir,
                         grompp_maxwarn_sampling=ctx.protocol.grompp_maxwarn_sampling,
+                        retry_mdps=retry_mdps,
                     )
                 )
 
@@ -2759,7 +3277,7 @@ def _stage_bar(ctx: StageContext) -> StageStatus:
     if gmxlib:
         artifacts.append(gmxlib)
 
-    for leg in ("complex", "apo"):
+    for leg in _job_legs(ctx):
         for repeat_index in range(1, ctx.protocol.repeats + 1):
             repeat_dir = ctx.job_dir / "legs" / leg / f"rep{repeat_index:02d}"
             dhdl_files = sorted(str(path) for path in repeat_dir.glob("lambda_*/dhdl.xvg"))
@@ -3102,21 +3620,42 @@ def _stage_artifact_exists(path: Path) -> bool:
         return False
 
 
+def _job_expected_legs(job_dir: Path) -> tuple[str, ...]:
+    """Expected leg set from job_spec protocol (two_leg default, dssb single-leg)."""
+    spec_path = job_dir / "job_spec.json"
+    leg_topology = "two_leg"
+    if spec_path.exists():
+        try:
+            leg_topology = str(read_json(spec_path).get("protocol", {}).get("leg_topology", "two_leg"))
+        except OSError:
+            pass
+    return ("dssb",) if leg_topology.strip().lower() == "dssb" else ("complex", "apo")
+
+
 def _mutate_outputs_complete(job_dir: Path) -> bool:
-    pmx_dirs = [job_dir / "legs" / "complex" / "pmx", job_dir / "legs" / "apo" / "pmx"]
-    return all(
+    expected_legs = _job_expected_legs(job_dir)
+    pmx_dirs = [job_dir / "legs" / leg / "pmx" for leg in expected_legs]
+    base_complete = all(
         _stage_artifact_exists(pmx_dir / "processed.gro")
         and gro_file_is_valid(pmx_dir / "processed.gro")
         and _stage_artifact_exists(pmx_dir / "pmxtop.top")
         for pmx_dir in pmx_dirs
     )
+    if not base_complete:
+        return False
+    if expected_legs == ("dssb",):
+        # DSSB mutate also produces the A/B-swapped unbound itp and dssb_qc.json;
+        # without them the recovered stage would silently skip the DSSB steps.
+        dssb_pmx = job_dir / "legs" / "dssb" / "pmx"
+        return _stage_artifact_exists(dssb_pmx / "dssb_qc.json")
+    return True
 
 
 def _build_legs_outputs_complete(job_dir: Path) -> bool:
     repeats, lambda_windows = _job_protocol_counts(job_dir)
     if repeats <= 0 or lambda_windows <= 0:
         return False
-    for leg in ("complex", "apo"):
+    for leg in _job_expected_legs(job_dir):
         for repeat_index in range(1, repeats + 1):
             repeat_dir = job_dir / "legs" / leg / f"rep{repeat_index:02d}"
             required_files = [
@@ -3144,7 +3683,7 @@ def _equilibrate_outputs_complete(job_dir: Path) -> bool:
     repeats, _lambda_windows = _job_protocol_counts(job_dir)
     if repeats <= 0:
         return False
-    for leg in ("complex", "apo"):
+    for leg in _job_expected_legs(job_dir):
         for repeat_index in range(1, repeats + 1):
             repeat_dir = job_dir / "legs" / leg / f"rep{repeat_index:02d}"
             if not _stage_artifact_exists(repeat_dir / "system.top"):
@@ -3158,7 +3697,7 @@ def _sample_outputs_complete(job_dir: Path) -> bool:
     repeats, lambda_windows = _job_protocol_counts(job_dir)
     if repeats <= 0 or lambda_windows <= 0:
         return False
-    for leg in ("complex", "apo"):
+    for leg in _job_expected_legs(job_dir):
         for repeat_index in range(1, repeats + 1):
             repeat_dir = job_dir / "legs" / leg / f"rep{repeat_index:02d}"
             for window_index in range(lambda_windows):
@@ -3213,7 +3752,7 @@ def _ensure_mutate_qc_payload(job_dir: Path) -> dict[str, object]:
         "legs": {},
     }
     found_any_mutant = False
-    for leg in ("complex", "apo"):
+    for leg in _job_expected_legs(job_dir):
         leg_payload, _artifacts, missing_mutant = _collect_mutate_leg_qc(
             job_dir,
             leg,

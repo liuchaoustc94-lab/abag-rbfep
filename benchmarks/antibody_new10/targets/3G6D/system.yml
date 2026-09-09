@@ -1,0 +1,11 @@
+system_name: 3g6d
+input_structure: benchmarks/antibody_new10/structures/3G6D.pdb
+structure_source: experimental
+antibody_chains:
+- H
+- L
+antigen_chains:
+- A
+notes:
+- CNTO607 Fab–IL-13
+- 10 antibody-side rows, dominated by same-side combination mutations; exploratory only.

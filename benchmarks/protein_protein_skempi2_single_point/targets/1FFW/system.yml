@@ -1,0 +1,12 @@
+system_name: 1ffw
+input_structure: benchmarks/protein_protein_skempi2_single_point/structures/1FFW.pdb
+structure_source: experimental
+complex_class: protein-protein
+mutated_partner: partner_a
+antibody_chains:
+- A
+antigen_chains:
+- B
+notes:
+- CheY–CheA
+- 11 unique single substitutions on the CheY chain.

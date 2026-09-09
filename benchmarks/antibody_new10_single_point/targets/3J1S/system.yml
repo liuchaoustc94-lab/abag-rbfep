@@ -1,0 +1,13 @@
+system_name: 3j1s
+input_structure: benchmarks/antibody_new10_single_point/structures/3J1S.pdb
+structure_source: experimental
+complex_class: antibody-antigen
+mutated_partner: antibody
+antibody_chains:
+- H
+- L
+antigen_chains:
+- A
+notes:
+- A20 Fab–AAV2
+- 15 Rosetta Flex ddG antibody substitutions (one of the 16 source rows is antigen-side); do not pool with experimental R metrics.

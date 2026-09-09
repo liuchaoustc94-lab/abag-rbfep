@@ -1,0 +1,11 @@
+pdb_id,method,resolution_A,deposited_structure,wt_baseline_status,formal_use,notes
+3SE8,X-RAY DIFFRACTION,1.895,crystal complex,PDB construct baseline; no annotated substitutions,experimental_single_point_ready,VRC03-gp120 structure
+3SE9,X-RAY DIFFRACTION,2.000,crystal complex,PDB construct baseline; no annotated substitutions,experimental_single_point_ready,VRC-PG04-gp120 structure
+3N85,X-RAY DIFFRACTION,3.200,crystal complex,PDB construct baseline; no annotated substitutions,experimental_near_threshold,Fab37-HER2 structure
+3G6D,X-RAY DIFFRACTION,3.200,crystal complex,PDB construct baseline; no annotated substitutions,experimental_multi_point_exploratory,CNTO607-IL13 structure
+3L5X,X-RAY DIFFRACTION,1.900,crystal complex,PDB construct baseline; no annotated substitutions,experimental_multi_point_exploratory,H2L6-IL13 structure
+2B2X,X-RAY DIFFRACTION,2.200,crystal complex,NOT WT; deposited AQC2 Fab is affinity-matured,excluded from raw WT RBFE,Antibody mutations include T50V/K64E and S28Q/N52Y; antigen is also engineered
+3J1S,ELECTRON MICROSCOPY,8.500,EM complex,sequence baseline but not a crystal structure,synthetic_control_only,Low-resolution A20-AAV2 control
+4KUC,X-RAY DIFFRACTION,2.787,crystal complex,engineered construct baseline; not full-length native complex,synthetic_control_only,6C2-ricin construct
+5JHL,X-RAY DIFFRACTION,3.000,crystal complex,engineered construct baseline; not full-length native complex,synthetic_control_only,Flavivirus antibody-Zika E construct
+4NNP,X-RAY DIFFRACTION,2.690,crystal complex,engineered construct baseline; not full-length native complex,synthetic_control_only,Antagonistic Fab-MntC construct

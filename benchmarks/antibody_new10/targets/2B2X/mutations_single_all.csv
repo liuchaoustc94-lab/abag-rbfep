@@ -1,0 +1,6 @@
+mutation_group_id,chain_id,resseq,icode,wt,mut,entity_side
+skempi2_2b2x_5044,H,64,,E,K,antibody
+skempi2_2b2x_5045,H,50,,V,T,antibody
+skempi2_2b2x_5046,L,52,,Y,E,antibody
+skempi2_2b2x_5137,H,64,,E,K,antibody
+skempi2_2b2x_5138,H,50,,V,T,antibody

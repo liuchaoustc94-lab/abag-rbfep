@@ -1,0 +1,11 @@
+system_name: acc_1iar
+input_structure: /mnt/data/liuchao/abag-rbfep/benchmarks/acceptance/structures/1IAR.pdb
+structure_source: experimental
+antibody_chains:
+  - B
+antigen_chains:
+  - A
+notes:
+  - Acceptance validation target (2026-08-18): IL-4 / IL-4Ralpha, 2.3A
+  - Experimental ddG from SKEMPI 2.0 (RT ln(Kd_mut/Kd_wt), per-row assay temperature).
+  - antibody/antigen are role labels for non-antibody interfaces.

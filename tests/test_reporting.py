@@ -1103,3 +1103,80 @@ def test_flag_censored_experimental_values_marks_saturated_max_duplicates() -> N
     assert by_job["j5"]["censored_experimental"] is False  # zero is not a saturation marker
     assert by_job["j6"]["censored_experimental"] is False  # 1MLC max is 0.53, unique
     assert by_job["j7"]["censored_experimental"] is False  # unique max is not censored
+
+
+def test_collect_job_results_dssb_single_leg_ddg(tmp_path: Path) -> None:
+    """V2.1a PR-3: dssb 单腿的 BAR ΔG 直接作为 ddG，complex/apo 字段为 None，
+    且带 charge_changing/setup_path/result_confidence 标注。"""
+    from abag_rbfe.reporting import collect_job_results
+    from abag_rbfe.io_utils import write_json
+
+    job_dir = tmp_path / "job-dssb"
+    spec = _job_spec("job-dssb")
+    spec["mutation_group"]["charge_conserving"] = False
+    spec["protocol"]["leg_topology"] = "dssb"
+    spec["protocol"]["repeats"] = 2
+    spec["protocol"]["lambda_windows"] = 2
+    spec["protocol"]["max_repeat_delta_kcal_mol"] = 5.0
+    write_json(job_dir / "job_spec.json", spec)
+    _write_bar_outputs(job_dir / "legs" / "dssb" / "rep01", delta_kt=4.00, stderr_kt=0.50)
+    _write_bar_outputs(job_dir / "legs" / "dssb" / "rep02", delta_kt=4.40, stderr_kt=0.60)
+
+    payload = collect_job_results(job_dir)
+    ddg = payload["ddg_summary"]
+
+    assert ddg["ready"] is True
+    assert ddg["paired_repeat_count"] == 2
+    assert ddg["complex_delta_g_kcal_mol"] is None
+    assert ddg["apo_delta_g_kcal_mol"] is None
+    assert abs(ddg["ddg_kcal_mol"] - 4.2 * ddg["kT_to_kcal_mol"]) < 1e-6
+    assert ddg["charge_changing"] is True
+    assert ddg["setup_path"] == "dssb"
+    assert ddg["result_confidence"] == "quantitative"
+    assert "dssb" in payload["bar_summary"]["legs"]
+    assert "complex" not in payload["bar_summary"]["legs"]
+
+
+def test_planning_routes_charge_changing_to_dssb(tmp_path: Path) -> None:
+    """V2.1a PR-3: 电荷变化突变自动路由 dssb；电荷守恒保持 two_leg；显式 pin 尊重。"""
+    from abag_rbfe.planning import build_batch_plan
+
+    system_path = tmp_path / "system.yml"
+    system_path.write_text(
+        "\n".join(
+            [
+                "system_name: routing_demo",
+                f"input_structure: {tmp_path / 'complex.pdb'}",
+                "structure_source: experimental",
+                "antibody_chains: [H]",
+                "antigen_chains: [A]",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    (tmp_path / "complex.pdb").write_text("HEADER DEMO\nEND\n", encoding="utf-8")
+    mutations_path = tmp_path / "mutations.csv"
+    mutations_path.write_text(
+        "\n".join(
+            [
+                "mutation_group_id,chain_id,resseq,icode,wt,mut,entity_side",
+                "cc_h_d32n,H,32,,D,N,antibody",
+                "nc_h_y33a,H,33,,Y,A,antibody",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    protocol_path = tmp_path / "protocol.yml"
+    protocol_path.write_text("preset: single_point\nallow_charge_changing: true\n", encoding="utf-8")
+
+    plan = build_batch_plan(system_path, mutations_path, protocol_path, batch_id="routing_demo", runs_root=tmp_path / "runs")
+    by_group = {job.mutation_group.mutation_group_id: job for job in plan.jobs}
+    assert by_group["cc_h_d32n"].protocol.leg_topology == "dssb"
+    assert by_group["nc_h_y33a"].protocol.leg_topology == "two_leg"
+
+    pinned_path = tmp_path / "protocol_pinned.yml"
+    pinned_path.write_text("preset: single_point\nallow_charge_changing: true\nleg_topology: two_leg\n", encoding="utf-8")
+    plan_pinned = build_batch_plan(system_path, mutations_path, pinned_path, batch_id="routing_pinned", runs_root=tmp_path / "runs2")
+    assert all(job.protocol.leg_topology == "two_leg" for job in plan_pinned.jobs)

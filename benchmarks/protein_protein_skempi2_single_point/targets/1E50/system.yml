@@ -1,0 +1,20 @@
+system_name: 1e50
+input_structure: benchmarks/protein_protein_skempi2_single_point/structures/1E50.pdb
+structure_source: experimental
+complex_class: protein-protein
+mutated_partner: partner_a
+antibody_chains:
+- A
+- C
+- E
+- G
+- Q
+- R
+antigen_chains:
+- B
+- D
+- F
+- H
+notes:
+- AML1 Runt domain–CBFβ
+- 15 single records / 11 unique signatures on AML1 copies.

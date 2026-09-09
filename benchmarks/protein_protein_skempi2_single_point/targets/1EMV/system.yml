@@ -1,0 +1,12 @@
+system_name: 1emv
+input_structure: benchmarks/protein_protein_skempi2_single_point/structures/1EMV.pdb
+structure_source: experimental
+complex_class: protein-protein
+mutated_partner: partner_a
+antibody_chains:
+- A
+antigen_chains:
+- B
+notes:
+- colicin E9 DNase–immunity protein Im9
+- 34 unique single substitutions on immunity protein Im9.

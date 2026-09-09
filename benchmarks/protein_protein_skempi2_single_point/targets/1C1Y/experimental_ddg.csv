@@ -1,0 +1,16 @@
+source_row_id,pdb_id,mutation_tokens,canonical_signature,source_mutation_tokens,source_mut_index,structure_mapped,mutation_count,single_point,antibody_chains,antigen_chains,ddg_kcal_mol,ddg_censored,censor_reason,temperature_K,affinity_mut_M,affinity_wt_M,reference,method,source_dataset,label_type
+skempi2_1c1y_6625,1C1Y,B:K11M,B:K11M,KB11M,,True,1,True,B,A,0.71297689,False,,298.00,4E-06,1.2E-06,15236966,IAFL,SKEMPI2,experimental_ddg
+skempi2_1c1y_6626,1C1Y,B:N10A,B:N10A,NB10A,,True,1,True,B,A,0.50175867,False,,298.00,2.8E-06,1.2E-06,15236966,IAFL,SKEMPI2,experimental_ddg
+skempi2_1c1y_6627,1C1Y,B:N10D,B:N10D,NB10D,,True,1,True,B,A,1.47562728,False,,298.00,1.45E-05,1.2E-06,15236966,IAFL,SKEMPI2,experimental_ddg
+skempi2_1c1y_6628,1C1Y,B:V15A,B:V15A,VB15A,,True,1,True,B,A,1.12344954,False,,298.00,8E-06,1.2E-06,15236966,IAFL,SKEMPI2,experimental_ddg
+skempi2_1c1y_6629,1C1Y,B:K11A,B:K11A,KB11A,,True,1,True,B,A,1.10845667,False,,298.00,7.8E-06,1.2E-06,15236966,IAFL,SKEMPI2,experimental_ddg
+skempi2_1c1y_6630,1C1Y,B:K11E,B:K11E,KB11E,,True,1,True,B,A,0.89069488,False,,298.00,5.4E-06,1.2E-06,15236966,IAFL,SKEMPI2,experimental_ddg
+skempi2_1c1y_6631,1C1Y,B:T14A,B:T14A,TB14A,,True,1,True,B,A,1.45484666,False,,298.00,1.4E-05,1.2E-06,15236966,IAFL,SKEMPI2,experimental_ddg
+skempi2_1c1y_6632,1C1Y,B:R13A,B:R13A,RB13A,,True,1,True,B,A,1.45484666,False,,298.00,1.4E-05,1.2E-06,15236966,IAFL,SKEMPI2,experimental_ddg
+skempi2_1c1y_6633,1C1Y,B:R5A,B:R5A,RB5A,,True,1,True,B,A,1.90617600,False,,298.00,3E-05,1.2E-06,15236966,IAFL,SKEMPI2,experimental_ddg
+skempi2_1c1y_6634,1C1Y,B:Q12A,B:Q12A,QB12A,,True,1,True,B,A,1.58018253,False,,298.00,1.73E-05,1.2E-06,15236966,IAFL,SKEMPI2,experimental_ddg
+skempi2_1c1y_6635,1C1Y,B:R5A;B:N10D,B:R5A;B:N10D,"RB5A,NB10D",,True,2,False,B,A,2.75129556,False,,298.00,1.25E-04,1.2E-06,15236966,IAFL,SKEMPI2,experimental_ddg
+skempi2_1c1y_6636,1C1Y,B:K30A,B:K30A,KB30A,,True,1,True,B,A,1.31203366,False,,298.00,1.1E-05,1.2E-06,15236966,IAFL,SKEMPI2,experimental_ddg
+skempi2_1c1y_6637,1C1Y,B:K30E,B:K30E,KB30E,,True,1,True,B,A,2.23190621,False,,298.00,5.2E-05,1.2E-06,15236966,IAFL,SKEMPI2,experimental_ddg
+skempi2_1c1y_6638,1C1Y,B:K30A;B:R35G,B:K30A;B:R35G,"KB30A,RB35G",,True,2,False,B,A,2.61915288,False,,298.00,1E-04,1.2E-06,15236966,IAFL,SKEMPI2,experimental_ddg
+skempi2_1c1y_6639,1C1Y,B:R35L,B:R35L,RB35L,,True,1,True,B,A,2.61915288,False,,298.00,1E-04,1.2E-06,15236966,IAFL,SKEMPI2,experimental_ddg

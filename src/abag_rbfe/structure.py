@@ -933,3 +933,30 @@ def partition_inter_residue_sidechain_repairable_clashes(
         else:
             blocking.append(issue)
     return repairable, blocking
+
+
+def rename_pdb_chains(input_path: Path, output_path: Path, chain_mapping: dict[str, str]) -> dict[str, object]:
+    """Rename chain IDs in ATOM records according to chain_mapping (old -> new,
+    single characters). Used by the DSSB path to avoid chain-ID collisions
+    between the bound complex and the unbound copy in the combined box."""
+    renamed = 0
+    output_lines: list[str] = []
+    with input_path.open("r", encoding="utf-8") as handle:
+        for line in handle:
+            if _is_protein_atom_record(line) and len(line) > 21 and line[21] in chain_mapping:
+                line = line[:21] + chain_mapping[line[21]] + line[22:]
+                renamed += 1
+            output_lines.append(line)
+    output_path.write_text("".join(output_lines), encoding="utf-8")
+    return {"renamed_atom_count": renamed, "chain_mapping": dict(chain_mapping)}
+
+
+def suggest_unbound_chain_mapping(bound_chains: list[str] | tuple[str, ...], unbound_chains: list[str] | tuple[str, ...]) -> dict[str, str]:
+    """Pick collision-free single-letter chain IDs for the unbound copy."""
+    import string
+
+    occupied = set(bound_chains)
+    pool = [c for c in string.ascii_uppercase if c not in occupied]
+    if len(pool) < len(unbound_chains):
+        raise ValueError("not enough free chain IDs for unbound copy")
+    return {chain: pool[index] for index, chain in enumerate(unbound_chains)}

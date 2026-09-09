@@ -1,0 +1,12 @@
+mutation_group_id,chain_id,resseq,icode,wt,mut,entity_side
+antigen_a_i5a,A,5,,I,A,antigen
+antigen_a_t6a,A,6,,T,A,antigen
+antigen_a_q8a,A,8,,Q,A,antigen
+antigen_a_i11a,A,11,,I,A,antigen
+antigen_a_t13a,A,13,,T,A,antigen
+antigen_a_n15a,A,15,,N,A,antigen
+antigen_a_s16a,A,16,,S,A,antigen
+antigen_a_q78a,A,78,,Q,A,antigen
+antigen_a_f82a,A,82,,F,A,antigen
+antigen_a_n89a,A,89,,N,A,antigen
+antigen_a_w91a,A,91,,W,A,antigen

@@ -1,0 +1,11 @@
+pdb_id,method,resolution_A,deposited_structure,wt_baseline_status,formal_use,notes
+1C1Y,X-RAY DIFFRACTION,1.900,crystal complex,"PDB construct baseline; no annotated substitutions",experimental_single_point_ready,Rap1A-Raf RBD
+1A4Y,X-RAY DIFFRACTION,2.000,crystal complex,"PDB construct baseline; no annotated substitutions",experimental_single_point_ready,ribonuclease inhibitor-angiogenin
+1C4Z,X-RAY DIFFRACTION,2.600,crystal complex,"PDB construct baseline; no annotated substitutions",experimental_single_point_ready,E6AP-UBCH7; three E6AP copies in the asymmetric unit
+1DAN,X-RAY DIFFRACTION,2.000,crystal complex,"PDB construct baseline; no annotated substitutions",experimental_single_point_ready,factor VIIa-tissue factor; duplicated tissue-factor chains T/U
+1E50,X-RAY DIFFRACTION,2.600,crystal complex,"PDB construct baseline; no annotated substitutions",experimental_single_point_ready,AML1-CBFbeta; multiple crystallographic copies
+1EMV,X-RAY DIFFRACTION,1.700,crystal complex,"PDB construct baseline; no annotated substitutions",experimental_single_point_ready,colicin E9-Im9
+1F47,X-RAY DIFFRACTION,1.950,crystal complex,"PDB construct baseline; no annotated substitutions",experimental_single_point_ready,FtsZ fragment-ZipA
+1JTD,X-RAY DIFFRACTION,2.300,crystal complex,"PDB construct baseline; no annotated substitutions",experimental_single_point_ready,TEM-1-BLIP-II
+3QHY,X-RAY DIFFRACTION,2.060,crystal complex,"PDB construct baseline; no annotated substitutions",experimental_single_point_ready,beta-lactamase-BLIP-II
+1FFW,X-RAY DIFFRACTION,2.700,crystal complex,"PDB construct baseline; no annotated substitutions",experimental_single_point_ready,CheY-CheA

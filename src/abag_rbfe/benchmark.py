@@ -881,6 +881,77 @@ def _load_benchmark_reference_rows(benchmark_root: Path, spec_name: str) -> dict
     return {row["mutation_group_id"]: row for row in read_csv_rows(curated_path)}
 
 
+def _balanced_accuracy_three_class(
+    predicted: list[float],
+    experimental: list[float],
+    *,
+    threshold_kcal_mol: float = 1.0,
+) -> float | None:
+    """Three-class balanced accuracy (favorable / neutral / unfavorable) with a
+    +/-threshold band — the recommended metric once RMSE approaches the
+    experimental reproducibility floor (~1 kcal/mol; Ross 2023)."""
+    def _cls(v: float) -> int:
+        if v <= -threshold_kcal_mol:
+            return 0
+        if v >= threshold_kcal_mol:
+            return 2
+        return 1
+
+    classes = [0, 1, 2]
+    recalls = []
+    for cls in classes:
+        members = [(p, e) for p, e in zip(predicted, experimental) if _cls(e) == cls]
+        if not members:
+            continue
+        correct = sum(1 for p, _e in members if _cls(p) == cls)
+        recalls.append(correct / len(members))
+    if not recalls:
+        return None
+    return sum(recalls) / len(recalls)
+
+
+def _per_target_metrics(
+    pair_rows: list[dict[str, Any]],
+    *,
+    complex_id_key: str = "complex_id",
+    predicted_key: str = "predicted_ddg_kcal_mol",
+    experimental_key: str = "experimental_ddg_kcal_mol",
+) -> dict[str, Any]:
+    """Per-target (within-complex) metrics — the metric that matches the real
+    use case (ranking mutations on one antibody). Pooled R is biased downward
+    by cross-target systematic offsets; the median per-target value is the
+    honest headline for ranking capability."""
+    by_target: dict[str, list[dict[str, Any]]] = {}
+    for row in pair_rows:
+        by_target.setdefault(str(row.get(complex_id_key, "")), []).append(row)
+    targets: dict[str, dict[str, Any]] = {}
+    pearsons: list[float] = []
+    spearmans: list[float] = []
+    for complex_id, rows in sorted(by_target.items()):
+        pred = [row[predicted_key] for row in rows]
+        exp = [row[experimental_key] for row in rows]
+        entry = {
+            "pair_count": len(rows),
+            "pearson_r": _pearson(pred, exp),
+            "spearman_rho": _spearman(pred, exp),
+            "mae_kcal_mol": _mean_abs_error([row.get("ddg_error_kcal_mol") for row in rows]),
+            "mean_offset_kcal_mol": (sum(p - e for p, e in zip(pred, exp)) / len(rows)) if rows else None,
+        }
+        targets[complex_id] = entry
+        if entry["pearson_r"] is not None:
+            pearsons.append(entry["pearson_r"])
+        if entry["spearman_rho"] is not None:
+            spearmans.append(entry["spearman_rho"])
+    return {
+        "targets": targets,
+        "target_count": len(targets),
+        "mean_pearson_r": sum(pearsons) / len(pearsons) if pearsons else None,
+        "median_pearson_r": sorted(pearsons)[len(pearsons) // 2] if pearsons else None,
+        "mean_spearman_rho": sum(spearmans) / len(spearmans) if spearmans else None,
+        "median_spearman_rho": sorted(spearmans)[len(spearmans) // 2] if spearmans else None,
+    }
+
+
 def _benchmark_metrics_from_pairs(
     pair_rows: list[dict[str, Any]],
     *,
@@ -900,6 +971,8 @@ def _benchmark_metrics_from_pairs(
         "mae_kcal_mol": _mean_abs_error(errors),
         "sign_accuracy": _sign_accuracy(predicted, experimental),
         "auc_strong_effect": _roc_auc_binary(strong_labels, strong_scores),
+        "balanced_accuracy_3class": _balanced_accuracy_three_class(predicted, experimental),
+        "per_target": _per_target_metrics(pair_rows),
     }
 
 
@@ -2942,8 +3015,8 @@ def _low_overlap_legs(qc_report: dict[str, Any]) -> list[str]:
         return []
 
     failing_legs: list[str] = []
-    for leg_name in ("complex", "apo"):
-        payload = overlap_legs.get(leg_name, {})
+    # Data-driven leg iteration: works for two-leg and DSSB single-leg QC payloads.
+    for leg_name, payload in overlap_legs.items():
         if not isinstance(payload, dict):
             continue
         score = _safe_float(payload.get("overlap_score_min"))
@@ -3428,6 +3501,8 @@ def plan_ab_bind_rescues(
         )
         if require_target_primary_repeat_spread_leg and not targeted_repeat_spread_leg:
             continue
+        # NOTE: two-leg rescue targeting stays complex/apo-scoped for now;
+        # DSSB rescue semantics land with the V2.1a reporting PR.
         target_legs = [primary_repeat_spread_leg] if targeted_repeat_spread_leg else []
         inherit_source_legs = [leg for leg in ("complex", "apo") if leg not in target_legs]
         preserved_targeted_leg_counts = targeted_repeat_spread_leg and not allow_targeted_leg_count_deepening

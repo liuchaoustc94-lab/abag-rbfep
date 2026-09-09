@@ -1,0 +1,13 @@
+system_name: 5c6t
+input_structure: benchmarks/antibody_skempi2_single_point/structures/5C6T.pdb
+structure_source: experimental
+complex_class: antibody-antigen
+mutated_partner: antibody
+antibody_chains:
+- H
+- L
+antigen_chains:
+- A
+notes:
+- 1G2 Fab–HCMV glycoprotein B
+- Eight unique antibody-side singles; near-threshold reserve.

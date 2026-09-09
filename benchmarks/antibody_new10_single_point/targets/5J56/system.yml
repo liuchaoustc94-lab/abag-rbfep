@@ -1,0 +1,12 @@
+system_name: 5j56
+input_structure: benchmarks/antibody_new10_single_point/structures/5J56.pdb
+structure_source: experimental
+complex_class: antibody-antigen
+mutated_partner: antibody
+antibody_chains:
+- B
+antigen_chains:
+- A
+notes:
+- V1C7 single-domain antibody–ricin A chain
+- 16 Rosetta Flex ddG antibody-side single substitutions.

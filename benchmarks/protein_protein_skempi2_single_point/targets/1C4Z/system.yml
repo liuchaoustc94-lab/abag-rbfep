@@ -1,0 +1,14 @@
+system_name: 1c4z
+input_structure: benchmarks/protein_protein_skempi2_single_point/structures/1C4Z.pdb
+structure_source: experimental
+complex_class: protein-protein
+mutated_partner: partner_a
+antibody_chains:
+- A
+- B
+- C
+antigen_chains:
+- D
+notes:
+- E6AP–UBCH7
+- 22 unique single substitutions on E6AP copies A–C.

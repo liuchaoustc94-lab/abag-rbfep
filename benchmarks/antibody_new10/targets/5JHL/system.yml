@@ -1,0 +1,11 @@
+system_name: 5jhl
+input_structure: benchmarks/antibody_new10/structures/5JHL.pdb
+structure_source: experimental
+antibody_chains:
+- H
+- L
+antigen_chains:
+- A
+notes:
+- flavivirus broadly protective antibody–Zika E
+- 16 Rosetta Flex ddG antibody substitutions; do not treat labels as experimental affinity.

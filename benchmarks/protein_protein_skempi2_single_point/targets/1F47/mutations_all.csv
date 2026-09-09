@@ -1,0 +1,13 @@
+mutation_group_id,chain_id,resseq,icode,wt,mut,entity_side
+skempi2_1f47_1882,A,4,,D,A,antibody
+skempi2_1f47_1883,A,5,,Y,A,antibody
+skempi2_1f47_1884,A,6,,L,A,antibody
+skempi2_1f47_1885,A,7,,D,A,antibody
+skempi2_1f47_1886,A,8,,I,A,antibody
+skempi2_1f47_1887,A,9,,P,A,antibody
+skempi2_1f47_1888,A,11,,F,A,antibody
+skempi2_1f47_1889,A,12,,L,A,antibody
+skempi2_1f47_1890,A,14,,K,A,antibody
+skempi2_1f47_1891,A,15,,Q,A,antibody
+skempi2_1f47_1892,A,7,,D,S,antibody
+skempi2_1f47_1893,A,7,,D,G,antibody

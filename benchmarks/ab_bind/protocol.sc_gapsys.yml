@@ -1,0 +1,6 @@
+# E2 A/B: de Groot/"Gapsys-style" soft-core recipe vs default Beutler.
+preset: validation_priority_single_point
+sc_alpha: 0
+sc_sigma: 0.3
+sc_power: 1
+sc_coul: true

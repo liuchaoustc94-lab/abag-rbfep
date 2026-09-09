@@ -1,0 +1,11 @@
+system_name: 3l5x
+input_structure: benchmarks/antibody_new10/structures/3L5X.pdb
+structure_source: experimental
+antibody_chains:
+- H
+- L
+antigen_chains:
+- A
+notes:
+- H2L6 Fab–IL-13
+- 36 antibody-side rows, mostly framework-adaptation combinations; V2/multi-point stress test.

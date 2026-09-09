@@ -1,0 +1,3 @@
+mutation_group_id,chain_id,resseq,icode,wt,mut,entity_side
+antibody_h_n28q,H,28,,N,Q,antibody
+antibody_h_d31e,H,31,,D,E,antibody

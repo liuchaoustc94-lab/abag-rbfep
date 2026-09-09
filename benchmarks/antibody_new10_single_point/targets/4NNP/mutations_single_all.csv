@@ -1,0 +1,17 @@
+mutation_group_id,chain_id,resseq,icode,wt,mut,entity_side
+graphinity_flexddg_4nnp_0257,H,59,,Y,I,antibody
+graphinity_flexddg_4nnp_1559,H,57,,Y,S,antibody
+graphinity_flexddg_4nnp_2861,H,59,,Y,L,antibody
+graphinity_flexddg_4nnp_4163,H,59,,Y,K,antibody
+graphinity_flexddg_4nnp_5464,L,27,,Q,S,antibody
+graphinity_flexddg_4nnp_6764,H,59,,Y,M,antibody
+graphinity_flexddg_4nnp_8066,L,27,,Q,T,antibody
+graphinity_flexddg_4nnp_9368,L,93,,Y,V,antibody
+graphinity_flexddg_4nnp_10670,L,27,,Q,M,antibody
+graphinity_flexddg_4nnp_11972,H,107,,W,P,antibody
+graphinity_flexddg_4nnp_13274,L,27,,Q,F,antibody
+graphinity_flexddg_4nnp_14576,H,57,,Y,P,antibody
+graphinity_flexddg_4nnp_15878,L,27,,Q,K,antibody
+graphinity_flexddg_4nnp_17180,H,59,,Y,F,antibody
+graphinity_flexddg_4nnp_18482,H,59,,Y,P,antibody
+graphinity_flexddg_4nnp_19784,L,93,,Y,W,antibody

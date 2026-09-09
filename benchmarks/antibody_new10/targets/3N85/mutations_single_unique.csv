@@ -1,0 +1,10 @@
+mutation_group_id,chain_id,resseq,icode,wt,mut,entity_side
+skempi2_3n85_4598,L,91,,W,F,antibody
+skempi2_3n85_4599,L,94,,W,Y,antibody
+skempi2_3n85_4600,H,30,,W,K,antibody
+skempi2_3n85_4601,H,30,,W,R,antibody
+skempi2_3n85_4602,H,32,,S,Y,antibody
+skempi2_3n85_4603,H,32,,S,A,antibody
+skempi2_3n85_4604,H,50,,S,G,antibody
+skempi2_3n85_4605,H,52,,S,Y,antibody
+skempi2_3n85_4606,H,100,,W,F,antibody

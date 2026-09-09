@@ -1,0 +1,12 @@
+system_name: 1f47
+input_structure: benchmarks/protein_protein_skempi2_single_point/structures/1F47.pdb
+structure_source: experimental
+complex_class: protein-protein
+mutated_partner: partner_a
+antibody_chains:
+- A
+antigen_chains:
+- B
+notes:
+- FtsZ fragment–ZipA
+- 12 unique single substitutions on the FtsZ fragment.
