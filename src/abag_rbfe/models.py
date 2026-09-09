@@ -98,6 +98,29 @@ class ProtocolConfig:
     sampling_pressure_tau_ps: float = 5.0
     sampling_refcoord_scaling: str = "all"
     equilibrate_em_steps: int = 5000
+    # Leg topology: "two_leg" (complex+apo, default) or "dssb"
+    # (double-system/single-box, V2.1a charge-changing path).
+    leg_topology: str = "two_leg"
+    lambda_distribution: str = "linear"  # linear | sigmoidal (endpoint-dense)
+    # Soft-core parameters (GROMACS mdp). Defaults match the historical
+    # Beutler recipe; the de Groot/"Gapsys-style" A/B recipe is
+    # sc_alpha=0, sc_sigma=0.3, sc_power=1, sc_coul=True.
+    sc_alpha: float = 0.3
+    sc_sigma: float = 0.25
+    sc_power: int = 1
+    sc_coul: bool = True
+    # GROMACS couple-intramol: pmx convention is "no"; set "yes" only as a
+    # workaround for hybrids whose perturbed excluded pairs exceed rlist
+    # (gromacs fatal in exclusionchecker, e.g. spread-out His->Gln hybrids).
+    couple_intramol: bool = False
+    # Window chaining (Patel-style continuous lambda traversal): window k starts
+    # from window k-1's production endpoint (md.gro) instead of the shared
+    # equilibration npt.gro. Motivation: PR-4b showed endpoint-ensemble frame
+    # sharing lets a single frame bias the whole leg (repeat spread 12.8
+    # kcal/mol on r21a); chaining removes shared-start bias. Windows become
+    # order-dependent within a leg/repeat (they already execute sequentially
+    # in the generated sample.sh, so wall-clock is unchanged).
+    window_chaining: bool = False
 
 
 @dataclass(frozen=True)

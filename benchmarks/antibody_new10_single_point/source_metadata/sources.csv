@@ -1,0 +1,5 @@
+source,url,local_input,sha256,retrieved_or_verified
+SKEMPI2 CSV,https://life.bsc.es/pid/skempi2/database/download/skempi_v2.csv,/tmp/skempi_new10/skempi_v2.csv,76f8e60d09eaa4f05fb265063886859a86895c0b2fb225e31fe82928a883972d,2026-08-31
+SKEMPI2 cleaned PDB archive,https://life.bsc.es/pid/skempi2/database/download/SKEMPI2_PDBs.tgz,/tmp/skempi_new10/SKEMPI2_PDBs.tgz,82418131a3864aa8484ea6ec300e58f9bc0349e21530f83f7ce336b41589a95a,2026-08-31
+Graphinity Flex ddG CSV,https://github.com/amhummer/Graphinity/blob/main/data/ddg_synthetic/Flex_ddG/Synthetic_FlexddG_ddG_20829.csv,/tmp/Graphinity/data/ddg_synthetic/Flex_ddG/Synthetic_FlexddG_ddG_20829.csv,c229f9d1629d99a59d8fe4fb0d657fad7d30208fdd0676d732b98c1515b3107f,2026-08-31
+Graphinity Flex ddG sequence mapping CSV,https://github.com/amhummer/Graphinity/blob/main/data/ddg_synthetic/Flex_ddG/Synthetic_FlexddG_ddG_20829_with_sequences.csv,/tmp/ab-ag-ddg/ddg_synthetic/Flex_ddG/Synthetic_FlexddG_ddG_20829_with_sequences.csv,cdb4ef9724b5bf8997c5123c4e6976a3c75d2ef517aa4d5a13d16f17497f078d,2026-08-31

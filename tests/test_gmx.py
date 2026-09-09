@@ -616,3 +616,104 @@ def test_validate_hybrid_topology_integrity_detects_complete_and_broken(tmp_path
     assert broken_result["ok"] is False
     assert any("atoms" in issue for issue in broken_result["issues"])
     assert any("state A charge" in issue for issue in broken_result["issues"])
+
+
+def test_swap_hybrid_residue_ab_states_roundtrip_and_charge_invariance(tmp_path: Path) -> None:
+    from abag_rbfe.gmx import swap_hybrid_residue_ab_states, validate_dssb_charge_invariance
+
+    itp = tmp_path / "pmx_topol_Protein_chain_U.itp"
+    itp.write_text(
+        "\n".join(
+            [
+                "[ atoms ]",
+                "  1  N   89  Q2A  N   1  -0.415700  14.0100",
+                "  2  CT  89  Q2A  CA  2  -0.003100  12.0100  CT  0.033700  12.0100",
+                "  3  CT  89  Q2A  CB  3  -0.003600  12.0100  DUM_CT  0.000000  3.9633",
+                "  4  C   89  Q2A  CD  4   0.695100  12.0100  DUM_C   0.000000  3.9633",
+                "[ bonds ]",
+                "  2  3  1  0.109000  284512.0  0.110000  250000.0",
+                "[ angles ]",
+                "  1  2  3  1  109.500000  418.400000  110.000000  400.000000 ; N CA CB",
+                "[ dihedrals ]",
+                "  1  2  3  4  9  0  8.368  1  0  1.12968  2 ; comment",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    summary = swap_hybrid_residue_ab_states(itp, set())
+    assert summary["swapped_atoms"] == 3  # CA/CB/CD 三个带 B 态列的原子被交换（N 无 B 列保持不变）
+
+    lines = itp.read_text().splitlines()
+    atoms = [l.split() for l in lines if l.strip().startswith(("2", "3", "4"))]
+    # CA: 交换后 type=CT, chargeA=0.0337, massA=12.01; chargeB=-0.0031
+    ca = [l for l in atoms if l[0] == "2"][0]
+    assert ca[6] == "0.033700" and ca[9] == "-0.003100"
+    # CB: A 态变为 DUM（原 B），B 态变为实原子
+    cb = [l for l in atoms if l[0] == "3"][0]
+    assert cb[1] == "DUM_CT" and cb[8] == "CT" and cb[6] == "0.000000" and cb[9] == "-0.003600"
+    # bonds: b0/kb 对换
+    bond = [l.split() for l in lines if l.strip().startswith("2  3")][0]
+    assert bond[3] == "0.110000" and bond[5] == "0.109000"
+    # angles: theta/k 对换
+    ang = [l.split() for l in lines if l.strip().startswith("1  2  3")][0]
+    assert ang[4] == "110.000000" and ang[6] == "109.500000"
+    # dihedrals func 9: 前后 6 参数对换
+    dih = [l.split() for l in lines if l.strip().startswith("1  2  3  4  9")][0]
+    assert dih[5:8] == ["0", "1.12968", "2"] and dih[8:11] == ["0", "8.368", "1"]
+
+    # DSSB 电荷不变性：swap 前后 chargeA_sum 应等于 swap 前 chargeB_sum
+    # 原拓扑 chargeA = -0.4157-0.0031-0.0036+0.6951 = 0.2727；chargeB = -0.4157+0.0337+0+0 = -0.382
+    # swap 后 chargeA == 原 chargeB
+    result = validate_dssb_charge_invariance([itp])
+    assert result["total_charge_state_a"] == -0.382
+    assert result["ok"] is False  # 单独 unbound 腿不满足不变性（需要 bound 腿配对）
+
+
+def test_rename_pdb_chains_and_mapping_suggestion(tmp_path: Path) -> None:
+    from abag_rbfe.structure import rename_pdb_chains, suggest_unbound_chain_mapping
+
+    pdb = tmp_path / "in.pdb"
+    pdb.write_text(
+        "ATOM      1  N   GLY H   1      11.000  10.000   8.000  1.00 20.00           N\n"
+        "ATOM      2  CA  GLY H   1      12.200  10.100   8.700  1.00 20.00           C\n"
+        "ATOM      3  N   GLY L   2      15.000  10.000   8.000  1.00 20.00           N\n"
+        "END\n",
+        encoding="utf-8",
+    )
+    out = tmp_path / "out.pdb"
+    summary = rename_pdb_chains(pdb, out, {"H": "U", "L": "V"})
+    assert summary["renamed_atom_count"] == 3
+    text = out.read_text()
+    assert "GLY U   1" in text and "GLY V   2" in text and "GLY H" not in text
+
+    mapping = suggest_unbound_chain_mapping(["H", "L", "Y"], ["H", "L"])
+    assert mapping == {"H": "A", "L": "B"}  # A/B 是未被占用的前两个字母
+
+
+def test_outlier_classification_and_correction(tmp_path: Path) -> None:
+    from abag_rbfe.outliers import (
+        apply_outlier_correction,
+        classify_outlier_features,
+        fit_shrinkage_alpha,
+        mutation_size_change,
+        outlier_class_label,
+    )
+
+    assert mutation_size_change("Y", "A") == -7  # Tyr 8 - Ala 1
+    assert mutation_size_change("G", "V") == 3
+    feats = classify_outlier_features(wt="Y", mut="A")
+    assert feats["is_aromatic_deletion"] and feats["is_large_deletion"]
+    assert feats["is_buried_aromatic_large_deletion"]
+    assert outlier_class_label(feats) == "buried_aromatic_large_deletion"
+
+    feats2 = classify_outlier_features(wt="D", mut="K")
+    assert outlier_class_label(feats2) == "charge_changing"
+
+    feats3 = classify_outlier_features(wt="S", mut="T")
+    assert outlier_class_label(feats3) == ""
+
+    alpha = fit_shrinkage_alpha([10.0, 12.0], [5.0, 6.0], [True, True])
+    assert 0.3 < alpha < 0.7
+    corrected = apply_outlier_correction([10.0, 8.0], [True, False], 0.5)
+    assert corrected == [5.0, 8.0]

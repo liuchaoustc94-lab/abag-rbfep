@@ -1,0 +1,13 @@
+system_name: 3se9
+input_structure: benchmarks/antibody_skempi2_single_point/structures/3SE9.pdb
+structure_source: experimental
+complex_class: antibody-antigen
+mutated_partner: antibody
+antibody_chains:
+- H
+- L
+antigen_chains:
+- G
+notes:
+- VRC-PG04–HIV-1 gp120
+- 25 antibody-side single substitutions; independent antibody on the same antigen family.

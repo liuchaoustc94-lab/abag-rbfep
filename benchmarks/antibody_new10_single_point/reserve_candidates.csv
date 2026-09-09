@@ -1,0 +1,3 @@
+pdb_id,name,antibody_rows,unique_single_rows,reason
+5C6T,1G2 Fab–HCMV glycoprotein B,9,8,best near-threshold experimental candidate; one additional independent antibody measurement is needed
+4NM8,CR8043 Fab–influenza HA,0,0,"SKEMPI mutations are on HA chain B (antigen), so excluded by the antibody-side requirement"

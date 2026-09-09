@@ -4916,3 +4916,160 @@ def test_build_batch_plan_applies_adaptive_lambda_unless_pinned(tmp_path: Path) 
         batch_id="adaptive_lambda_pinned", runs_root=tmp_path / "runs2",
     )
     assert all(job.protocol.lambda_windows == 8 for job in plan_pinned.jobs)
+
+
+def test_naked_charge_checker_flags_legacy_strict_schedule_and_passes_direction_aware() -> None:
+    from abag_rbfe.stages import _lambda_component_schedules, check_lambda_schedule_naked_charge
+
+    # Legacy strict schedule (coul-first for an insertion): charged zero-LJ
+    # ghost atoms appear at the junction window (the ISSUE-007 failure mode).
+    legacy_coul = [0.0, 0.33, 0.67, 1.0, 1.0, 1.0]
+    legacy_vdw = [0.0, 0.0, 0.0, 0.0, 0.5, 1.0]
+    legacy = check_lambda_schedule_naked_charge(
+        legacy_coul, legacy_vdw, deletion_atoms=False, insertion_atoms=True
+    )
+    assert legacy["ok"] is False
+    assert any(v["atom_class"] == "insertion" and v["coul_scale"] >= 0.99 and v["vdw_scale"] == 0.0 for v in legacy["violations"])
+
+    # Direction-aware overlapped schedule for an insertion (vdW first): clean.
+    coul, vdw = _lambda_component_schedules(12, sidechain_growth=4)
+    aware = check_lambda_schedule_naked_charge(coul, vdw, deletion_atoms=False, insertion_atoms=True)
+    assert aware["ok"] is True
+    assert aware["violations"] == []
+
+    # Deletion-side residual risk is also detected when classes are present.
+    coul_ins, vdw_ins = _lambda_component_schedules(12, sidechain_growth=4)
+    deletion_risk = check_lambda_schedule_naked_charge(
+        coul_ins, vdw_ins, deletion_atoms=True, insertion_atoms=False
+    )
+    assert deletion_risk["ok"] is False  # vdW-full before coul-off leaves deletion atoms charged
+
+
+def test_sigmoidal_lambda_distribution_is_endpoint_dense() -> None:
+    from abag_rbfe.stages import _lambda_component_schedules
+
+    lin_coul, _ = _lambda_component_schedules(12, sidechain_growth=-1, distribution="linear")
+    sig_coul, _ = _lambda_component_schedules(12, sidechain_growth=-1, distribution="sigmoidal")
+    assert lin_coul[0] == sig_coul[0] == 0.0
+    assert lin_coul[-1] == sig_coul[-1] == 1.0
+    # endpoints denser under sigmoidal: smaller steps at both ramp ends
+    assert sig_coul[1] - sig_coul[0] < lin_coul[1] - lin_coul[0]
+    assert sig_coul[5] - sig_coul[4] < lin_coul[5] - lin_coul[4]
+    # monotonic and bounded
+    assert all(0.0 <= v <= 1.0 for v in sig_coul)
+    assert all(b >= a for a, b in zip(sig_coul, sig_coul[1:]))
+
+
+def test_job_legs_abstraction_defaults_and_dssb(tmp_path: Path) -> None:
+    """PR-1 leg abstraction: two-leg default unchanged; dssb protocol yields a
+    single-leg enumeration and is accepted by the configured-legs whitelist."""
+    from abag_rbfe.stages import _configured_legs, _job_expected_legs
+
+    # default job (no leg_topology) -> two-leg
+    job_dir = tmp_path / "job"
+    job_dir.mkdir()
+    assert _job_expected_legs(job_dir) == ("complex", "apo")
+
+    # explicit two_leg -> unchanged
+    (job_dir / "job_spec.json").write_text('{"protocol": {"leg_topology": "two_leg"}}')
+    assert _job_expected_legs(job_dir) == ("complex", "apo")
+
+    # dssb -> single leg
+    (job_dir / "job_spec.json").write_text('{"protocol": {"leg_topology": "dssb"}}')
+    assert _job_expected_legs(job_dir) == ("dssb",)
+
+    # whitelist accepts dssb and still rejects junk
+    assert _configured_legs("complex,apo,dssb") == ("complex", "apo", "dssb")
+    assert _configured_legs("complex,bogus") == ("complex",)
+
+
+def test_dssb_job_prepare_and_mutate_command_contract(tmp_path: Path, monkeypatch) -> None:
+    """V2.1a PR-2: a dssb job produces bound/unbound prepare inputs and a
+    mutate.sh containing the doublebox + rename + A/B-swap + dssb QC chain."""
+    system_path = tmp_path / "system.yml"
+    system_path.write_text(
+        "\n".join(
+            [
+                "system_name: dssb_demo",
+                f"input_structure: {tmp_path / 'complex.pdb'}",
+                "structure_source: experimental",
+                "antibody_chains: [H]",
+                "antigen_chains: [A]",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    (tmp_path / "complex.pdb").write_text(
+        "\n".join(
+            [
+                "HEADER    DEMO",
+                "ATOM      1  N   GLU H  32      11.000  10.000   8.000  1.00 20.00           N",
+                "ATOM      2  CA  GLU H  32      12.200  10.100   8.700  1.00 20.00           C",
+                "ATOM      3  C   GLU H  32      13.300   9.200   8.900  1.00 20.00           C",
+                "ATOM      4  O   GLU H  32      14.400   8.700   8.200  1.00 20.00           O",
+                "TER",
+                "ATOM      5  N   ASP A  50      20.000  10.000   8.000  1.00 20.00           N",
+                "ATOM      6  CA  ASP A  50      20.900  10.600   8.900  1.00 20.00           C",
+                "ATOM      7  C   ASP A  50      22.100   9.700   9.100  1.00 20.00           C",
+                "ATOM      8  O   ASP A  50      22.500   8.900   8.300  1.00 20.00           O",
+                "TER",
+                "END",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    mutations_path = tmp_path / "mutations.csv"
+    mutations_path.write_text(
+        "mutation_group_id,chain_id,resseq,icode,wt,mut,entity_side\nsingle_a_d50k,A,50,,D,K,antigen\n",
+        encoding="utf-8",
+    )
+    protocol_path = tmp_path / "protocol.yml"
+    protocol_path.write_text("preset: single_point\nleg_topology: dssb\nallow_charge_changing: true\n", encoding="utf-8")
+
+    batch_plan = build_batch_plan(
+        system_path,
+        mutations_path,
+        protocol_path,
+        batch_id="dssb_contract_demo",
+        runs_root=tmp_path / "runs",
+    )
+    job_dir = Path(batch_plan.jobs[0].workdir)
+    assert batch_plan.jobs[0].protocol.leg_topology == "dssb"
+
+    monkeypatch.setattr(
+        CommandRunner,
+        "run_script",
+        lambda self, script_path, commands, workdir, env=None: (
+            self.write_script(script_path, commands, workdir, env=env),
+            CommandOutcome("planned", "written"),
+        )[1],
+    )
+    statuses = run_job(job_dir, execute=False, to_stage="mutate")
+
+    # prepare: bound/unbound 双输入 + QC 键
+    dssb_dir = job_dir / "legs" / "dssb"
+    assert (dssb_dir / "bound_input.pdb").is_file()
+    assert (dssb_dir / "unbound_input.pdb").is_file()
+    prepare_qc = json.loads((job_dir / "artifacts" / "prepare_qc.json").read_text())
+    assert set(prepare_qc["legs"].keys()) == {"bound", "unbound"}
+    bound_chains = set()
+    for line in (dssb_dir / "bound_input.pdb").read_text().splitlines():
+        if line.startswith("ATOM"):
+            bound_chains.add(line[21])
+    assert bound_chains == {"H", "A"}
+
+    # mutate.sh: DSSB 命令链合同
+    mutate_script = (job_dir / "artifacts" / "commands" / "mutate.sh").read_text(encoding="utf-8")
+    assert "mutate -f" in mutate_script and "mutant_bound.pdb" in mutate_script
+    assert "mutant_unbound.pdb" in mutate_script
+    assert "rename_pdb_chains" in mutate_script
+    assert "doublebox -f1 mutant_bound.pdb -f2 mutant_unbound_renamed.pdb -o mutant.pdb" in mutate_script
+    assert "swap_hybrid_residue_ab_states" in mutate_script
+    assert "validate_dssb_charge_invariance" in mutate_script
+    assert "dssb_qc.json" in mutate_script
+
+    # 链映射：unbound(H? no, antigen A) -> 未被占用的字母
+    mapping = json.loads((dssb_dir / "pmx" / "dssb_chain_mapping.json").read_text())["chain_mapping"]
+    assert mapping == {"A": "B"}  # H,A 被 bound 占用，pool 首字母 B

@@ -1,0 +1,175 @@
+source_row_id,pdb_id,mutation_tokens,source_mutation_tokens,source_mut_index,structure_mapped,canonical_signature,mutation_count,single_point,antibody_chains,antigen_chains,ddg_kcal_mol,ddg_censored,censor_reason,temperature_K,affinity_mut_M,affinity_wt_M,reference,method,source_dataset,label_type
+skempi2_3se8_6723,3SE8,H:R30A,RH30A,,True,H:R30A,1,True,"H,L",G,-0.03949763,False,,303.00,5.9E-08,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se8_6724,3SE8,H:W47A,WH47A,,True,H:W47A,1,True,"H,L",G,1.47514677,False,,303.00,7.3E-07,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se8_6725,3SE8,H:W50A,WH50A,,True,H:W50A,1,True,"H,L",G,1.33352610,False,,303.00,5.77E-07,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se8_6726,3SE8,H:K52A,KH52A,,True,H:K52A,1,True,"H,L",G,1.11141450,False,,303.00,3.99E-07,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se8_6727,3SE8,H:L54A,LH54A,,True,H:L54A,1,True,"H,L",G,0.05477619,False,,303.00,6.9E-08,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se8_6728,3SE8,H:W55A,WH55A,,True,H:W55A,1,True,"H,L",G,0.76110564,False,,303.00,2.23E-07,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se8_6729,3SE8,H:G56A,GH56A,,True,H:G56A,1,True,"H,L",G,0.35709724,False,,303.00,1.14E-07,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se8_6730,3SE8,H:V58A,VH58A,,True,H:V58A,1,True,"H,L",G,1.24968522,False,,303.00,5.02E-07,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se8_6731,3SE8,H:S59A,SH59A,,True,H:S59A,1,True,"H,L",G,1.15084026,False,,303.00,4.26E-07,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se8_6732,3SE8,H:Y60A,YH60A,,True,H:Y60A,1,True,"H,L",G,0.85584885,False,,303.00,2.61E-07,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se8_6733,3SE8,H:R62A,RH62A,,True,H:R62A,1,True,"H,L",G,1.20616928,False,,303.00,4.67E-07,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se8_6734,3SE8,H:Q63A,QH63A,,True,H:Q63A,1,True,"H,L",G,1.11442512,False,,303.00,4.01E-07,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se8_6735,3SE8,H:Q65A,QH65A,,True,H:Q65A,1,True,"H,L",G,0.54980508,False,,303.00,1.57E-07,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se8_6736,3SE8,H:R72A,RH72A,,True,H:R72A,1,True,"H,L",G,2.64446255,False,,303.00,5.09E-06,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se8_6737,3SE8,H:Q76A,QH76A,,True,H:Q76A,1,True,"H,L",G,0.09689986,False,,303.00,7.4E-08,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se8_6738,3SE8,H:P78A,PH78A,,True,H:P78A,1,True,"H,L",G,0.01881787,False,,303.00,6.5E-08,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se8_6739,3SE8,H:P81A,PH81A,,True,H:P81A,1,True,"H,L",G,-0.07091986,False,,303.00,5.6E-08,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se8_6740,3SE8,H:D110A,DH110A,,True,H:D110A,1,True,"H,L",G,-0.38934902,False,,303.00,3.3E-08,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se8_6741,3SE8,H:Y111A,YH111A,,True,H:Y111A,1,True,"H,L",G,0.82992175,False,,303.00,2.5E-07,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se8_6742,3SE8,H:D114A,DH114A,,True,H:D114A,1,True,"H,L",G,-0.24413982,False,,303.00,4.2E-08,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se8_6743,3SE8,H:F115A,FH115A,,True,H:F115A,1,True,"H,L",G,1.06760443,False,,303.00,3.71E-07,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se8_6744,3SE8,L:E1A,EL1A,,True,L:E1A,1,True,"H,L",G,-0.55651744,False,,303.00,2.5E-08,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se8_6745,3SE8,L:Q27A,QL27A,,True,L:Q27A,1,True,"H,L",G,-0.21612906,False,,303.00,4.4E-08,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se8_6746,3SE8,L:N30A,NL30A,,True,L:N30A,1,True,"H,L",G,0.19434925,False,,303.00,8.7E-08,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se8_6747,3SE8,L:D49A,DL49A,,True,L:D49A,1,True,"H,L",G,0.85584885,False,,303.00,2.61E-07,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se8_6748,3SE8,L:F90A,FL90A,,True,L:F90A,1,True,"H,L",G,-0.86409724,False,,303.00,1.5E-08,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se8_6749,3SE8,L:E91A,EL91A,,True,L:E91A,1,True,"H,L",G,1.51349116,False,,303.00,7.78E-07,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se8_6750,3SE8,L:F92A,FL92A,,True,L:F92A,1,True,"H,L",G,0.83232544,False,,303.00,2.51E-07,6.3E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se9_6751,3SE9,H:L34A,LH34A,,True,H:L34A,1,True,"H,L",G,0.56599989,False,,303.00,6.4E-08,2.5E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se9_6752,3SE9,H:W48A,WH48A,,True,H:W48A,1,True,"H,L",G,1.05844649,False,,303.00,1.45E-07,2.5E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se9_6753,3SE9,H:W51A,WH51A,,True,H:W51A,1,True,"H,L",G,1.27569504,False,,303.00,2.08E-07,2.5E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se9_6754,3SE9,H:V55A,VH55A,,True,H:V55A,1,True,"H,L",G,-0.85929942,False,,303.00,6E-09,2.5E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se9_6755,3SE9,H:T56A,TH56A,,True,H:T56A,1,True,"H,L",G,-0.85929942,False,,303.00,6E-09,2.5E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se9_6756,3SE9,H:G57A,GH57A,,True,H:G57A,1,True,"H,L",G,0.45244483,False,,303.00,5.3E-08,2.5E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se9_6757,3SE9,H:V59A,VH59A,,True,H:V59A,1,True,"H,L",G,0.98335967,False,,303.00,1.28E-07,2.5E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se9_6758,3SE9,H:N60A,NH60A,,True,H:N60A,1,True,"H,L",G,1.52176166,False,,303.00,3.13E-07,2.5E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se9_6759,3SE9,H:G62A,GH62A,,True,H:G62A,1,True,"H,L",G,0.04634000,False,,303.00,2.7E-08,2.5E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se9_6760,3SE9,H:P64A,PH64A,,True,H:P64A,1,True,"H,L",G,-0.44193964,False,,303.00,1.2E-08,2.5E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se9_6761,3SE9,H:R67A,RH67A,,True,H:R67A,1,True,"H,L",G,1.46954497,False,,303.00,2.87E-07,2.5E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se9_6762,3SE9,H:R74A,RH74A,,True,H:R74A,1,True,"H,L",G,2.67925736,False,,303.00,2.14E-06,2.5E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se9_6763,3SE9,H:R76A,RH76A,,True,H:R76A,1,True,"H,L",G,-0.23221621,False,,303.00,1.7E-08,2.5E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se9_6764,3SE9,H:D77A,DH77A,,True,H:D77A,1,True,"H,L",G,-0.76648177,False,,303.00,7E-09,2.5E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se9_6765,3SE9,H:Y104A,YH104A,,True,H:Y104A,1,True,"H,L",G,0.46369979,False,,303.00,5.4E-08,2.5E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se9_6766,3SE9,H:T105A,TH105A,,True,H:T105A,1,True,"H,L",G,-0.44193964,False,,303.00,1.2E-08,2.5E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se9_6767,3SE9,H:G106A,GH106A,,True,H:G106A,1,True,"H,L",G,-0.30757980,False,,303.00,1.5E-08,2.5E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se9_6768,3SE9,H:G107A,GH107A,,True,H:G107A,1,True,"H,L",G,-0.61515960,False,,303.00,9E-09,2.5E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se9_6769,3SE9,H:G109A,GH109A,,True,H:G109A,1,True,"H,L",G,0.18514358,False,,303.00,3.4E-08,2.5E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se9_6770,3SE9,L:V3A,VL3A,,True,L:V3A,1,True,"H,L",G,-0.49433118,False,,303.00,1.1E-08,2.5E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se9_6771,3SE9,L:Y28A,YL28A,,True,L:Y28A,1,True,"H,L",G,1.11771951,False,,303.00,1.6E-07,2.5E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se9_6772,3SE9,L:G29A,GL29A,,True,L:G29A,1,True,"H,L",G,0.46369979,False,,303.00,5.4E-08,2.5E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se9_6773,3SE9,L:L89A,LL89A,,True,L:L89A,1,True,"H,L",G,0.96424305,False,,303.00,1.24E-07,2.5E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se9_6774,3SE9,L:E90A,EL90A,,True,L:E90A,1,True,"H,L",G,0.41735978,False,,303.00,5E-08,2.5E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3se9_6775,3SE9,L:F91A,FL91A,,True,L:F91A,1,True,"H,L",G,0.02361569,False,,303.00,2.6E-08,2.5E-08,27908641,SPR,SKEMPI2,experimental_ddg
+skempi2_3n85_4598,3N85,L:W91F,WL91F,,True,L:W91F,1,True,"H,L",A,0.13959167,False,,298.00,1E-09,7.9E-10,20654626,SPR,SKEMPI2,experimental_ddg
+skempi2_3n85_4599,3N85,L:W94Y,WL94Y,,True,L:W94Y,1,True,"H,L",A,-0.03871881,False,,298.00,7.4E-10,7.9E-10,20654626,SPR,SKEMPI2,experimental_ddg
+skempi2_3n85_4600,3N85,H:W30K,WH30K,,True,H:W30K,1,True,"H,L",A,-0.78460343,False,,298.00,2.1E-10,7.9E-10,20654626,SPR,SKEMPI2,experimental_ddg
+skempi2_3n85_4601,3N85,H:W30R,WH30R,,True,H:W30R,1,True,"H,L",A,-0.55396751,False,,298.00,3.1E-10,7.9E-10,20654626,SPR,SKEMPI2,experimental_ddg
+skempi2_3n85_4602,3N85,H:S32Y,SH32Y,,True,H:S32Y,1,True,"H,L",A,0.05712250,False,,298.00,8.7E-10,7.9E-10,20654626,SPR,SKEMPI2,experimental_ddg
+skempi2_3n85_4603,3N85,H:S32A,SH32A,,True,H:S32A,1,True,"H,L",A,-0.13401966,False,,298.00,6.3E-10,7.9E-10,20654626,SPR,SKEMPI2,experimental_ddg
+skempi2_3n85_4604,3N85,H:S50G,SH50G,,True,H:S50G,1,True,"H,L",A,0.48767122,False,,298.00,1.8E-09,7.9E-10,20654626,SPR,SKEMPI2,experimental_ddg
+skempi2_3n85_4605,3N85,H:S52Y,SH52Y,,True,H:S52Y,1,True,"H,L",A,-0.78460343,False,,298.00,2.1E-10,7.9E-10,20654626,SPR,SKEMPI2,experimental_ddg
+skempi2_3n85_4606,3N85,H:W100F,WH100F,,True,H:W100F,1,True,"H,L",A,-0.01518511,False,,298.00,7.7E-10,7.9E-10,20654626,SPR,SKEMPI2,experimental_ddg
+skempi2_3n85_4607,3N85,H:W100F,WH100F,,True,H:W100F,1,True,"H,L",A,-0.01518511,False,,298.00,7.7E-10,7.9E-10,20654626,SPR,SKEMPI2,experimental_ddg
+graphinity_flexddg_3j1s_0116,3J1S,H:Y58V,H:Y58V,57,True,H:Y58V,1,True,"H,L",A,-1.7949282254558705,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_3j1s_1418,3J1S,H:Y58T,H:Y58T,57,True,H:Y58T,1,True,"H,L",A,-1.467842417133948,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_3j1s_2720,3J1S,H:Y58W,H:Y58W,57,True,H:Y58W,1,True,"H,L",A,0.3286979922617916,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_3j1s_4022,3J1S,L:W92H,L:W92H,91,True,L:W92H,1,True,"H,L",A,0.6103108971757814,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_3j1s_5324,3J1S,L:W92T,L:W92T,91,True,L:W92T,1,True,"H,L",A,-0.2092562381239532,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_3j1s_6623,3J1S,L:W92I,L:W92I,91,True,L:W92I,1,True,"H,L",A,-0.355981475081419,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_3j1s_7925,3J1S,L:W92Y,L:W92Y,91,True,L:W92Y,1,True,"H,L",A,-0.0410139989609414,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_3j1s_9227,3J1S,L:W92K,L:W92K,91,True,L:W92K,1,True,"H,L",A,1.2733022964282996,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_3j1s_10529,3J1S,H:S56A,H:S56A,55,True,H:S56A,1,True,"H,L",A,0.0599169704821278,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_3j1s_11831,3J1S,L:W92M,L:W92M,91,True,L:W92M,1,True,"H,L",A,-0.1516837831182,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_3j1s_13133,3J1S,H:S56R,H:S56R,55,True,H:S56R,1,True,"H,L",A,2.461803623430915,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_3j1s_15737,3J1S,L:G94V,L:G94V,93,True,L:G94V,1,True,"H,L",A,0.6354375902699045,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_3j1s_17039,3J1S,L:G94C,L:G94C,93,True,L:G94C,1,True,"H,L",A,-0.5856454475264763,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_3j1s_18341,3J1S,L:G94Q,L:G94Q,93,True,L:G94Q,1,True,"H,L",A,1.6962932352619502,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_3j1s_19643,3J1S,L:W92L,L:W92L,91,True,L:W92L,1,True,"H,L",A,-0.069698079738804,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4kuc_0237,4KUC,D:E112L,D:E92L,91,True,D:E112L,1,True,"H,D",A,-0.7893981632588312,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4kuc_1539,4KUC,D:R111T,D:R91T,90,True,D:R111T,1,True,"H,D",A,-0.558260408266462,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4kuc_2841,4KUC,D:E112K,D:E92K,91,True,D:E112K,1,True,"H,D",A,1.146034765751586,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4kuc_4143,4KUC,D:E112M,D:E92M,91,True,D:E112M,1,True,"H,D",A,0.448386769301959,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4kuc_5444,4KUC,H:S74P,H:S51P,50,True,H:S74P,1,True,"H,D",A,-2.2064551186917933,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4kuc_6744,4KUC,D:E112F,D:E92F,91,True,D:E112F,1,True,"H,D",A,0.7104828185994863,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4kuc_8046,4KUC,H:S74T,H:S51T,50,True,H:S74T,1,True,"H,D",A,-0.1552875366075023,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4kuc_9348,4KUC,H:V119Y,H:V96Y,95,True,H:V119Y,1,True,"H,D",A,2.812359844048991,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4kuc_10650,4KUC,H:S74K,H:S51K,50,True,H:S74K,1,True,"H,D",A,-0.4747373584905692,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4kuc_11952,4KUC,D:Y113P,D:Y93P,92,True,D:Y113P,1,True,"H,D",A,-7.1866479264084,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4kuc_13254,4KUC,H:S74M,H:S51M,50,True,H:S74M,1,True,"H,D",A,0.7068872903841497,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4kuc_14556,4KUC,D:R111S,D:R91S,90,True,D:R111S,1,True,"H,D",A,-0.4477170329672262,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4kuc_15858,4KUC,H:S74L,H:S51L,50,True,H:S74L,1,True,"H,D",A,1.93919714844882,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4kuc_17160,4KUC,D:E112P,D:E92P,91,True,D:E112P,1,True,"H,D",A,-2.7253033993944813,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4kuc_18462,4KUC,D:E112S,D:E92S,91,True,D:E112S,1,True,"H,D",A,-2.1190997168792465,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4kuc_19764,4KUC,H:V119W,H:V96W,95,True,H:V119W,1,True,"H,D",A,0.6189599712901388,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5jhl_0408,5JHL,L:Y93S,L:Y92S,91,True,L:Y93S,1,True,"H,L",A,-1.5608162861134351,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5jhl_1710,5JHL,H:T38W,H:T32W,31,True,H:T38W,1,True,"H,L",A,1.6658071008847135,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5jhl_3012,5JHL,H:T38E,H:T32E,31,True,H:T38E,1,True,"H,L",A,-0.8598841054617292,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5jhl_4314,5JHL,H:T38G,H:T32G,31,True,H:T38G,1,True,"H,L",A,-0.3708358360072843,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5jhl_5615,5JHL,L:Q91C,L:Q90C,89,True,L:Q91C,1,True,"H,L",A,-0.3091732174093597,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5jhl_6915,5JHL,H:T38H,H:T32H,31,True,H:T38H,1,True,"H,L",A,1.5790646764775198,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5jhl_8217,5JHL,L:Q91D,L:Q90D,89,True,L:Q91D,1,True,"H,L",A,-0.2748972128898563,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5jhl_9519,5JHL,H:T38M,H:T32M,31,True,H:T38M,1,True,"H,L",A,0.6315578173651513,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5jhl_10821,5JHL,H:T38V,H:T32V,31,True,H:T38V,1,True,"H,L",A,0.4290635211458149,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5jhl_12123,5JHL,H:T38F,H:T32F,31,True,H:T38F,1,True,"H,L",A,1.9975534191024809,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5jhl_13425,5JHL,H:H40A,H:H34A,33,True,H:H40A,1,True,"H,L",A,-1.4043935335547042,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5jhl_14727,5JHL,H:T38S,H:T32S,31,True,H:T38S,1,True,"H,L",A,-0.52229710223947,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5jhl_16029,5JHL,H:T38Y,H:T32Y,31,True,H:T38Y,1,True,"H,L",A,1.8112730204346303,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5jhl_17331,5JHL,H:T38I,H:T32I,31,True,H:T38I,1,True,"H,L",A,-0.1960702535929299,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5jhl_18633,5JHL,H:T38L,H:T32L,31,True,H:T38L,1,True,"H,L",A,-2.4739259263954008,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5jhl_19935,5JHL,H:T38K,H:T32K,31,True,H:T38K,1,True,"H,L",A,0.7569293990260655,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4nnp_0257,4NNP,H:Y59I,H:Y57I,56,True,H:Y59I,1,True,"H,L",A,-0.7417638080404823,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4nnp_1559,4NNP,H:Y57S,H:Y55S,54,True,H:Y57S,1,True,"H,L",A,-0.9876719147021682,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4nnp_2861,4NNP,H:Y59L,H:Y57L,56,True,H:Y59L,1,True,"H,L",A,-0.5989154317311634,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4nnp_4163,4NNP,H:Y59K,H:Y57K,56,True,H:Y59K,1,True,"H,L",A,1.378532042139109,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4nnp_5464,4NNP,L:Q27S,L:Q27S,26,True,L:Q27S,1,True,"H,L",A,-0.2282330170123176,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4nnp_6764,4NNP,H:Y59M,H:Y57M,56,True,H:Y59M,1,True,"H,L",A,0.1238014794840212,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4nnp_8066,4NNP,L:Q27T,L:Q27T,26,True,L:Q27T,1,True,"H,L",A,-0.6736915046178436,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4nnp_9368,4NNP,L:Y93V,L:Y93V,92,True,L:Y93V,1,True,"H,L",A,-2.653427231181426,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4nnp_10670,4NNP,L:Q27M,L:Q27M,26,True,L:Q27M,1,True,"H,L",A,0.2787550097655167,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4nnp_11972,4NNP,H:W107P,H:W105P,104,True,H:W107P,1,True,"H,L",A,-1.782081170931164,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4nnp_13274,4NNP,L:Q27F,L:Q27F,26,True,L:Q27F,1,True,"H,L",A,0.197593948263913,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4nnp_14576,4NNP,H:Y57P,H:Y55P,54,True,H:Y57P,1,True,"H,L",A,-1.2895095569067774,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4nnp_15878,4NNP,L:Q27K,L:Q27K,26,True,L:Q27K,1,True,"H,L",A,0.0293217698569177,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4nnp_17180,4NNP,H:Y59F,H:Y57F,56,True,H:Y59F,1,True,"H,L",A,1.6607957704579617,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4nnp_18482,4NNP,H:Y59P,H:Y57P,56,True,H:Y59P,1,True,"H,L",A,0.3004467990252029,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4nnp_19784,4NNP,L:Y93W,L:Y93W,92,True,L:Y93W,1,True,"H,L",A,-1.5166416883599894,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_0270,4PLJ,C:P95I,C:P95I,94,True,C:P95I,1,True,"D,C",B,0.6386063245218822,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_1572,4PLJ,C:T94S,C:T94S,93,True,C:T94S,1,True,"D,C",B,0.4014461042326831,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_2874,4PLJ,C:P95L,C:P95L,94,True,C:P95L,1,True,"D,C",B,1.959278271533655,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_4176,4PLJ,C:P95K,C:P95K,94,True,C:P95K,1,True,"D,C",B,-1.4211663212401573,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_5477,4PLJ,D:K63S,D:K63S,62,True,D:K63S,1,True,"D,C",B,-1.7508538082241525,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_6777,4PLJ,C:P95M,C:P95M,94,True,C:P95M,1,True,"D,C",B,-0.9998440084605396,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_8079,4PLJ,D:K63T,D:K63T,62,True,D:K63T,1,True,"D,C",B,-1.4913912450596476,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_9381,4PLJ,D:N104V,D:N104V,103,True,D:N104V,1,True,"D,C",B,-0.7918594289803378,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_10683,4PLJ,D:K63M,D:K63M,62,True,D:K63M,1,True,"D,C",B,-1.915983021251643,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_11985,4PLJ,D:I55S,D:I55S,54,True,D:I55S,1,True,"D,C",B,-0.1080086600186036,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_13287,4PLJ,D:K63F,D:K63F,62,True,D:K63F,1,True,"D,C",B,-0.6902512759395993,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_14589,4PLJ,C:T94P,C:T94P,93,True,C:T94P,1,True,"D,C",B,-1.3333540051957342,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_15891,4PLJ,D:K63L,D:K63L,62,True,D:K63L,1,True,"D,C",B,-1.4069961274081833,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_17193,4PLJ,C:P95F,C:P95F,94,True,C:P95F,1,True,"D,C",B,-1.2512586418119795,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_18495,4PLJ,C:P95S,C:P95S,94,True,C:P95S,1,True,"D,C",B,-0.2946886667647741,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_19797,4PLJ,D:N104Y,D:N104Y,103,True,D:N104Y,1,True,"D,C",B,-5.113363542306454,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_6a79_0528,6A79,L:T94I,L:T95I,94,True,L:T94I,1,True,"H,L",A,-0.3038538438588873,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_6a79_1830,6A79,L:S93T,L:S94T,93,True,L:S93T,1,True,"H,L",A,-0.2771992547952238,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_6a79_3132,6A79,L:T94L,L:T95L,94,True,L:T94L,1,True,"H,L",A,-1.9291833394573608,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_6a79_4434,6A79,L:T94K,L:T95K,94,True,L:T94K,1,True,"H,L",A,-2.265707752244058,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_6a79_5735,6A79,H:Y57P,H:Y59P,58,True,H:Y57P,1,True,"H,L",A,-6.421116803561213,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_6a79_7035,6A79,L:T94M,L:T95M,94,True,L:T94M,1,True,"H,L",A,-0.6360247068843965,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_6a79_8337,6A79,H:Y57S,H:Y59S,58,True,H:Y57S,1,True,"H,L",A,-0.0022264379717618,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_6a79_9639,6A79,H:A103V,H:A105V,104,True,H:A103V,1,True,"H,L",A,0.9263890142585828,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_6a79_10941,6A79,H:Y57K,H:Y59K,58,True,H:Y57K,1,True,"H,L",A,-0.6906279810301112,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_6a79_12243,6A79,H:D31S,H:D33S,32,True,H:D31S,1,True,"H,L",A,-0.2718337861340119,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_6a79_13545,6A79,H:Y57M,H:Y59M,58,True,H:Y57M,1,True,"H,L",A,-0.6092723343280728,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_6a79_14847,6A79,L:S93P,L:S94P,93,True,L:S93P,1,True,"H,L",A,-2.01449220210994,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_6a79_16149,6A79,H:Y57L,H:Y59L,58,True,H:Y57L,1,True,"H,L",A,-0.2906444014728262,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_6a79_17451,6A79,L:T94F,L:T95F,94,True,L:T94F,1,True,"H,L",A,-0.3831895673666645,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_6a79_18753,6A79,L:T94P,L:T95P,94,True,L:T94P,1,True,"H,L",A,-8.935060100758276,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_6a79_20055,6A79,H:A103Y,H:A105Y,104,True,H:A103Y,1,True,"H,L",A,-0.1822850676172251,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5j56_0405,5J56,B:D59L,B:D60L,59,True,B:D59L,1,True,B,A,-1.55934248397182,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5j56_1707,5J56,B:S57T,B:S58T,57,True,B:S57T,1,True,B,A,1.3299560831307158,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5j56_3009,5J56,B:D59K,B:D60K,59,True,B:D59K,1,True,B,A,-6.239775220968477,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5j56_4311,5J56,B:D59M,B:D60M,59,True,B:D59M,1,True,B,A,-1.7594097483947762,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5j56_5612,5J56,B:W107P,B:W108P,107,True,B:W107P,1,True,B,A,-3.664666291571873,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5j56_6912,5J56,B:D59F,B:D60F,59,True,B:D59F,1,True,B,A,3.029453660315361,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5j56_8214,5J56,B:W107S,B:W108S,107,True,B:W107S,1,True,B,A,-4.252012543345391,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5j56_9516,5J56,B:E114V,B:E115V,114,True,B:E114V,1,True,B,A,-3.2268786873440174,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5j56_10818,5J56,B:W107K,B:W108K,107,True,B:W107K,1,True,B,A,-5.380596388016689,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5j56_12120,5J56,B:F61S,B:F62S,61,True,B:F61S,1,True,B,A,-1.667338374531874,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5j56_13422,5J56,B:W107M,B:W108M,107,True,B:W107M,1,True,B,A,-3.700395351399335,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5j56_14724,5J56,B:S57P,B:S58P,57,True,B:S57P,1,True,B,A,0.6140287280698464,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5j56_16026,5J56,B:W107L,B:W108L,107,True,B:W107L,1,True,B,A,-2.881183006276053,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5j56_17328,5J56,B:D59P,B:D60P,59,True,B:D59P,1,True,B,A,-2.607018382758998,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5j56_18630,5J56,B:D59S,B:D60S,59,True,B:D59S,1,True,B,A,-0.2953668808449647,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_5j56_19932,5J56,B:E114Y,B:E115Y,114,True,B:E114Y,1,True,B,A,-1.3431073970437095,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg

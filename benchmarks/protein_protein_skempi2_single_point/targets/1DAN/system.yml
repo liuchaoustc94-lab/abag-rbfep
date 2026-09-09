@@ -1,0 +1,14 @@
+system_name: 1dan
+input_structure: benchmarks/protein_protein_skempi2_single_point/structures/1DAN.pdb
+structure_source: experimental
+complex_class: protein-protein
+mutated_partner: partner_a
+antibody_chains:
+- T
+- U
+antigen_chains:
+- H
+- L
+notes:
+- factor VIIa–tissue factor
+- 97 single records / 85 unique signatures on tissue-factor copies T/U.

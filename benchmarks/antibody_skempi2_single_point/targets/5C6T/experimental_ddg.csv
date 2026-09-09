@@ -1,0 +1,10 @@
+source_row_id,pdb_id,mutation_tokens,canonical_signature,source_mutation_tokens,source_mut_index,structure_mapped,mutation_count,single_point,antibody_chains,antigen_chains,ddg_kcal_mol,ddg_censored,censor_reason,temperature_K,affinity_mut_M,affinity_wt_M,reference,method,source_dataset,label_type
+skempi2_5c6t_6228,5C6T,H:R31S,H:R31S,RH31S,,True,1,True,"H,L",A,0.31154542,False,,298.00,2.2E-10,1.3E-10,26365435,SPR,SKEMPI2,experimental_ddg
+skempi2_5c6t_6229,5C6T,H:S32A,H:S32A,SH32A,,True,1,True,"H,L",A,-0.86834556,False,,298.00,3E-11,1.3E-10,26365435,SPR,SKEMPI2,experimental_ddg
+skempi2_5c6t_6230,5C6T,H:N97A,H:N97A,NH97A,,True,1,True,"H,L",A,1.52589631,False,,298.00,1.71E-09,1.3E-10,26365435,SPR,SKEMPI2,experimental_ddg
+skempi2_5c6t_6231,5C6T,H:Y98A,H:Y98A,YH98A,,True,1,True,"H,L",A,1.71668012,False,,298.00,2.36E-09,1.3E-10,26365435,SPR,SKEMPI2,experimental_ddg
+skempi2_5c6t_6232,5C6T,H:F99A,H:F99A,FH99A,,True,1,True,"H,L",A,1.46002995,False,,298.00,1.53E-09,1.3E-10,26365435,SPR,SKEMPI2,experimental_ddg
+skempi2_5c6t_6233,5C6T,H:Y98A;H:F99A,H:Y98A;H:F99A,"YH98A,FH99A",,True,2,False,"H,L",A,,True,missing_or_censored_affinity,298.00,,1.3E-10,26365435,SPR,SKEMPI2,experimental_ddg
+skempi2_5c6t_6234,5C6T,H:Y104A,H:Y104A,YH104A,,True,1,True,"H,L",A,0.36307242,False,,298.00,2.4E-10,1.3E-10,26365435,SPR,SKEMPI2,experimental_ddg
+skempi2_5c6t_6235,5C6T,L:Y47A,L:Y47A,YL47A,,True,1,True,"H,L",A,0.55165654,False,,298.00,3.3E-10,1.3E-10,26365435,SPR,SKEMPI2,experimental_ddg
+skempi2_5c6t_6236,5C6T,L:R48A,L:R48A,RL48A,,True,1,True,"H,L",A,0.12296131,False,,298.00,1.6E-10,1.3E-10,26365435,SPR,SKEMPI2,experimental_ddg

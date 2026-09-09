@@ -1,0 +1,17 @@
+source_row_id,pdb_id,mutation_tokens,canonical_signature,source_mutation_tokens,source_mut_index,structure_mapped,mutation_count,single_point,antibody_chains,antigen_chains,ddg_kcal_mol,ddg_censored,censor_reason,temperature_K,affinity_mut_M,affinity_wt_M,reference,method,source_dataset,label_type
+graphinity_flexddg_4plj_0270,4PLJ,C:P95I,C:P95I,C:P95I,94,True,1,True,"D,C",B,0.6386063245218822,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_1572,4PLJ,C:T94S,C:T94S,C:T94S,93,True,1,True,"D,C",B,0.4014461042326831,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_2874,4PLJ,C:P95L,C:P95L,C:P95L,94,True,1,True,"D,C",B,1.959278271533655,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_4176,4PLJ,C:P95K,C:P95K,C:P95K,94,True,1,True,"D,C",B,-1.4211663212401573,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_5477,4PLJ,D:K63S,D:K63S,D:K63S,62,True,1,True,"D,C",B,-1.7508538082241525,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_6777,4PLJ,C:P95M,C:P95M,C:P95M,94,True,1,True,"D,C",B,-0.9998440084605396,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_8079,4PLJ,D:K63T,D:K63T,D:K63T,62,True,1,True,"D,C",B,-1.4913912450596476,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_9381,4PLJ,D:N104V,D:N104V,D:N104V,103,True,1,True,"D,C",B,-0.7918594289803378,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_10683,4PLJ,D:K63M,D:K63M,D:K63M,62,True,1,True,"D,C",B,-1.915983021251643,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_11985,4PLJ,D:I55S,D:I55S,D:I55S,54,True,1,True,"D,C",B,-0.1080086600186036,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_13287,4PLJ,D:K63F,D:K63F,D:K63F,62,True,1,True,"D,C",B,-0.6902512759395993,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_14589,4PLJ,C:T94P,C:T94P,C:T94P,93,True,1,True,"D,C",B,-1.3333540051957342,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_15891,4PLJ,D:K63L,D:K63L,D:K63L,62,True,1,True,"D,C",B,-1.4069961274081833,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_17193,4PLJ,C:P95F,C:P95F,C:P95F,94,True,1,True,"D,C",B,-1.2512586418119795,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_18495,4PLJ,C:P95S,C:P95S,C:P95S,94,True,1,True,"D,C",B,-0.2946886667647741,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg
+graphinity_flexddg_4plj_19797,4PLJ,D:N104Y,D:N104Y,D:N104Y,103,True,1,True,"D,C",B,-5.113363542306454,False,,,,,,Rosetta Flex ddG (Graphinity control),Graphinity-Flex-ddG,synthetic_rosetta_flexddg

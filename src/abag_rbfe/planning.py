@@ -15,6 +15,7 @@ from abag_rbfe.constants import preset_copy
 from abag_rbfe.io_utils import ensure_dir, read_yaml, utc_now, write_csv_rows, write_json, write_yaml
 from abag_rbfe.models import BatchPlan, JobSpec, ProtocolConfig, SystemConfig, dataclass_to_dict
 from abag_rbfe.paths import ProjectPaths
+from abag_rbfe.routing import MutationRoute, classify_mutation_route
 
 
 def slugify(value: str) -> str:
@@ -160,6 +161,7 @@ def build_batch_plan(
 
     jobs: list[JobSpec] = []
     job_rows: list[dict[str, object]] = []
+    routing_rows: list[dict[str, object]] = []
     for mutation_group in mutation_groups:
         protocol = choose_protocol_for_group(
             base_protocol,
@@ -170,6 +172,18 @@ def build_batch_plan(
             adapted = adaptive_lambda_windows(protocol.lambda_windows, mutation_group.sites)
             if adapted != protocol.lambda_windows:
                 protocol = replace(protocol, lambda_windows=adapted)
+        # V2.1a routing: charge-changing mutations run the DSSB single-leg path
+        # unless leg_topology was explicitly pinned in the protocol file.
+        if not mutation_group.charge_conserving and "leg_topology" not in explicit_protocol_fields:
+            protocol = replace(protocol, leg_topology="dssb")
+        route = classify_mutation_route(
+            mutation_group.sites,
+            charge_conserving=mutation_group.charge_conserving,
+        )
+        if (route.primary == "dssb") != (protocol.leg_topology == "dssb"):
+            # Pinned leg_topology overrides the table; keep the route label as
+            # advisory and record the divergence.
+            route = MutationRoute(route.primary, route.tags + ("leg_topology_pinned",), route.reasons)
         job_id = build_job_id(system.system_name, mutation_group)
         workdir = ensure_dir(jobs_dir / job_id)
         job = JobSpec(
@@ -198,7 +212,17 @@ def build_batch_plan(
                 "entity_side": mutation_group.entity_side,
                 "min_version": mutation_group.min_version,
                 "protocol_preset": protocol.preset,
+                "route": route.primary,
+                "route_tags": ";".join(route.tags),
                 "workdir": workdir,
+            }
+        )
+        routing_rows.append(
+            {
+                "job_id": job_id,
+                "route": route.primary,
+                "tags": list(route.tags),
+                "reasons": list(route.reasons),
             }
         )
 
@@ -213,6 +237,7 @@ def build_batch_plan(
     write_csv_rows(
         batch_dir / "jobs.csv",
         job_rows,
-        ["job_id", "mutation_group_id", "mutation_count", "entity_side", "min_version", "protocol_preset", "workdir"],
+        ["job_id", "mutation_group_id", "mutation_count", "entity_side", "min_version", "protocol_preset", "route", "route_tags", "workdir"],
     )
+    write_json(batch_dir / "routing_summary.json", {"jobs": routing_rows})
     return batch_plan

@@ -1,0 +1,4 @@
+mutation_group_id,chain_id,resseq,icode,wt,mut,entity_side
+skempi2_3g6d_4261,H,103,,F,A,antibody
+skempi2_3g6d_4262,H,104,,H,A,antibody
+skempi2_3g6d_4263,H,105,,W,A,antibody

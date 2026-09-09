@@ -1,0 +1,12 @@
+system_name: 1c1y
+input_structure: benchmarks/protein_protein_skempi2_single_point/structures/1C1Y.pdb
+structure_source: experimental
+complex_class: protein-protein
+mutated_partner: partner_a
+antibody_chains:
+- B
+antigen_chains:
+- A
+notes:
+- Rap1A–Raf RBD
+- 13 unique single substitutions on the Raf RBD chain.

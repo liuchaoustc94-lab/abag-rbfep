@@ -118,6 +118,12 @@ def _load_job_spec(job_dir: Path) -> dict[str, Any]:
     return read_json(spec_path)
 
 
+def _job_leg_names(spec: dict[str, Any]) -> tuple[str, ...]:
+    """Leg enumeration from job_spec protocol (two_leg default; dssb single-leg)."""
+    leg_topology = str(spec.get("protocol", {}).get("leg_topology", "two_leg")).strip().lower()
+    return ("dssb",) if leg_topology == "dssb" else ("complex", "apo")
+
+
 def _nonempty_file(path: Path) -> bool:
     try:
         return path.is_file() and path.stat().st_size > 0
@@ -169,12 +175,13 @@ def _sample_progress(job_dir: Path, spec: dict[str, Any]) -> dict[str, Any]:
     protocol = spec.get("protocol", {})
     repeats = max(_safe_int(protocol.get("repeats"), 0), 0)
     lambda_windows = max(_safe_int(protocol.get("lambda_windows"), 0), 0)
-    total_windows = repeats * lambda_windows * 2
+    leg_names = _job_leg_names(spec)
+    total_windows = repeats * lambda_windows * len(leg_names)
     started_windows = 0
     completed_windows = 0
     active_window: dict[str, Any] | None = None
 
-    for leg_name in ("complex", "apo"):
+    for leg_name in leg_names:
         for repeat_index in range(1, repeats + 1):
             repeat_id = f"rep{repeat_index:02d}"
             repeat_dir = job_dir / "legs" / leg_name / repeat_id
@@ -234,11 +241,12 @@ def _equilibrate_repeat_completed(repeat_dir: Path) -> bool:
 def _equilibrate_progress(job_dir: Path, spec: dict[str, Any]) -> dict[str, Any]:
     protocol = spec.get("protocol", {})
     repeats = max(_safe_int(protocol.get("repeats"), 0), 0)
-    total_repeats = repeats * 2
+    leg_names = _job_leg_names(spec)
+    total_repeats = repeats * len(leg_names)
     started_repeats = 0
     completed_repeats = 0
 
-    for leg_name in ("complex", "apo"):
+    for leg_name in leg_names:
         for repeat_index in range(1, repeats + 1):
             repeat_dir = job_dir / "legs" / leg_name / f"rep{repeat_index:02d}"
             if _equilibrate_repeat_completed(repeat_dir):
@@ -628,7 +636,7 @@ def collect_job_results(job_dir: Path) -> dict[str, Any]:
 
     legs: dict[str, Any] = {}
     repeat_results_by_leg: dict[str, list[dict[str, Any]]] = {}
-    for leg in ("complex", "apo"):
+    for leg in _job_leg_names(spec):
         leg_root = job_dir / "legs" / leg
         repeats = [
             _parse_repeat_bar(repeat_dir, leg=leg, temperature_k=temperature_k)
@@ -661,29 +669,52 @@ def collect_job_results(job_dir: Path) -> dict[str, Any]:
             "repeats": repeats,
         }
 
-    complex_by_repeat = {item["repeat_id"]: item for item in repeat_results_by_leg["complex"] if item["delta_g_kcal_mol"] is not None}
-    apo_by_repeat = {item["repeat_id"]: item for item in repeat_results_by_leg["apo"] if item["delta_g_kcal_mol"] is not None}
-    common_repeat_ids = sorted(set(complex_by_repeat) & set(apo_by_repeat))
-    ddg_repeats = []
-    for repeat_id in common_repeat_ids:
-        complex_item = complex_by_repeat[repeat_id]
-        apo_item = apo_by_repeat[repeat_id]
-        stderr_kcal = None
-        if complex_item["stderr_kcal_mol"] is not None and apo_item["stderr_kcal_mol"] is not None:
-            stderr_kcal = sqrt(complex_item["stderr_kcal_mol"] ** 2 + apo_item["stderr_kcal_mol"] ** 2)
-        ddg_kcal = complex_item["delta_g_kcal_mol"] - apo_item["delta_g_kcal_mol"]
-        ddg_repeats.append(
+    leg_names = list(repeat_results_by_leg.keys())
+    if leg_names == ["dssb"]:
+        # V2.1a DSSB: the thermodynamic cycle closes inside the single box —
+        # the leg's BAR delta G IS ddG (bound WT->MUT and unbound MUT->WT run
+        # simultaneously under one global lambda). No cross-leg pairing.
+        ddg_repeats = [
             {
-                "repeat_id": repeat_id,
-                "complex_delta_g_kcal_mol": complex_item["delta_g_kcal_mol"],
-                "apo_delta_g_kcal_mol": apo_item["delta_g_kcal_mol"],
-                "ddg_kcal_mol": ddg_kcal,
-                "propagated_stderr_kcal_mol": stderr_kcal,
+                "repeat_id": item["repeat_id"],
+                "complex_delta_g_kcal_mol": None,
+                "apo_delta_g_kcal_mol": None,
+                "ddg_kcal_mol": item["delta_g_kcal_mol"],
+                "propagated_stderr_kcal_mol": item["stderr_kcal_mol"],
             }
-        )
+            for item in repeat_results_by_leg["dssb"]
+            if item["delta_g_kcal_mol"] is not None
+        ]
+        complex_delta_g_mean = None
+        apo_delta_g_mean = None
+    else:
+        complex_by_repeat = {item["repeat_id"]: item for item in repeat_results_by_leg["complex"] if item["delta_g_kcal_mol"] is not None}
+        apo_by_repeat = {item["repeat_id"]: item for item in repeat_results_by_leg["apo"] if item["delta_g_kcal_mol"] is not None}
+        common_repeat_ids = sorted(set(complex_by_repeat) & set(apo_by_repeat))
+        ddg_repeats = []
+        for repeat_id in common_repeat_ids:
+            complex_item = complex_by_repeat[repeat_id]
+            apo_item = apo_by_repeat[repeat_id]
+            stderr_kcal = None
+            if complex_item["stderr_kcal_mol"] is not None and apo_item["stderr_kcal_mol"] is not None:
+                stderr_kcal = sqrt(complex_item["stderr_kcal_mol"] ** 2 + apo_item["stderr_kcal_mol"] ** 2)
+            ddg_kcal = complex_item["delta_g_kcal_mol"] - apo_item["delta_g_kcal_mol"]
+            ddg_repeats.append(
+                {
+                    "repeat_id": repeat_id,
+                    "complex_delta_g_kcal_mol": complex_item["delta_g_kcal_mol"],
+                    "apo_delta_g_kcal_mol": apo_item["delta_g_kcal_mol"],
+                    "ddg_kcal_mol": ddg_kcal,
+                    "propagated_stderr_kcal_mol": stderr_kcal,
+                }
+            )
+        complex_delta_g_mean = legs["complex"]["delta_g_kcal_mol_mean"]
+        apo_delta_g_mean = legs["apo"]["delta_g_kcal_mol_mean"]
 
     ddg_values = [item["ddg_kcal_mol"] for item in ddg_repeats]
     ddg_range = _safe_range(ddg_values)
+    mutation_group = spec.get("mutation_group", {})
+    setup_path = "dssb" if leg_names == ["dssb"] else "two_leg"
     ddg_summary = {
         **_build_job_metadata(spec, job_dir),
         "generated_at": utc_now(),
@@ -691,8 +722,8 @@ def collect_job_results(job_dir: Path) -> dict[str, Any]:
         "kT_to_kcal_mol": KCAL_PER_MOL_PER_K * temperature_k,
         "ready": bool(ddg_repeats),
         "paired_repeat_count": len(ddg_repeats),
-        "complex_delta_g_kcal_mol": legs["complex"]["delta_g_kcal_mol_mean"],
-        "apo_delta_g_kcal_mol": legs["apo"]["delta_g_kcal_mol_mean"],
+        "complex_delta_g_kcal_mol": complex_delta_g_mean,
+        "apo_delta_g_kcal_mol": apo_delta_g_mean,
         "ddg_kcal_mol": _safe_mean(ddg_values),
         "ddg_repeat_stdev_kcal_mol": _safe_stdev(ddg_values),
         "ddg_repeat_range_kcal_mol": ddg_range,
@@ -701,6 +732,11 @@ def collect_job_results(job_dir: Path) -> dict[str, Any]:
         ),
         "repeat_within_threshold": ddg_range <= max_repeat_delta if ddg_range is not None else None,
         "repeats": ddg_repeats,
+        "charge_changing": not bool(mutation_group.get("charge_conserving", True)),
+        "setup_path": setup_path,
+        "result_confidence": "quantitative"
+        if ddg_repeats and (ddg_range is None or ddg_range <= max_repeat_delta)
+        else "indicative",
     }
     return {
         "metadata": _build_job_metadata(spec, job_dir),

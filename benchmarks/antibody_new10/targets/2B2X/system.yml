@@ -1,0 +1,11 @@
+system_name: 2b2x
+input_structure: benchmarks/antibody_new10/structures/2B2X.pdb
+structure_source: experimental
+antibody_chains:
+- H
+- L
+antigen_chains:
+- A
+notes:
+- AQC2 Fab–integrin alpha-1 (alternate structure)
+- 115 antibody-side rows, but mostly combinations; structural replicate of the already queued 1MHP biology. The deposited 2B2X complex contains an affinity-matured Fab, so revert to a WT AQC2 baseline before RBFE.

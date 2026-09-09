@@ -56,7 +56,15 @@
   - [ ] 方向感知调度下 7 个插入 job 重跑验证（排队中）
   - [ ] 评估 sample 阶段自动 dt 减半回退机制的残留必要性
 
+**pmx develop 升级评估（2026-09-08，结论：路径关闭）**：拉取上游 deGrootLab/pmx develop（0dd5f0a, 2026-07-28）逐项对比——① **杂化映射数据完全一致**（amber99sb-star-ildn-mut.ff/aminoacids.rtp 零差异，上游没有修复任何映射）；② 上游 develop 的代码**连我们的输入都跑不过**（`bb_super` 断言：杂化残基骨架原子 N-CA-C-H-O-HA vs 输入 N-CA-C-O 不匹配即崩——我们 vendored 版的 `_resolve_dihedral_atoms` 容错补丁是关键负载，上游反而落后）；③ 因此崩溃族的根因**不在 pmx 拓扑生成层**，而在 GROMACS 中间 λ 态的 soft-core+约束形态动力学本身。下一步候选：给杂化残基在生产段加专用约束（带校正项）或直接接受 hard-set 状态。
+
+**P3-a Alchembed 预生长 pilot（2026-08-26，3 canary × 3 轮，部分阴性）**：`tools/pregrow_window.py` 实现 λ 子步 EM 预生长（从上窗口到目标窗口的 coul/vdw 插值，每子步 1000-2000 步 steep EM + ci=yes EM 基底）。结果：① 预生长本身可机械通过（d31e 需 8 子步×2000 步才过 EM）；② 但随后 pre_md/production 仍 LINCS 风暴崩溃（step 0 起）——EM 预生长解决了立体冲突，治不了中间 λ 的 MD 动力学不稳定；③ **dummy 漂移假说被数据否定**（equilibration 后 dummy 残基内几何与 builder 结构一致）；④ y50l 发现 grompp 的 CUDA #700 瞬态错误（同 GPU 上前序 segfault 的连带污染），规避法=grompp 强制 CPU。结论：该族的根因在生产 MD 阶段的中间 λ 态本身，下一步应是**带位置约束的窗口内生长**（pre_md/production 期间对杂化残基+骨架加 posres），而非继续优化起跑结构。
+
 **调度演进（2026-08-12 三轮迭代）**：严格分步（修电荷变化 overlap，B2 验证）→ 重叠分步（幽灵态缓解不足，失败窗 λ003→λ005）→ **方向感知分步**（插入 vdW 先行、删除 coul 先行——插入型突变的侧链必须先在口袋中“长大”再带电，否则交界窗口的全电荷零 vdW 幽灵原子在紧密环区必然 LINCS 爆炸）。
+
+**根治（2026-08-26，窗口级自动重试阶梯）**：sample 阶段每个 λ 窗口改为三级容错——① standard；② retry1-reseed（同物理、新 ld-seed，治随机 LINCS）；③ retry2-robust（pre_relax 3× EM 步数 + pre_md/production 半 dt 双倍步数 + 新种子，治交界窗口确定性积分不稳定）。变体 mdp（`*.retry1.mdp`/`*.retry2.mdp`）由 sample 阶段直接写出，**旧 job resume 即自动获得阶梯**（无需重跑 build_legs）；崩溃的 mdrun 在 `set +e` 包裹的 && 链内失败，不再杀死整个 stage。三级全败才判窗口失败（`exit 1`）。实现：`stages.py::_write_sample_retry_mdps` + `_sample_window_snippet` 重写；测试 `tests/test_sample_retry_ladder.py`（4 个，含 stub-gmx 的 bash 级阶梯恢复测试）。12 个崩溃 job（E4 w98f/y50l、V1 ×9、h487q）已用新阶梯重排（`run_retry_ladder_rescue_20260826.sh`）。
+
+**补充（2026-08-24，h487q/1AK4 CypA 环）**：24λ 加密重试在 complex/rep01/lambda_011（删除型 coul=1.0/vdw=0.25 窗口）pre_relax EM 反复失败——原始报错是 exclusionchecker fatal（perturbed excluded pairs beyond rlist）；把该 job 全部 pre_relax/pre_md mdp 的 rlist 1.25→1.50 后越过了 exclusion 检查，但 EM 仍然 SIGSEGV（dummy 原子在 25% LJ 下几何畸变失控）。**rlist 补丁无效，已放弃该路线**；候选后续：pre_relax 阶段加大 sc-alpha（0.3→0.5）或对该类窗口以低 λ 邻窗结构起步（需管线支持）。~~h487q 暂挂起，不占队列。~~（2026-08-26 更新：h487q 已随重试阶梯重排，retry2 的 3× EM 是对该 EM SIGSEGV 的一次顺带验证；若仍败则回到 sc-alpha 方案。）
 
 ## ISSUE-006 [open] 全链路正确性审计记录（2026-08-06，ISSUE-001 后续）
 
@@ -86,3 +94,39 @@
 - **严重度**：low（文档）
 - **现象**：README accepted R=0.672/32 pairs vs `validation_target_summary.json` R=0.607/42 pairs；且两者都基于 ISSUE-001 的缺氢数据，修复后均需重建。
 - **遗留**：修复后数据就绪时统一以 `validation_target_summary.json` 为唯一权威来源重新生成全部文档数字。
+
+## ISSUE-009 [fixed 2026-08-24] wipe 漏删 `stages/build_legs.json` 导致 1BJ1 FEP 重跑假失败（运维陷阱第三次复发）
+
+- **严重度**：medium（运维，已造成 ~5 天空转）
+- **现象**：`run_1bj1_ensemble_fix_20260819.sh` 的 wipe 段删除了 `legs/*/rep*/lambda_*` 和 sample/bar/qc/report 阶段状态，但**漏删 `stages/build_legs.json`**。08-24 resume 时 build_legs 被视为已完成而跳过，lambda 目录（含 `pre_relax.mdp` 等）永不重建，sample 阶段在 `lambda_000` 即 grompp 失败（"pre_relax.mdp does not exist"），4 个 job 全部 state=failed。
+- **修复**：队列脚本 `benchmarks/ab_bind/run_stalled_queue_20260824.sh` Phase 0 补删 build_legs.json 后 resume，mdp 重建正常。
+- **教训（写入运维纪律）**：任何删除 `lambda_*` 目录的 wipe **必须同时删除 `stages/build_legs.json`**（mdp 由 build_legs 渲染）；只删 sample.json 适用于 lambda 目录保留的续跑（per-window 幂等跳过已完成窗口）。
+- **同类处理**：E4 w98f/y50l 属于"lambda 目录保留、窗口部分完成"场景，只删 sample.json 即可幂等续跑。
+
+## OBS-6 [resolved 2026-09-09] QC overlap 低分的真实根因（"QC 通过率低"现象）
+
+- **现象**：报告里 qc_qualified 通过率极低（部分靶点 0-3/job）
+- **误诊记录（2026-09-08，已撤回）**：曾判定为"旧版 overlap 反射逻辑 bug + 结果陈旧"，重跑 bar 无效后深挖
+- **真根因（三层）**：
+  1. **语义**：QC 的腿级 overlap = 每 rep 的**最差 λ 区间**（`overlap_score_min`，support 交集/并集比）——方向感知重叠调度在 coul/vdw 交界窗口的 ΔH 分布天然可脱节（Pro/大插入尤甚），是设计内行为而非收敛失败
+  2. **口径**：报告的 qc_qualified 复合条件把 warning 计入不过 → 视觉放大
+  3. **阈值**：0.2 阈值与 ISSUE-001 缺氢时代数据共同演化，对化学完整数据偏严
+- **数据佐证**：214 个当前批次 qc_report：pass 30 / warning 183 / fail 1；bar stderr <1 占 96%
+- **处置**：overlap 指标语义保留（最差区间对真实不收敛敏感），QC 阈值重标定列入待办（等 fit 面板 ~100 pairs）；报告层把 qc_qualified 拆成"any-fail"与"any-warning"两档（待做）
+
+## OBS-7 [resolved 2026-09-09] QC 阈值重标定——数据驱动结论（234 pairs）
+
+**分析**（`runs/analysis/qc_metric_calibration_20260909.json`）：QC 指标与 |ddG 误差| 的 Spearman 相关：overlap 均值/最差腿 **−0.14/−0.10（无用，降级为 informational）**；bar stderr **+0.33**；repeat 极差 **+0.30**。
+
+**阈值扫描结论**：
+| 阈值 | 判据 |
+|---|---|
+| **bar stderr ≤1.0**（现默认 10.0 从不触发） | 超线者中位误差 7.06 vs 线下 1.25，只剔 7%——**锐利判别器** |
+| **repeat 极差 ≤4**（现默认 1.0 在 79% 数据上误报） | 超线者中位误差 2.54 vs 线下 1.17，剔 11% |
+| 组合（极差>4 或 se>1.5） | 剔 11%（中位误差 3.04）→ 保留 208 点（1.13） |
+
+**处置（2026-09-09）**：
+- **不改 ProtocolConfig 默认值**（实测会破坏 12 个 rescue-planning 测试——该阈值同时驱动 rescue 触发器，改它等于改救援语义，超出本次范围；已回滚，402 全绿）
+- 重标定落**报告层**：qc_qualified 分档（fail / warning / clean），重标定阈值（se≤1.0、极差≤4）用于 reporting 的 qualified 判定（待做小项）
+- overlap 指标降级为 informational（OBS-6 的语义确认 + 本分析的无预测力证据）
+- QC 纪律不变：QC 过滤口径只作诊断，不进官方指标

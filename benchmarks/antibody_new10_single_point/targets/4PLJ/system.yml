@@ -1,0 +1,13 @@
+system_name: 4plj
+input_structure: benchmarks/antibody_new10_single_point/structures/4PLJ.pdb
+structure_source: experimental
+complex_class: antibody-antigen
+mutated_partner: antibody
+antibody_chains:
+- D
+- C
+antigen_chains:
+- B
+notes:
+- 8G12 antibody–hepatitis E virus E2
+- 16 Rosetta Flex ddG antibody-side single substitutions.

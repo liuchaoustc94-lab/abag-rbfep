@@ -1,0 +1,3 @@
+source,url,local_input,sha256,retrieved_or_verified
+SKEMPI2 CSV,https://life.bsc.es/pid/skempi2/database/download/skempi_v2.csv,/tmp/skempi_new10/skempi_v2.csv,76f8e60d09eaa4f05fb265063886859a86895c0b2fb225e31fe82928a883972d,2026-08-31
+SKEMPI2 cleaned PDB archive,https://life.bsc.es/pid/skempi2/database/download/SKEMPI2_PDBs.tgz,/tmp/skempi_new10/SKEMPI2_PDBs.tgz,82418131a3864aa8484ea6ec300e58f9bc0349e21530f83f7ce336b41589a95a,2026-08-31

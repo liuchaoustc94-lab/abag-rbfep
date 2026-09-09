@@ -1,0 +1,12 @@
+system_name: 1jtd
+input_structure: benchmarks/protein_protein_skempi2_single_point/structures/1JTD.pdb
+structure_source: experimental
+complex_class: protein-protein
+mutated_partner: partner_a
+antibody_chains:
+- B
+antigen_chains:
+- A
+notes:
+- TEM-1 beta-lactamase–BLIP-II
+- 25 unique single substitutions on BLIP-II.

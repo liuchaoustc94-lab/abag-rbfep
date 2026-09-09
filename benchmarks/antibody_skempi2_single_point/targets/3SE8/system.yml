@@ -1,0 +1,13 @@
+system_name: 3se8
+input_structure: benchmarks/antibody_skempi2_single_point/structures/3SE8.pdb
+structure_source: experimental
+complex_class: antibody-antigen
+mutated_partner: antibody
+antibody_chains:
+- H
+- L
+antigen_chains:
+- G
+notes:
+- VRC03 Fab–HIV-1 gp120
+- 28 antibody-side single substitutions; strongest strict new experimental target.

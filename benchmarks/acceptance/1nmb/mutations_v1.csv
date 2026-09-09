@@ -1,0 +1,7 @@
+mutation_group_id,chain_id,resseq,icode,wt,mut,entity_side
+antibody_h_d56e,H,56,,D,E,antibody
+antibody_h_y99a,H,99,,Y,A,antibody
+antibody_l_y32f,L,32,,Y,F,antibody
+antibody_l_t93f,L,93,,T,F,antibody
+antibody_l_t93w,L,93,,T,W,antibody
+antibody_l_l94v,L,94,,L,V,antibody

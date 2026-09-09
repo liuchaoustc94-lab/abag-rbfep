@@ -7070,3 +7070,36 @@ def test_plan_ab_bind_rescues_appends_batches_into_existing_rescue_root(tmp_path
         "abbind-rescue_1vfb-antibody-h-v34a",
     }
     assert {row["source_job_id"] for row in rescue_rows} == {"1vfb-antibody-h-y32a", "1vfb-antibody-h-v34a"}
+
+
+def test_balanced_accuracy_three_class_metric() -> None:
+    from abag_rbfe.benchmark import _balanced_accuracy_three_class
+
+    # 完美预测 → 1.0
+    assert _balanced_accuracy_three_class([2.0, 0.0, -2.0], [2.5, 0.1, -1.5]) == 1.0
+    # 全部预测 neutral：只有 neutral 类召回 1.0，其余两类 0 → BA = 1/3
+    ba = _balanced_accuracy_three_class([0.0, 0.0, 0.0], [2.5, 0.1, -1.5])
+    assert abs(ba - 1.0 / 3) < 1e-9
+    # 空列表 → None
+    assert _balanced_accuracy_three_class([], []) is None
+    # 单类存在时按该类召回
+    assert _balanced_accuracy_three_class([2.0, 1.5], [3.0, 1.2]) == 1.0
+
+
+def test_per_target_metrics_median_and_structure() -> None:
+    from abag_rbfe.benchmark import _per_target_metrics
+
+    rows = [
+        {"complex_id": "A", "predicted_ddg_kcal_mol": 1.0, "experimental_ddg_kcal_mol": 1.1, "ddg_error_kcal_mol": -0.1},
+        {"complex_id": "A", "predicted_ddg_kcal_mol": 2.0, "experimental_ddg_kcal_mol": 2.1, "ddg_error_kcal_mol": -0.1},
+        {"complex_id": "A", "predicted_ddg_kcal_mol": 3.0, "experimental_ddg_kcal_mol": 2.9, "ddg_error_kcal_mol": 0.1},
+        {"complex_id": "B", "predicted_ddg_kcal_mol": 3.0, "experimental_ddg_kcal_mol": 1.0, "ddg_error_kcal_mol": 2.0},
+        {"complex_id": "B", "predicted_ddg_kcal_mol": 2.0, "experimental_ddg_kcal_mol": 0.5, "ddg_error_kcal_mol": 1.5},
+        {"complex_id": "B", "predicted_ddg_kcal_mol": 1.0, "experimental_ddg_kcal_mol": 0.0, "ddg_error_kcal_mol": 1.0},
+    ]
+    result = _per_target_metrics(rows)
+    assert result["target_count"] == 2
+    assert result["targets"]["A"]["pearson_r"] > 0.99
+    assert result["targets"]["B"]["pearson_r"] > 0.99
+    assert result["targets"]["B"]["mean_offset_kcal_mol"] == 1.5
+    assert result["median_pearson_r"] > 0.99

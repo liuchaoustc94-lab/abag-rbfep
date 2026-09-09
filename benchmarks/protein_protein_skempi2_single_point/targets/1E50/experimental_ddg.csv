@@ -1,0 +1,17 @@
+source_row_id,pdb_id,mutation_tokens,canonical_signature,source_mutation_tokens,source_mut_index,structure_mapped,mutation_count,single_point,antibody_chains,antigen_chains,ddg_kcal_mol,ddg_censored,censor_reason,temperature_K,affinity_mut_M,affinity_wt_M,reference,method,source_dataset,label_type
+skempi2_1e50_5645,1E50,A:D8A,A:D8A,DA8A,,True,1,True,"A,C,E,G,Q,R","B,D,F,H",-0.40207270,False,,298.00,7.1E-09,1.4E-08,12807883,ESMA,SKEMPI2,experimental_ddg
+skempi2_1e50_5646,1E50,A:N11A,A:N11A,NA11A,,True,1,True,"A,C,E,G,Q,R","B,D,F,H",0.67813231,False,,298.00,4.4E-08,1.4E-08,12807883,ESMA,SKEMPI2,experimental_ddg
+skempi2_1e50_5647,1E50,A:M48A,A:M48A,MA48A,,True,1,True,"A,C,E,G,Q,R","B,D,F,H",1.31967489,False,,298.00,1.3E-07,1.4E-08,12807883,ESMA,SKEMPI2,experimental_ddg
+skempi2_1e50_5648,1E50,A:N51A,A:N51A,NA51A,,True,1,True,"A,C,E,G,Q,R","B,D,F,H",2.43162530,False,,298.00,8.5E-07,1.4E-08,12807883,ESMA,SKEMPI2,experimental_ddg
+skempi2_1e50_5649,1E50,A:Y55A,A:Y55A,YA55A,,True,1,True,"A,C,E,G,Q,R","B,D,F,H",0.94456718,False,,298.00,6.9E-08,1.4E-08,12807883,ESMA,SKEMPI2,experimental_ddg
+skempi2_1e50_5650,1E50,A:S56A,A:S56A,SA56A,,True,1,True,"A,C,E,G,Q,R","B,D,F,H",0.97793865,False,,298.00,7.3E-08,1.4E-08,12807883,ESMA,SKEMPI2,experimental_ddg
+skempi2_1e50_5651,1E50,A:T91A,A:T91A,TA91A,,True,1,True,"A,C,E,G,Q,R","B,D,F,H",1.51238576,False,,298.00,1.8E-07,1.4E-08,12807883,ESMA,SKEMPI2,experimental_ddg
+skempi2_1e50_5652,1E50,A:V101A,A:V101A,VA101A,,True,1,True,"A,C,E,G,Q,R","B,D,F,H",-0.04388577,False,,298.00,1.3E-08,1.4E-08,12807883,ESMA,SKEMPI2,experimental_ddg
+skempi2_1e50_5653,1E50,A:T103A,A:T103A,TA103A,,True,1,True,"A,C,E,G,Q,R","B,D,F,H",2.18450597,False,,298.00,5.6E-07,1.4E-08,12807883,ESMA,SKEMPI2,experimental_ddg
+skempi2_1e50_5658,1E50,A:D8A,A:D8A,DA8A,,True,1,True,"A,C,E,G,Q,R","B,D,F,H",-0.22998801,False,,298.00,1.77E-08,2.61E-08,11257229,ESMA,SKEMPI2,experimental_ddg
+skempi2_1e50_5659,1E50,A:N51A,A:N51A,NA51A,,True,1,True,"A,C,E,G,Q,R","B,D,F,H",1.40728434,False,,298.00,2.81E-07,2.61E-08,11257229,ESMA,SKEMPI2,experimental_ddg
+skempi2_1e50_5660,1E50,A:D52A;A:E53A,A:D52A;A:E53A,"DA52A,EA53A",,True,2,False,"A,C,E,G,Q,R","B,D,F,H",0.39086585,False,,298.00,5.05E-08,2.61E-08,11257229,ESMA,SKEMPI2,experimental_ddg
+skempi2_1e50_5661,1E50,A:Y55A,A:Y55A,YA55A,,True,1,True,"A,C,E,G,Q,R","B,D,F,H",0.88333843,False,,298.00,1.16E-07,2.61E-08,11257229,ESMA,SKEMPI2,experimental_ddg
+skempi2_1e50_5662,1E50,A:R84A,A:R84A,RA84A,,True,1,True,"A,C,E,G,Q,R","B,D,F,H",-0.19114216,False,,298.00,1.89E-08,2.61E-08,11257229,ESMA,SKEMPI2,experimental_ddg
+skempi2_1e50_5663,1E50,A:K86M,A:K86M,KA86M,,True,1,True,"A,C,E,G,Q,R","B,D,F,H",0.31994247,False,,298.00,4.48E-08,2.61E-08,11257229,ESMA,SKEMPI2,experimental_ddg
+skempi2_1e50_5664,1E50,A:T91A,A:T91A,TA91A,,True,1,True,"A,C,E,G,Q,R","B,D,F,H",1.04340081,False,,298.00,1.52E-07,2.61E-08,11257229,ESMA,SKEMPI2,experimental_ddg

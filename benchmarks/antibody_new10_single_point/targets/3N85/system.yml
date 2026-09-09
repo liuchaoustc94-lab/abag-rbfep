@@ -1,0 +1,13 @@
+system_name: 3n85
+input_structure: benchmarks/antibody_new10_single_point/structures/3N85.pdb
+structure_source: experimental
+complex_class: antibody-antigen
+mutated_partner: antibody
+antibody_chains:
+- H
+- L
+antigen_chains:
+- A
+notes:
+- Fab37–HER2
+- 10 source rows, but WH100F is duplicated; only 9 unique single signatures.

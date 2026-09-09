@@ -1,0 +1,11 @@
+mutation_group_id,ddg_kcal_mol,note
+antibody_h_l27r,0.65,n_meas=1
+antibody_h_l27k,0.87,n_meas=1
+antibody_h_n28d,0.13,n_meas=1
+antibody_l_y30k,0.67,n_meas=1
+antibody_l_n31r,-0.92,n_meas=1
+antibody_l_n31k,3.49,n_meas=1
+antibody_l_s53d,-0.16,n_meas=1
+antibody_l_s53e,-0.85,n_meas=1
+antibody_l_t56d,-0.43,n_meas=1
+antibody_l_t56e,-0.69,n_meas=1

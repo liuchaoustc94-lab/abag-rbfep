@@ -984,3 +984,147 @@ def validate_hybrid_topology_integrity(pmx_dir: Path) -> dict[str, object]:
         "residues": residues,
         "issues": issues,
     }
+
+
+def swap_hybrid_residue_ab_states(itp_path: Path, hybrid_resnames: set[str] | frozenset[str]) -> dict[str, object]:
+    """Swap A/B alchemical states of hybrid residues in a pmx chain itp.
+
+    Used by the V2.1a DSSB path: the unbound copy must run MUT->WT while the
+    bound copy runs WT->MUT under the same global lambda. Mechanically swaps
+    (typeA,chargeA,massA)<->(typeB,chargeB,massB) in [ atoms ] and the
+    A/B parameter pairs in [ bonds ]/[ angles ]/[ dihedrals ] for every atom
+    and bonded term that touches a hybrid residue (resname matches
+    _HYBRID_RESNAME_RE and is in hybrid_resnames, or _HYBRID_RESNAME_RE when
+    hybrid_resnames is empty).
+    Returns a summary dict; raises ValueError on unsupported dihedral funcs.
+    """
+    itp_path = Path(itp_path)
+    lines = itp_path.read_text(encoding="utf-8").splitlines()
+
+    def _is_hybrid_res(resname: str) -> bool:
+        if hybrid_resnames:
+            return resname in hybrid_resnames
+        return bool(_HYBRID_RESNAME_RE.match(resname))
+
+    # 1) collect hybrid atom numbers per residue
+    hybrid_atoms: dict[int, str] = {}
+    in_atoms = False
+    out_lines: list[str] = []
+    swapped_atoms = 0
+    for line in lines:
+        stripped = line.strip()
+        if stripped.startswith("["):
+            in_atoms = stripped.lower().startswith("[ atoms ]")
+            out_lines.append(line)
+            continue
+        if in_atoms and stripped and not stripped.startswith(";"):
+            parts = stripped.split()
+            if len(parts) >= 8 and parts[0].lstrip("-").isdigit() and _is_hybrid_res(parts[3]):
+                resnr = int(parts[2])
+                hybrid_atoms[int(parts[0])] = parts[3]
+                if len(parts) >= 11:
+                    # nr typeA resnr resid atomA cgnr chargeA massA typeB chargeB massB
+                    parts[1], parts[8] = parts[8], parts[1]
+                    parts[6], parts[9] = parts[9], parts[6]
+                    parts[7], parts[10] = parts[10], parts[7]
+                    swapped_atoms += 1
+                    out_lines.append("  " + "  ".join(parts))
+                    continue
+        out_lines.append(line)
+
+    # 2) swap A/B parameter pairs in bonded sections touching hybrid atoms
+    final_lines: list[str] = []
+    section = ""
+    swapped_terms = 0
+    for line in out_lines:
+        stripped = line.strip()
+        if stripped.startswith("["):
+            section = stripped.lower()
+            final_lines.append(line)
+            continue
+        if not stripped or stripped.startswith(";") or section not in {"[ bonds ]", "[ angles ]", "[ dihedrals ]"}:
+            final_lines.append(line)
+            continue
+        parts = stripped.split()
+        comment = ""
+        if ";" in parts:
+            idx = parts.index(";")
+            comment = " " + " ".join(parts[idx:])
+            parts = parts[:idx]
+        try:
+            n_ids = {"[ bonds ]": 2, "[ angles ]": 3, "[ dihedrals ]": 4}[section]
+            ids = [int(x) for x in parts[:n_ids]]
+        except (ValueError, KeyError):
+            final_lines.append(line)
+            continue
+        if not any(atom_nr in hybrid_atoms for atom_nr in ids):
+            final_lines.append(line)
+            continue
+        rest = parts[n_ids:]
+        func = int(rest[0])
+        params = rest[1:]
+        if section == "[ bonds ]" and func == 1 and len(params) >= 4:
+            params[0], params[2] = params[2], params[0]
+            params[1], params[3] = params[3], params[1]
+        elif section == "[ angles ]" and func == 1 and len(params) >= 4:
+            params[0], params[2] = params[2], params[0]
+            params[1], params[3] = params[3], params[1]
+        elif section == "[ dihedrals ]":
+            # GROMACS: func 1/4/9 use 3 params per state; R-B func 3/5 use 6.
+            n_params = {1: 3, 4: 3, 9: 3, 3: 6, 5: 6}.get(func)
+            if n_params is None:
+                raise ValueError(f"unsupported dihedral func {func} in {itp_path}")
+            if len(params) == 2 * n_params:
+                params = params[n_params:] + params[:n_params]
+            elif len(params) in (0, n_params):
+                # shared A/B params (or empty): swap is a no-op
+                final_lines.append(line)
+                continue
+            else:
+                raise ValueError(f"unexpected dihedral param count {len(params)} for func {func} in {itp_path}")
+        else:
+            final_lines.append(line)
+            continue
+        swapped_terms += 1
+        final_lines.append("  " + "  ".join([str(x) for x in ids + [func] + params]) + comment)
+
+    itp_path.write_text("\n".join(final_lines) + "\n", encoding="utf-8")
+    return {
+        "itp": str(itp_path),
+        "hybrid_residues": sorted(set(hybrid_atoms.values())),
+        "swapped_atoms": swapped_atoms,
+        "swapped_bonded_terms": swapped_terms,
+    }
+
+
+def validate_dssb_charge_invariance(itp_paths: list[Path]) -> dict[str, object]:
+    """DSSB net-charge invariant: total charge of state A must equal state B
+    across the combined topology (both equal Q_WT + Q_MUT by construction).
+    """
+    total_a = 0.0
+    total_b = 0.0
+    for itp_path in itp_paths:
+        in_atoms = False
+        for line in Path(itp_path).read_text(encoding="utf-8").splitlines():
+            stripped = line.strip()
+            if stripped.startswith("["):
+                in_atoms = stripped.lower().startswith("[ atoms ]")
+                continue
+            if not in_atoms or not stripped or stripped.startswith(";"):
+                continue
+            parts = stripped.split()
+            if len(parts) >= 8 and parts[0].lstrip("-").isdigit():
+                try:
+                    charge_a = float(parts[6])
+                except ValueError:
+                    continue
+                total_a += charge_a
+                total_b += float(parts[9]) if len(parts) >= 11 else charge_a
+    delta = round(total_a - total_b, 4)
+    return {
+        "checked": True,
+        "ok": abs(delta) <= 0.05,
+        "total_charge_state_a": round(total_a, 4),
+        "total_charge_state_b": round(total_b, 4),
+        "delta": delta,
+    }

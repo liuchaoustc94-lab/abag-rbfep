@@ -1,0 +1,9 @@
+mutation_group_id,chain_id,resseq,icode,wt,mut,entity_side
+skempi2_5c6t_6228,H,31,,R,S,antibody
+skempi2_5c6t_6229,H,32,,S,A,antibody
+skempi2_5c6t_6230,H,97,,N,A,antibody
+skempi2_5c6t_6231,H,98,,Y,A,antibody
+skempi2_5c6t_6232,H,99,,F,A,antibody
+skempi2_5c6t_6234,H,104,,Y,A,antibody
+skempi2_5c6t_6235,L,47,,Y,A,antibody
+skempi2_5c6t_6236,L,48,,R,A,antibody

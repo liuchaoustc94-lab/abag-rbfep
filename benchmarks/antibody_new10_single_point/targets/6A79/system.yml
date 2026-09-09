@@ -1,0 +1,13 @@
+system_name: 6a79
+input_structure: benchmarks/antibody_new10_single_point/structures/6A79.pdb
+structure_source: experimental
+complex_class: antibody-antigen
+mutated_partner: antibody
+antibody_chains:
+- H
+- L
+antigen_chains:
+- A
+notes:
+- B5209B scFv–Robo1 Ig5
+- 16 Rosetta Flex ddG antibody-side single substitutions; source paper reports only a smaller experimental mutant panel.

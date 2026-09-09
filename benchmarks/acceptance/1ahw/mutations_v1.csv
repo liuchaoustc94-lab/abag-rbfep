@@ -1,0 +1,9 @@
+mutation_group_id,chain_id,resseq,icode,wt,mut,entity_side
+antibody_c_y156a,C,156,,Y,A,antibody
+antibody_c_y157a,C,157,,Y,A,antibody
+antibody_c_t167a,C,167,,T,A,antibody
+antibody_c_t170a,C,170,,T,A,antibody
+antibody_c_l176a,C,176,,L,A,antibody
+antibody_c_t197a,C,197,,T,A,antibody
+antibody_c_v198a,C,198,,V,A,antibody
+antibody_c_n199a,C,199,,N,A,antibody

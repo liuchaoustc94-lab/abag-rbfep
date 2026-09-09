@@ -1,0 +1,13 @@
+system_name: 4nnp
+input_structure: benchmarks/antibody_new10_single_point/structures/4NNP.pdb
+structure_source: experimental
+complex_class: antibody-antigen
+mutated_partner: antibody
+antibody_chains:
+- H
+- L
+antigen_chains:
+- A
+notes:
+- antagonistic Fab–MntC
+- 16 Rosetta Flex ddG antibody substitutions on a bacterial transporter target.

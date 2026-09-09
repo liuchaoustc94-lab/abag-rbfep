@@ -1,0 +1,11 @@
+pdb_id,method,resolution_A,deposited_structure,wt_baseline_status,formal_use,notes
+3SE8,X-RAY DIFFRACTION,1.895,crystal complex,"PDB construct baseline; no annotated substitutions",experimental_single_point_ready,VRC03-gp120; 28 unique antibody-side SKEMPI2 singles
+3SE9,X-RAY DIFFRACTION,2.000,crystal complex,"PDB construct baseline; no annotated substitutions",experimental_single_point_ready,VRC-PG04-gp120; 25 unique antibody-side SKEMPI2 singles
+3N85,X-RAY DIFFRACTION,3.200,crystal complex,"PDB construct baseline; no annotated substitutions",experimental_single_point_near_threshold,Fab37-HER2; 10 rows collapse to 9 unique singles
+3J1S,ELECTRON MICROSCOPY,8.500,EM complex,"sequence baseline; low-resolution EM, not a crystal structure",synthetic_control_only,A20-AAV2 Graphinity control
+4KUC,X-RAY DIFFRACTION,2.787,crystal complex,"engineered construct baseline; synthetic label domain",synthetic_control_only,6C2-ricin Graphinity control
+5JHL,X-RAY DIFFRACTION,3.000,crystal complex,"engineered construct baseline; synthetic label domain",synthetic_control_only,flavivirus antibody-Zika E Graphinity control
+4NNP,X-RAY DIFFRACTION,2.690,crystal complex,"engineered construct baseline; synthetic label domain",synthetic_control_only,antagonistic Fab-MntC Graphinity control
+4PLJ,X-RAY DIFFRACTION,2.300,crystal complex,"PDB construct baseline; synthetic label domain",synthetic_control_only,8G12-HEV E2 Graphinity control
+6A79,X-RAY DIFFRACTION,2.310,crystal complex,"NOT WT; deposited antibody heavy chain contains P103A",synthetic_control_only,B5209B-Robo1 Ig5; revert P103A before WT RBFE
+5J56,X-RAY DIFFRACTION,1.800,crystal complex,"PDB construct baseline; synthetic label domain",synthetic_control_only,V1C7-RTA Graphinity control
